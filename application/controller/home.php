@@ -30,6 +30,16 @@ class Home extends Controller
     public function exampleOne()
     {
         // load views
+        if(isset($_FILES['userfile']['name'])){
+            if($_FILES['userfile']['name']!=null){
+            echo print_r($_FILES);
+            $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+            while(!feof($file)){
+                echo fgets($file) . "<br>";
+            }
+            fclose($file);
+            }
+        }
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/example_one.php';
         require APP . 'view/_templates/footer.php';
