@@ -27,19 +27,28 @@ class Home extends Controller
      * This method handles what happens when you move to http://yourproject/home/exampleone
      * The camelCase writing is just for better readability. The method name is case-insensitive.
      */
-    public function exampleOne()
+    public function fileupload()
     {
-        // load views
+        //Check to see the the SuperGlobal Variable $_FILES has data
         if(isset($_FILES['userfile']['name'])){
+            //CHeck for file upload error resulting in null file
             if($_FILES['userfile']['name']!=null){
-            echo print_r($_FILES);
+            //open the uploaded file for reading
             $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+            $count =0;
+            //while not end of file loop get line as an array
             while(!feof($file)){
-                echo fgets($file) . "<br>";
+                $count += 1;
+                $line = fgetcsv($file,0,"\t") ;
+                if($count!=1){
+                 //print out our array for viewing pleasure.
+                echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+                }
             }
-            fclose($file);
             }
         }
+            
+        // load views
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/example_one.php';
         require APP . 'view/_templates/footer.php';
@@ -50,9 +59,19 @@ class Home extends Controller
      * This method handles what happens when you move to http://yourproject/home/exampletwo
      * The camelCase writing is just for better readability. The method name is case-insensitive.
      */
-    public function exampleTwo()
+    public function login()
     {
+        //is the http request contains information from a feild called VARIABLEAMEFOREMAIL
+        if(isset($_REQUEST['VARIABLENAMEFOREMAIL'])){
+        $user = $this->loadModel('user');
+        $userEmail = $_REQUEST['VARIABLENAMEFOREMAIL'];
+        $userPassword = $_REQUEST['VARIABLENAMEFORPASSOWRD'];
         // load views
+        if($user->checkLogin($userEmail,$userPassword)){
+            session_start();
+            header('location: /information');
+        }
+    }
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/example_two.php';
         require APP . 'view/_templates/footer.php';
