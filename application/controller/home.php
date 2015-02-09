@@ -34,8 +34,14 @@ class Home extends Controller
             if($_FILES['userfile']['name']!=null){
             echo print_r($_FILES);
             $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+            $count =0;
             while(!feof($file)){
-                echo fgets($file) . "<br>";
+                $count += 1;
+                $line = fgetcsv($file,0,"\t") ;
+                if($count!=1){
+                
+                echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+            }
             }
             fclose($file);
             }
