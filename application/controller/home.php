@@ -36,28 +36,24 @@ class Home extends Controller
             //open the uploaded file for reading
             $file = fopen($_FILES['userfile']['tmp_name'], 'r');
             $count =0;
+            //while not end of file loop get line as an array
             while(!feof($file)){
                 $count += 1;
                 $line = fgetcsv($file,0,"\t") ;
                 if($count!=1){
-                
+                 //print out our array for viewing pleasure.
                 echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+                }
             }
-            //while not end of file loop get line as an array
-            while(!feof($file)){
-                //print out our array for viewing pleasure.
-                echo print_r(fgetcsv($file,0,"\t")) . "<br>";
-
-            }
-            fclose($file);
             }
         }
+            
         // load views
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/example_one.php';
         require APP . 'view/_templates/footer.php';
     }
-}
+
     /**
      * PAGE: exampletwo
      * This method handles what happens when you move to http://yourproject/home/exampletwo
