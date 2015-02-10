@@ -8,11 +8,17 @@ class Controller
     public $db = null;
 
     /**
+     * @var null Model
+     */
+    public $model = null;
+
+    /**
      * Whenever controller is created, open a database connection too and load "the model".
      */
     function __construct()
     {
         $this->openDatabaseConnection();
+        $this->loadModel();
     }
 
     /**
@@ -35,11 +41,10 @@ class Controller
      * Loads the "model".
      * @return object model
      */
-    public function loadModel($modelName)
+    public function loadModel()
     {
-        require APP . '/model/'. strtolower($modelName).'.php';
+        require APP . '/model/model.php';
         // create new "model" (and pass the database connection)
         $this->model = new Model($this->db);
-		return new Model($this->db);
-	}
+    }
 }

@@ -22,7 +22,7 @@
     <!-- navigation -->
     <div class="navigation">
         <a href="<?php echo URL; ?>">home</a>
-        <a href="<?php echo URL; ?>home/fileupload">File Upload Sample</a>
-        <a href="<?php echo URL; ?>home/login">Login Sample</a>
+        <a href="<?php echo URL; ?>home/exampleone">subpage</a>
+        <a href="<?php echo URL; ?>home/exampletwo">subpage 2</a>
         <a href="<?php echo URL; ?>songs">songs</a>
     </div>
