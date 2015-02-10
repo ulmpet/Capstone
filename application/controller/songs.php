@@ -17,7 +17,6 @@ class Songs extends Controller
      */
     public function index()
     {
-		$model = $this->loadModel('model');
         // getting all songs and amount of songs
         $songs = $this->model->getAllSongs();
         $amount_of_songs = $this->model->getAmountOfSongs();
