@@ -29,6 +29,7 @@ class Home extends Controller
      */
     public function fileupload()
     {
+        Helper::outputArray($_SESSION); 
         //Check to see the the SuperGlobal Variable $_FILES has data
         if(isset($_FILES['userfile']['name'])){
             print_r($_FILES);
@@ -62,17 +63,28 @@ class Home extends Controller
      */
     public function login()
     {
+        $this->message = 'Please enter your username and password.';
         //is the http request contains information from a feild called VARIABLEAMEFOREMAIL
-        if(isset($_REQUEST['VARIABLENAMEFOREMAIL'])){
-        $user = $this->loadModel('user');
-        $userEmail = $_REQUEST['VARIABLENAMEFOREMAIL'];
-        $userPassword = $_REQUEST['VARIABLENAMEFORPASSOWRD'];
-        // load views
-        if($user->checkLogin($userEmail,$userPassword)){
-            session_start();
-            header('location: /information');
+        $userModel = $this->loadModel('user');
+        //Helper::outputArray($userModel->selectAllUsers(),true);
+
+        if(isset($_REQUEST['Email'])){
+        $userEmail = $_REQUEST['Email'];
+        $userPassword = $_REQUEST['password'];
+        //echo count($userModel->checkLogin($userEmail,$userPassword));
+        $userInformation = $userModel->checkLogin($userEmail,$userPassword);
+        if(count($userInformation) == 1){
+            
+            //Helper::outputArray($userInformation);
+            $_SESSION['UID'] = $userInformation[0]['UserID'];
+            $_SESSION['ACCESS'] = $userInformation[0]['Root'];
+            Helper::outputArray($_SESSION);
+            //header('location: /Home/fileupload');
+        }else{
+            $this->message = 'Login Failed';
         }
     }
+        // load views
         require APP . 'view/_templates/header.php';
         require APP . 'view/home/example_two.php';
         require APP . 'view/_templates/footer.php';

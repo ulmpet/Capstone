@@ -52,4 +52,21 @@ class Helper
         return $raw_sql;
     }
 
+    static public function outputArray($arrayName){
+        if(is_object($arrayName)){
+            $arrayName = get_object_vars($arrayName);
+        }
+        echo '</br>';
+        foreach ($arrayName as $key => $value) {
+            if(is_array($value)){
+                foreach($value as $rowKey => $rowValue){
+                    echo '[ '. $key .'] [ '. $rowKey .']  =>  '.  $rowValue .' </br>';
+                }
+            }else{
+            echo '[ '. $key .']  =>  '.  $value .' </br>';
+            }
+        }
+        echo '</br>';
+    }
+
 }

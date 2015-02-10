@@ -17,7 +17,7 @@ class user
      * Add user information into the userTable in the phage_enzyme_tool database
      * @param array $userInfo UserInfo
      */
-    public function addUser(userInfo)
+    public function addUser($userInfo)
     {
         $sql = "INSERT INTO userTable (EmailAddress, Password, Root, VerificationValue, IPAdrress, Organization) VALUES (:EmailAddress, :Password, :Root, :VerificationValue, :IPAdrress, :Organization)";
         $query = $this->db->prepare($sql);
@@ -26,4 +26,19 @@ class user
         $query->execute($parameters);
     }
 
+    public function selectAllUsers(){
+        
+        $sql ="select * from userTable";
+         $query = $this->db->prepare($sql);
+        $query->execute();
+         return $query->fetchAll();
+    }
+
+    public function checkLogin($userEmail,$userPassword){
+        $sql ="SELECT UserID,Root FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userEmail' => $userEmail, ':userPassword' => $userPassword);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
 }
