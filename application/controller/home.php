@@ -31,6 +31,7 @@ class Home extends Controller
     {
         //Check to see the the SuperGlobal Variable $_FILES has data
         if(isset($_FILES['userfile']['name'])){
+            print_r($_FILES);
             //CHeck for file upload error resulting in null file
             if($_FILES['userfile']['name']!=null){
             //open the uploaded file for reading
