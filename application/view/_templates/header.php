@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MINI</title>
+    <title>P.E.T</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,13 +16,5 @@
 <body>
     <!-- logo -->
     <div class="logo">
-        MINI
-    </div>
-
-    <!-- navigation -->
-    <div class="navigation">
-        <a href="<?php echo URL; ?>">home</a>
-        <a href="<?php echo URL; ?>home/fileupload">File Upload Sample</a>
-        <a href="<?php echo URL; ?>home/login">Login Sample</a>
-        <a href="<?php echo URL; ?>songs">songs</a>
+        P.E.T v2.0a
     </div>

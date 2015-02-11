@@ -12,13 +12,39 @@ class Home extends Controller
 {
     /**
      * PAGE: index
-     * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
+     * This method handles what happens when you move to http://yourproject/home/index 
+     * This is the login handler and landing page for all users coming to the site. 
      */
     public function index()
     {
+        $this->message = 'Please enter your username and password.';
+        //load the user model to check login
+        $userModel = $this->loadModel('user');
+        //Helper::outputArray($userModel->selectAllUsers(),true);
+        //if the http request contains information from a feild called Email attempt a login
+        if(isset($_REQUEST['Email'])){
+            $userEmail = $_REQUEST['Email'];
+            $userPassword = $_REQUEST['Password'];
+            //echo count($userModel->checkLogin($userEmail,$userPassword));
+            //request user from database with entered credientials
+            $userInformation = $userModel->checkLogin($userEmail,$userPassword);
+            // if there is such a user
+            if(count($userInformation) == 1){
+            
+                //set the session verables and redirect to News Page
+                $_SESSION['UID'] = $userInformation[0]['UserID'];
+                $_SESSION['ACCESS'] = $userInformation[0]['Root'];
+                //Helper::outputArray($_SESSION);
+                header('location: /News');
+            //else login failed
+            }else{
+                $this->message = 'Login Failed';
+            }
+    }
         // load views
         require APP . 'view/_templates/header.php';
-        require APP . 'view/home/index.php';
+        
+        require APP . 'view/home/example_two.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -52,6 +78,7 @@ class Home extends Controller
             
         // load views
         require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
         require APP . 'view/home/example_one.php';
         require APP . 'view/_templates/footer.php';
     }
@@ -61,32 +88,6 @@ class Home extends Controller
      * This method handles what happens when you move to http://yourproject/home/exampletwo
      * The camelCase writing is just for better readability. The method name is case-insensitive.
      */
-    public function login()
-    {
-        $this->message = 'Please enter your username and password.';
-        //is the http request contains information from a feild called VARIABLEAMEFOREMAIL
-        $userModel = $this->loadModel('user');
-        //Helper::outputArray($userModel->selectAllUsers(),true);
-
-        if(isset($_REQUEST['Email'])){
-        $userEmail = $_REQUEST['Email'];
-        $userPassword = $_REQUEST['password'];
-        //echo count($userModel->checkLogin($userEmail,$userPassword));
-        $userInformation = $userModel->checkLogin($userEmail,$userPassword);
-        if(count($userInformation) == 1){
-            
-            //Helper::outputArray($userInformation);
-            $_SESSION['UID'] = $userInformation[0]['UserID'];
-            $_SESSION['ACCESS'] = $userInformation[0]['Root'];
-            Helper::outputArray($_SESSION);
-            //header('location: /Home/fileupload');
-        }else{
-            $this->message = 'Login Failed';
-        }
-    }
-        // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/example_two.php';
-        require APP . 'view/_templates/footer.php';
-    }
+    
+    
 }
