@@ -16,5 +16,8 @@
 <body>
     <!-- logo -->
     <div class="logo">
+
         P.E.T v2.0a
+        MINI
     </div>
+

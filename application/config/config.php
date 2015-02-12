@@ -47,6 +47,7 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  * This is the place where you define your database credentials, database type etc.
  */
 
+
 // Remote Database credentials
  define('DB_TYPE', 'mysql');
  define('DB_HOST', '54.175.149.72');
@@ -55,10 +56,4 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  define('DB_PASS', '5T[/Db{/~A6)u-Y');
  define('DB_CHARSET', 'utf8');
 
-// Local DB credentials
-/*define('DB_TYPE', 'mysql');
-define('DB_HOST', '127.0.0.1:3306');
-define('DB_NAME', 'phagedata');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8');*/
+
