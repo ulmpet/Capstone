@@ -41,9 +41,9 @@ class Controller
      * Loads the "model".
      * @return object model
      */
-    public function loadModel()
+    public function loadModel($modelName)
     {
-        require APP . '/model/model.php';
+        require APP . '/model/'.$modelName.'.php';
         // create new "model" (and pass the database connection)
 
         $reflection = new ReflectionClass($modelName);
