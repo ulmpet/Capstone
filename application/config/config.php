@@ -49,11 +49,19 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 
 
 // Remote Database credentials
+if(URL == "127.0.0.1"){
  define('DB_TYPE', 'mysql');
  define('DB_HOST', '54.175.149.72');
  define('DB_NAME', 'phage_enzyme_tool');
  define('DB_USER', 'siteData');
  define('DB_PASS', '5T[/Db{/~A6)u-Y');
  define('DB_CHARSET', 'utf8');
-
+}else{}
+ define('DB_TYPE', 'mysql');
+ define('DB_HOST', 'localhost');
+ define('DB_NAME', 'phage_enzyme_tool');
+ define('DB_USER', 'siteData');
+ define('DB_PASS', '5T[/Db{/~A6)u-Y');
+ define('DB_CHARSET', 'utf8');
+}
 
