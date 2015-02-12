@@ -82,28 +82,28 @@ class Home extends Controller
     public function fileupload()
     {
         if(isset($_SESSION['ACCESS']) && $_SESSION['ACCESS'] == 1){
-        Helper::outputArray($_SESSION); 
-        //Check to see the the SuperGlobal Variable $_FILES has data
-        if(isset($_FILES['userfile']['name'])){
-            print_r($_FILES);
-            //CHeck for file upload error resulting in null file
-            if($_FILES['userfile']['name']!=null){
-            //open the uploaded file for reading
-            $file = fopen($_FILES['userfile']['tmp_name'], 'r');
-            $count =0;
+            Helper::outputArray($_SESSION); 
+            //Check to see the the SuperGlobal Variable $_FILES has data
+            if(isset($_FILES['userfile']['name'])){
+                print_r($_FILES);
+                //CHeck for file upload error resulting in null file
+                if($_FILES['userfile']['name']!=null){
+                //open the uploaded file for reading
+                $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+                $count =0;
             //while not end of file loop get line as an array
-            while(!feof($file)){
-                $count += 1;
-                $line = fgetcsv($file,0,"\t") ;
-                if($count!=1){
-                 //print out our array for viewing pleasure.
-                echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+                while(!feof($file)){
+                    $count += 1;
+                    $line = fgetcsv($file,0,"\t") ;
+                    if($count!=1){
+                    //print out our array for viewing pleasure.
+                    echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+                    }
+                }
                 }
             }
-            }
-        }
         }else{
-            header('location: /error/accessError')
+            header('location: /error/accessError');
         }
     }
             
