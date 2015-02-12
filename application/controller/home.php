@@ -35,7 +35,7 @@ class Home extends Controller
                 $_SESSION['UID'] = $userInformation[0]['UserID'];
                 $_SESSION['ACCESS'] = $userInformation[0]['Root'];
                 //Helper::outputArray($_SESSION);
-                header('location: /News');
+                header('location: /news');
             //else login failed
             }else{
                 $this->message = 'Login Failed';
@@ -44,9 +44,35 @@ class Home extends Controller
         // load views
         require APP . 'view/_templates/header.php';
         
-        require APP . 'view/home/example_two.php';
+        require APP . 'view/home/login.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    /**
+    *   
+    *
+    *
+    */
+    public function signup()
+    {
+        if(isset($_REQUEST['email'])){
+            Helper::outputArray($_REQUEST);
+            $info = array($_REQUEST['email'], $_REQUEST['pass'], 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization']);
+            Helper::outputArray($info);
+            $userModel = $this->loadModel('user');
+
+            if($userModel->addUser($info)){
+                header('location: /');
+            }
+        }
+
+        // load views
+        require APP . 'view/_templates/header.php';
+        
+        require APP . 'view/home/signup.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
 
     /**
      * PAGE: exampleone

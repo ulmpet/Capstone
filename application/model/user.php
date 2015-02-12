@@ -19,11 +19,11 @@ class user
      */
     public function addUser($userInfo)
     {
-        $sql = "INSERT INTO userTable (EmailAddress, Password, Root, VerificationValue, IPAdrress, Organization) VALUES (:EmailAddress, :Password, :Root, :VerificationValue, :IPAdrress, :Organization)";
+        $sql = "INSERT INTO userTable (EmailAddress, Password, Root, VerificationValue, IPAddress, Organization) VALUES (:EmailAddress, :Password, :Root, :VerificationValue, :IPAddress, :Organization)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':EmailAddress' => $userInfo[0], ':Password' => $userInfo[1], ':Root' => $userInfo[2], ':VerificationValue' => $userInfo[3], ':IPAdrress' => $userInfo[4], ':Organization' => $userInfo[5]);
+        $parameters = array(':EmailAddress' => $userInfo[0], ':Password' => $userInfo[1], ':Root' => $userInfo[2], ':VerificationValue' => $userInfo[3], ':IPAddress' => $userInfo[4], ':Organization' => $userInfo[5]);
 
-        $query->execute($parameters);
+        return $query->execute($parameters);
     }
 
     public function selectAllUsers(){
