@@ -81,6 +81,7 @@ class Home extends Controller
      */
     public function fileupload()
     {
+        if(isset($_SESSION['ACCESS']) && $_SESSION['ACCESS'] == 1){
         Helper::outputArray($_SESSION); 
         //Check to see the the SuperGlobal Variable $_FILES has data
         if(isset($_FILES['userfile']['name'])){
@@ -101,6 +102,10 @@ class Home extends Controller
             }
             }
         }
+        }else{
+            header('location: /error/accessError')
+        }
+    }
             
 
         // load views
