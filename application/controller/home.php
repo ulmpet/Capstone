@@ -105,7 +105,6 @@ class Home extends Controller
         }else{
             header('location: /error/accessError');
         }
-    }
             
 
         // load views
@@ -113,7 +112,7 @@ class Home extends Controller
         require APP . 'view/_templates/nav.php';
         require APP . 'view/home/example_one.php';
         require APP . 'view/_templates/footer.php';
-    }
+    }// end file upload
 
 
-}
+}// end class
