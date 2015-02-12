@@ -64,5 +64,5 @@ if(URL == "127.0.0.1"){
  define('DB_PASS', '5T[/Db{/~A6)u-Y');
  define('DB_CHARSET', 'utf8');
 }
-}
+
 
