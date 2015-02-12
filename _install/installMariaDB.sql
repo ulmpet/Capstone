@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS userTable
 	Password VARCHAR(128),
 	Root BOOLEAN,
 	VerificationValue VARCHAR(128),
-	IPAdress VARCHAR(15),
+	IPAddress VARCHAR(15),
 	Organization VARCHAR(50)
 );
 
@@ -43,7 +43,6 @@ CREATE TABLE clusterTable
 
 CREATE TABLE phageTable
 (
-	
 	PhageID INTEGER AUTO_INCREMENT NOT NULL primary key,
 	PhageName VARCHAR(100),
 	GenusID INTEGER,
