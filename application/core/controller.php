@@ -43,4 +43,23 @@ class Controller
         $instanceArgs = array($this->db);
 		return $reflection->newInstanceArgs($instanceArgs);
 	}
+
+    /*
+    * Funciton to check if a current user had access to a page.
+    * accepts an integer value representing the needed access level to veiw a page and checks against the current 
+    * users level stored in the database. 
+    */
+    public function checkAuthLevel($levelNeeded){
+        $userModel = $this->loadModel('user');
+        if(isset($_SESSION['UID'])){
+            $currentUsersAuth = $userModel->checkAuth($_SESSION['UID']);
+            if ($currentUsersAuth[0]['AuthLevel'] >= $levelNeeded){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }

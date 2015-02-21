@@ -10,12 +10,14 @@ CREATE TABLE IF NOT EXISTS genusTable(
 CREATE TABLE IF NOT EXISTS userTable
 (
 	UserID INTEGER NOT NULL AUTO_INCREMENT primary key,
-	EmailAddress VARCHAR(100),
-	Password VARCHAR(128),
-	Root BOOLEAN,
+	EmailAddress VARCHAR(100) NOT NULL,
+	Password VARCHAR(128) NOT NULL,
+	AuthLevel Int NOT NULL,
 	VerificationValue VARCHAR(128),
 	IPAddress VARCHAR(15),
-	Organization VARCHAR(50)
+	Organization VARCHAR(50),
+	Salt VARCHAR(128),
+	Active Boolean
 );
 
 CREATE TABLE cutsTable
