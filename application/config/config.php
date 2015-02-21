@@ -49,7 +49,7 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 
 
 // Remote Database credentials
-if(URL == "127.0.0.1"){
+if(URL_DOMAIN == "127.0.0.1"){
  define('DB_TYPE', 'mysql');
  define('DB_HOST', '54.175.149.72');
  define('DB_NAME', 'phage_enzyme_tool');

@@ -16,4 +16,8 @@ class PhageTool extends Controller
      */
     public function index()
     {}
+
+    public function test(){
+    	echo 'success';
+    }
 }

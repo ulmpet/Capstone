@@ -33,7 +33,6 @@ class Home extends Controller
             
                 //set the session verables and redirect to News Page
                 $_SESSION['UID'] = $userInformation[0]['UserID'];
-                $_SESSION['ACCESS'] = $userInformation[0]['Root'];
                 //Helper::outputArray($_SESSION);
                 header('location: /news');
             //else login failed
@@ -81,7 +80,7 @@ class Home extends Controller
      */
     public function fileupload()
     {
-        if(isset($_SESSION['ACCESS']) && $_SESSION['ACCESS'] == 1){
+        if($this->checkAuthLevel(1)){
             Helper::outputArray($_SESSION); 
             //Check to see the the SuperGlobal Variable $_FILES has data
             if(isset($_FILES['userfile']['name'])){
@@ -103,7 +102,7 @@ class Home extends Controller
                 }
             }
         }else{
-            header('location: /error/accessError');
+            header('location: /Error/access');
         }
             
 
@@ -114,5 +113,10 @@ class Home extends Controller
         require APP . 'view/_templates/footer.php';
     }// end file upload
 
+    public function testPage(){
+        $userModel = $this->loadModel('user');
+        echo Helper::outputArray($_SESSION);
+        echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
+    }
 
 }// end class
