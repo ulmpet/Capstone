@@ -129,6 +129,7 @@ class Home extends Controller
 
         // Finally, destroy the session.
         session_destroy();
+        header('location: /home');
     }//end logout
     
     public function testPage(){
