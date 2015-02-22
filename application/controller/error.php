@@ -18,12 +18,14 @@ class Error extends Controller
     {
         // load views
         require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
         require APP . 'view/error/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
     public function access(){
         require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
         require APP . 'view/error/access.php';
         require APP . 'view/_templates/footer.php';
     }
