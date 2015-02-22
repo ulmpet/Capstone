@@ -6,6 +6,7 @@ class Controller
      * @var null Database Connection
      */
     public $db = null;
+    public $authValue = null;
 
     /**
      * Whenever controller is created, open a database connection too and load "the model".
@@ -13,6 +14,7 @@ class Controller
     function __construct()
     {
         $this->openDatabaseConnection();
+        
     }
 
     /**
@@ -61,5 +63,12 @@ class Controller
         }else{
             return false;
         }
+    }
+
+    public function getAuth(){
+        $userModel = $this->loadModel('user');
+        $currentUsersAuth = $userModel->checkAuth($_SESSION['UID']);
+        $this->authValue = $currentUsersAuth[0]['AuthLevel'];
+        return $this->authValue;
     }
 }
