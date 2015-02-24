@@ -1,5 +1,5 @@
 <div class="container">
-
+	<p><?php echo $this->message ?>
 	<form method='post' action=''></br>
 	<label>Your email<input type="text" name="email"/></label></br>
 	<label>Enter a password<input type="password" name="pass"/></label></br>

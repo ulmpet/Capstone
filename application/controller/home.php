@@ -23,8 +23,9 @@ class Home extends Controller
         //Helper::outputArray($userModel->selectAllUsers(),true);
         //if the http request contains information from a feild called Email attempt a login
         if(isset($_REQUEST['Email'])){
+            $userSalt = $userModel->getSalt($_REQUEST['Email']);
             $userEmail = $_REQUEST['Email'];
-            $userPassword = $_REQUEST['Password'];
+            $userPassword = hash('sha512',$_REQUEST['Password'].$userSalt);
             //echo count($userModel->checkLogin($userEmail,$userPassword));
             //request user from database with entered credientials
             $userInformation = $userModel->checkLogin($userEmail,$userPassword);
@@ -54,16 +55,25 @@ class Home extends Controller
     */
     public function signup()
     {
+        $this->message = 'Please Enter all required information.';
         if(isset($_REQUEST['email'])){
-            Helper::outputArray($_REQUEST);
-            $info = array($_REQUEST['email'], $_REQUEST['pass'], 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization']);
-            Helper::outputArray($info);
+            //create a random salt to add to password
+            $salt = bin2hex(openssl_random_pseudo_bytes(64));
+            // add the salt to the password and hash useing sah512 creating a 128 charicter password
+            $password = hash('sha512',$_REQUEST['pass'].$salt);
+            //add all user signup data to the array 
+            $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1);
+            //load the user model
             $userModel = $this->loadModel('user');
 
-            if($userModel->addUser($info)){
+            //insert the data to the database and return to home on success
+            if($userModel->SelectUserByEmail($_REQUEST['email'])==0){
+                $userModel->addUser($info);
                 header('location: /');
-            }
-        }
+            }else{
+                $this->message = 'This Account Email Address already Exists.';
+            }   
+         }
 
         // load views
         require APP . 'view/_templates/header.php';
@@ -134,8 +144,9 @@ class Home extends Controller
     
     public function testPage(){
         $userModel = $this->loadModel('user');
+        echo $userModel->SelectUserByEmail('admin');
         echo Helper::outputArray($_SESSION);
-        echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
+        //echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
 
 
     }//end test page
