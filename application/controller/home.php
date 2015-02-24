@@ -10,6 +10,8 @@
  */
 class Home extends Controller
 {
+
+    var $Testmessage;
     /**
      * PAGE: index
      * This method handles what happens when you move to http://yourproject/home/index 
@@ -49,7 +51,7 @@ class Home extends Controller
     }
 
     /**
-    *   
+    *   Function to preform sighnup on the web app. If the signup form as been posted
     *
     *
     */
@@ -144,6 +146,7 @@ class Home extends Controller
     
     public function testPage(){
         $userModel = $this->loadModel('user');
+        echo $Testmessage;
         echo $userModel->SelectUserByEmail('admin');
         echo Helper::outputArray($_SESSION);
         //echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
@@ -151,6 +154,10 @@ class Home extends Controller
 
     }//end test page
 
-
+    public function redirectTest(){
+        $this->Testmessage = 'Succes 10100101!!';
+        $this->testPage();
+        die();
+    }
 
 }// end class
