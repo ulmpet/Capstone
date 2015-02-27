@@ -11,4 +11,11 @@
        -Improved entry of Phage cut information 
        -Validation of data from phageDB and nebcutter
  </pre>
+ <form enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
+    <!-- MAX_FILE_SIZE must precede the file input field -->
+    <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
+    <!-- Name of input element determines name in $_FILES array -->
+    Send this file: <input name="userfile" type="file" />
+    <input type="submit" value="Send File" />
+</form>
 </div>
