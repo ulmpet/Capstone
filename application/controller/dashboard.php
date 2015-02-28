@@ -24,6 +24,7 @@ class Dashboard extends Controller
 
     public function fileupload()
     {
+        $phages = array();
         if($this->checkAuthLevel(1)){
             Helper::outputArray($_SESSION); 
             //Check to see the the SuperGlobal Variable $_FILES has data
@@ -38,11 +39,24 @@ class Dashboard extends Controller
                 while(!feof($file)){
                     $count += 1;
                     $line = fgetcsv($file,0,"\t") ;
+                    //skips the first line of the file (colomn names)
                     if($count!=1){
+                        if($line[0]!=''){
+                            if(strlen($line[1]) > 1){
+                                $cluster = substr($line[1],0,1);
+                                $subcluster = substr($line[1],1,1);
+                            }else{
+                                $cluster = substr($line[1],0,1);
+                                $subcluster = null;
+                            }
+                            $phages[$line[0]] = array($cluster,$subcluster);
+                        }
                     //print out our array for viewing pleasure.
                     echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
                     }
+                    
                 }
+                Helper::outputArray($phages);
                 }
             }
         }else{
