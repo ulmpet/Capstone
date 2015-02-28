@@ -11,6 +11,7 @@
        -Improved entry of Phage cut information 
        -Validation of data from phageDB and nebcutter
  </pre>
+ <?php Helper::outputArray($adminList);?>
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
     <div id="phageType" style="display:block">

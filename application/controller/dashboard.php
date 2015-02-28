@@ -16,10 +16,11 @@ class Dashboard extends Controller
      */
     public function index()
     {
-
-        $userModel = loadModel('user');
-        $adminList = $userModel->getAdmin();
         
+        $phageGenus = $this->loadModel('genus');
+        $adminList = $this->userModel->getAdmin();
+        $genusList = $phageGenus->getGenusList();
+
     	require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/dashboard/dashboard.php';
