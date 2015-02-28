@@ -13,6 +13,16 @@
  </pre>
  <form enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
+    <div id="" style="display:block">
+        <select id="opts">
+            <option value="0">Select a Genus</option>
+            <option value="1">Mycobacterium</option>
+            <option value="2">Arthrobacter</option>
+            <option value="3">Bacillus</option>
+            <option value="4">Streptomyces</option>
+        </select>
+  </div>
+
     <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
     <!-- Name of input element determines name in $_FILES array -->
     Send this file: <input name="userfile" type="file" />
