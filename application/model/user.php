@@ -45,6 +45,13 @@ class user
         return $query->fetchAll();
     }
 
+    public function getAdmin(){
+        $sql ="select EmailAddress from userTable WHERE AuthLevel = 1;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     /*
     * Selects UserID in the userTable matching the given email address. 
     * @param

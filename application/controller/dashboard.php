@@ -16,6 +16,10 @@ class Dashboard extends Controller
      */
     public function index()
     {
+
+        $userModel = loadModel('user');
+        $adminList = $userModel->getAdmin();
+        
     	require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/dashboard/dashboard.php';
@@ -26,6 +30,8 @@ class Dashboard extends Controller
     {
         $phages = array();
         if($this->checkAuthLevel(1)){
+
+
             Helper::outputArray($_SESSION); 
             //Check to see the the SuperGlobal Variable $_FILES has data
             if(isset($_FILES['userfile']['name'])){
