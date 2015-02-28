@@ -32,4 +32,24 @@
     Send this file: <input name="userfile" type="file" />
     <input type="submit" value="Send File" />
 </form>
+
+  <form>
+    <div>
+      <select id="admins">
+      <?php 
+
+      $counter = 0;
+      foreach($adminList as $email){
+
+        echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
+        $counter += 1;
+
+      } 
+      ?>
+
+    </select>
+    <br><input type="submit" value="Remove Admin"></br>
+    </div>
+
+  </form>
 </div>
