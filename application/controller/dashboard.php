@@ -33,7 +33,7 @@ class Dashboard extends Controller
         if($this->checkAuthLevel(1)){
 
 
-            Helper::outputArray($_SESSION); 
+            Helper::outputArray($_POST); 
             //Check to see the the SuperGlobal Variable $_FILES has data
             if(isset($_FILES['userfile']['name'])){
                 print_r($_FILES);
@@ -59,11 +59,13 @@ class Dashboard extends Controller
                             $phages[$line[0]] = array($cluster,$subcluster);
                         }
                     //print out our array for viewing pleasure.
-                    echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
+                    // or not echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
                     }
                     
                 }
                 Helper::outputArray($phages);
+                //$phageModel = $this->loadModel('phage');
+                //Helper::outputArray($phageModel->addShortPhage($phages));   
                 }
             }
         }else{

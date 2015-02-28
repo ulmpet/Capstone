@@ -16,6 +16,10 @@ class PhageTool extends Controller
      */
     public function index()
     {
+
+        $phageGenus = $this->loadModel('genus');
+        $genusList = $phageGenus->getGenusList();
+        
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/phagetool/phagetool.php';

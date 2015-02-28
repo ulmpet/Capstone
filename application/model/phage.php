@@ -35,17 +35,17 @@ class phage
         $query = $this->db->prepare($sql);
         $lines =0;
         $success =0;
-        foreach($phageArray as $phage){
+        foreach($phageArray as $phage=>$value){
             $lines +=1;
             $parameters = array(':PhageName' => $phage,
                             ':GenusID' => $type,
-                            ':ClusterID' => $phage[0],
-                            ':SubclusterID' => $phage[1],
+                            ':ClusterID' => $value[0],
+                            ':SubclusterID' => $value[1],
                             ':Updated'=> date(MYSQL_DATE_FORMAT));
             if($query->execute($parameters)){
-                success+=1;
+                $success+=1;
             }
         }
-        return 
+        return  array($lines,$success);
     }
 }
