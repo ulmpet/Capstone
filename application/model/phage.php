@@ -14,13 +14,13 @@ class phage
     }
 
     function addFullPhage($phageArray){
-        $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, SubclusterID, YearFound, DateFinished,Updated) 
-                VALUES (:PhageName, :GenusID, :ClusterID, :SubclusterID, :YearFound, :DateFinished,:Genome,:Updated)";
+        $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster, YearFound, DateFinished,Updated) 
+                VALUES (:PhageName, :GenusID, :ClusterID, :Subcluster, :YearFound, :DateFinished,:Genome,:Updated)";
         $query = $this->db->prepare($sql);
         $parameters = array(':PhageName' => $phageArray[0],
                             ':GenusID' => $phageArray[1],
                             ':ClusterID' => $phageArray[2],
-                            ':SubclusterID' => $phageArray[3],
+                            ':Subcluster' => $phageArray[3],
                             ':YearFound' => $phageArray[4],
                             ':DateFinished' => $phageArray[5],
                             ':Genome'=> $phageArray[6],
@@ -31,8 +31,8 @@ class phage
 
     function addShortPhage($phageArray,$type){
          set_time_limit(0);
-        $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, SubclusterID,Updated) 
-                VALUES (:PhageName, :GenusID, :ClusterID, :SubclusterID,:Updated)";
+        $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster,Updated) 
+                VALUES (:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
         $query = $this->db->prepare($sql);
         $lines =0;
         $success =0;
@@ -41,7 +41,7 @@ class phage
             $parameters = array(':PhageName' => $phage,
                             ':GenusID' => $type,
                             ':ClusterID' => $value[0],
-                            ':SubclusterID' => $value[1],
+                            ':Subcluster' => $value[1],
                             ':Updated'=> date(MYSQL_DATE_FORMAT));
             if($query->execute($parameters)){
                 $success+=1;

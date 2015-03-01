@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS enzymeTable
 CREATE TABLE IF NOT EXISTS clusterTable
 (
 	ClusterID INTEGER AUTO_INCREMENT NOT NULL primary key,
-	Cluster VARCHAR(3)
+	Cluster VARCHAR(20) UNIQUE
 	
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS phageTable
 	PhageName VARCHAR(100) NOT NULL UNIQUE,
 	GenusID INTEGER,
 	ClusterID CHAR(2),
-	SubclusterID INTEGER,
+	Subcluster CHAR(5),
 	YearFound INTEGER,
 	DateFinished DATE,
 	Gnome MEDIUMTEXT,
