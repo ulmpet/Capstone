@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS userTable
 	Active Boolean
 );
 
-CREATE TABLE cutsTable
+CREATE TABLE IF NOT EXISTS cutsTable
 (
 	CutID INTEGER NOT NULL AUTO_INCREMENT primary key,
 	PhageID INTEGER,
@@ -29,28 +29,29 @@ CREATE TABLE cutsTable
 	CutLocations text
 );
 
-CREATE TABLE enzymeTable
+CREATE TABLE IF NOT EXISTS enzymeTable
 (
 	EnzymeID INTEGER AUTO_INCREMENT NOT NULL primary key,
 	EnzymeName VARCHAR(100),
 	CutPattern VARCHAR(50) # do we keep this? 
 );
 
-CREATE TABLE clusterTable
+CREATE TABLE IF NOT EXISTS clusterTable
 (
 	ClusterID INTEGER AUTO_INCREMENT NOT NULL primary key,
-	Cluster VARCHAR(3)
+	Cluster VARCHAR(20) UNIQUE
 	
 );
 
-CREATE TABLE phageTable
+CREATE TABLE IF NOT EXISTS phageTable
 (
 	PhageID INTEGER AUTO_INCREMENT NOT NULL primary key,
-	PhageName VARCHAR(100),
+	PhageName VARCHAR(100) NOT NULL UNIQUE,
 	GenusID INTEGER,
-	ClusterID INTEGER,
-	SubclusterID INTEGER,
+	ClusterID CHAR(2),
+	Subcluster CHAR(5),
 	YearFound INTEGER,
 	DateFinished DATE,
-	Gnome MEDIUMTEXT
+	Gnome MEDIUMTEXT,
+	Updated DATE
 );

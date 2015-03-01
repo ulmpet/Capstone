@@ -15,9 +15,17 @@ class PhageTool extends Controller
      * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
      */
     public function index()
-    {}
+    {
+
+        $phageGenus = $this->loadModel('genus');
+        $genusList = $phageGenus->getGenusList();
+        
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
+        require APP . 'view/phagetool/phagetool.php';
+        require APP . 'view/_templates/footer.php';}
 
     public function test(){
-    	echo 'success';
+    	
     }
 }

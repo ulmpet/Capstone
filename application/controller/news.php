@@ -16,6 +16,9 @@ class News extends Controller
      */
     public function index()
     {
-    	echo 'NEWS';
+    	require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
+        require APP . 'view/news/news.php';
+        require APP . 'view/_templates/footer.php';
     }
 }
