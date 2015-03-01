@@ -30,6 +30,7 @@ class phage
     }
 
     function addShortPhage($phageArray,$type){
+         set_time_limit(0);
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, SubclusterID,Updated) 
                 VALUES (:PhageName, :GenusID, :ClusterID, :SubclusterID,:Updated)";
         $query = $this->db->prepare($sql);
@@ -45,6 +46,8 @@ class phage
             if($query->execute($parameters)){
                 $success+=1;
             }
+            
+                           
         }
         return  array($lines,$success);
     }

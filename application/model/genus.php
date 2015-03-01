@@ -21,10 +21,10 @@ class genus
     }
 
     function addGenus($newGenus){
-        $sql ="INSERT into genusTable (GenusName) VALUES (:GenusName);";
+        $sql ="INSERT into genusTable (Genus) VALUES (:GenusName);";
         $query = $this->db->prepare($sql);
         $paramaters = array(':GenusName' => $newGenus);
-        $query->execute();
-        return $query->fetchAll();
+        Helper::outputArray($paramaters);
+        return $query->execute($paramaters);
     }
 }

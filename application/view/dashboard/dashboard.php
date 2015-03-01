@@ -12,15 +12,21 @@
        -Validation of data from phageDB and nebcutter
  </pre>
  <?php Helper::outputArray($adminList);?>
+ <div>
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
-    <div id="phageType" style="display:block">
-        <select id="opts">
-            <option value="0">Select a Genus</option>
-            <option value="1">Mycobacterium</option>
-            <option value="2">Arthrobacter</option>
-            <option value="3">Bacillus</option>
-            <option value="4">Streptomyces</option>
+    <div id="phageType" name="genus" style="display:block">
+        <select id="opts" name="genusName">
+      <?php 
+
+        echo "<option value='null'> None </option>";
+      foreach($genusList as $genus){
+
+        echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>";
+        
+
+      } 
+      ?>
         </select>
         <label><input type='radio' name="filetype"  value=0 id='short' onchage=/>Short CSV</label>
         <label><input type='radio' name="filetype"  value=1 id='full' onchange=/>Full CSV</label>
@@ -32,7 +38,8 @@
     Send this file: <input name="userfile" type="file" />
     <input type="submit" value="Send File" />
 </form>
-
+</div>
+<div>
   <form>
     <div>
       <select id="admins">
@@ -48,8 +55,15 @@
       ?>
 
     </select>
-    <br><input type="submit" value="Remove Admin"></br>
+    <input type="submit" value="Remove Admin"></br>
     </div>
 
   </form>
+</div>
+<div>
+  <form action='dashboard/addGenus' method='POST'>
+    <label> New Genus Name: <input type='text' name='newGenus' text="Enter New Genus"></label>
+    <input type='submit' value="Add Genus">
+  </form>
+</div>
 </div>

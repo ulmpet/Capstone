@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS phageTable
 	PhageID INTEGER AUTO_INCREMENT NOT NULL primary key,
 	PhageName VARCHAR(100) NOT NULL UNIQUE,
 	GenusID INTEGER,
-	ClusterID INTEGER,
+	ClusterID CHAR(2),
 	SubclusterID INTEGER,
 	YearFound INTEGER,
 	DateFinished DATE,
