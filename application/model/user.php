@@ -40,9 +40,16 @@ class user
     public function selectAllUsers(){
         
         $sql ="select * from userTable";
-         $query = $this->db->prepare($sql);
+        $query = $this->db->prepare($sql);
         $query->execute();
-         return $query->fetchAll();
+        return $query->fetchAll();
+    }
+
+    public function getAdmin(){
+        $sql ="select EmailAddress from userTable WHERE AuthLevel = 1;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
     /*
@@ -52,10 +59,10 @@ class user
     */
     public function selectUserByEmail($email){
         $sql ="select UserID from userTable WHERE EmailAddress = :email;";
-         $query = $this->db->prepare($sql);
-         $parameters = array(':email'=>$email);
+        $query = $this->db->prepare($sql);
+        $parameters = array(':email'=>$email);
         $query->execute($parameters);
-         return count($query->fetchAll());
+        return count($query->fetchAll());
     }
 
     /*

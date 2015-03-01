@@ -20,17 +20,15 @@ class Home extends Controller
     public function index()
     {
         $this->message = 'Please enter your username and password.';
-        //load the user model to check login
-        $userModel = $this->loadModel('user');
         //Helper::outputArray($userModel->selectAllUsers(),true);
         //if the http request contains information from a feild called Email attempt a login
         if(isset($_REQUEST['Email'])){
-            $userSalt = $userModel->getSalt($_REQUEST['Email']);
+            $userSalt = $this->userModel->getSalt($_REQUEST['Email']);
             $userEmail = $_REQUEST['Email'];
             $userPassword = hash('sha512',$_REQUEST['Password'].$userSalt);
             //echo count($userModel->checkLogin($userEmail,$userPassword));
             //request user from database with entered credientials
-            $userInformation = $userModel->checkLogin($userEmail,$userPassword);
+            $userInformation = $this->userModel->checkLogin($userEmail,$userPassword);
             // if there is such a user
             if(count($userInformation) == 1){
             
@@ -65,12 +63,10 @@ class Home extends Controller
             $password = hash('sha512',$_REQUEST['pass'].$salt);
             //add all user signup data to the array 
             $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1);
-            //load the user model
-            $userModel = $this->loadModel('user');
 
             //insert the data to the database and return to home on success
-            if($userModel->SelectUserByEmail($_REQUEST['email'])==0){
-                $userModel->addUser($info);
+            if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
+                $this->userModel->addUser($info);
                 header('location: /');
             }else{
                 $this->message = 'This Account Email Address already Exists.';
@@ -90,40 +86,7 @@ class Home extends Controller
      * This method handles what happens when you move to http://yourproject/home/exampleone
      * The camelCase writing is just for better readability. The method name is case-insensitive.
      */
-    public function fileupload()
-    {
-        if($this->checkAuthLevel(1)){
-            Helper::outputArray($_SESSION); 
-            //Check to see the the SuperGlobal Variable $_FILES has data
-            if(isset($_FILES['userfile']['name'])){
-                print_r($_FILES);
-                //CHeck for file upload error resulting in null file
-                if($_FILES['userfile']['name']!=null){
-                //open the uploaded file for reading
-                $file = fopen($_FILES['userfile']['tmp_name'], 'r');
-                $count =0;
-            //while not end of file loop get line as an array
-                while(!feof($file)){
-                    $count += 1;
-                    $line = fgetcsv($file,0,"\t") ;
-                    if($count!=1){
-                    //print out our array for viewing pleasure.
-                    echo '(\'' .$line[0].'\',\''.$line[1].'\')'. "<br>";
-                    }
-                }
-                }
-            }
-        }else{
-            header('location: /Error/access');
-        }
-            
-
-        // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/_templates/nav.php';
-        require APP . 'view/home/example_one.php';
-        require APP . 'view/_templates/footer.php';
-    }// end file upload
+    
 
     public function logOut(){
         // Unset all of the session variables.
@@ -145,9 +108,9 @@ class Home extends Controller
     }//end logout
     
     public function testPage(){
-        $userModel = $this->loadModel('user');
+        
         echo $Testmessage;
-        echo $userModel->SelectUserByEmail('admin');
+        echo $this->userModel->SelectUserByEmail('admin');
         echo Helper::outputArray($_SESSION);
         //echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
 

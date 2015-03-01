@@ -65,4 +65,7 @@ if(URL_DOMAIN == "127.0.0.1"){
  define('DB_CHARSET', 'utf8');
 }
 
-
+define('MYSQL_DATE_FORMAT', 'Y-m-d');
+define('HUMAN_DATE_NUMERICAL','m-d-Y');
+define('HUMAN_DATE_FULL','F d, Y');
+define('HUMAN_DATE_SHORT', 'M d, Y');

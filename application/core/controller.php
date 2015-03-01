@@ -7,6 +7,7 @@ class Controller
      */
     public $db = null;
     public $authValue = null;
+    public $userModel = null;
 
     /**
      * Whenever controller is created, open a database connection too and load "the model".
@@ -14,6 +15,7 @@ class Controller
     function __construct()
     {
         $this->openDatabaseConnection();
+        $this->userModel = $this->loadModel('user');
         
     }
 
@@ -52,23 +54,27 @@ class Controller
     * users level stored in the database. 
     */
     public function checkAuthLevel($levelNeeded){
-        $userModel = $this->loadModel('user');
+        
         if(isset($_SESSION['UID'])){
-            $currentUsersAuth = $userModel->checkAuth($_SESSION['UID']);
+            $currentUsersAuth = $this->userModel->checkAuth($_SESSION['UID']);
             if ($currentUsersAuth[0]['AuthLevel'] >= $levelNeeded){
+                
                 return true;
             }else{
+                
                 return false;
             }
         }else{
+            
             return false;
         }
     }
 
     public function getAuth(){
-        $userModel = $this->loadModel('user');
-        $currentUsersAuth = $userModel->checkAuth($_SESSION['UID']);
+        
+        $currentUsersAuth = $this->userModel->checkAuth($_SESSION['UID']);
         $this->authValue = $currentUsersAuth[0]['AuthLevel'];
+        
         return $this->authValue;
     }
 }

@@ -11,4 +11,59 @@
        -Improved entry of Phage cut information 
        -Validation of data from phageDB and nebcutter
  </pre>
+ <?php Helper::outputArray($adminList);?>
+ <div>
+ <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
+    <!-- MAX_FILE_SIZE must precede the file input field -->
+    <div id="phageType" name="genus" style="display:block">
+        <select id="opts" name="genusName">
+      <?php 
+
+        echo "<option value='null'> None </option>";
+      foreach($genusList as $genus){
+
+        echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>";
+        
+
+      } 
+      ?>
+        </select>
+        <label><input type='radio' name="filetype"  value=0 id='short' onchage=/>Short CSV</label>
+        <label><input type='radio' name="filetype"  value=1 id='full' onchange=/>Full CSV</label>
+        <label><input type='radio' name="filetype"  value=2 id='fasta' onchange=/>FASTA File</label>
+  </div>
+
+    <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
+    <!-- Name of input element determines name in $_FILES array -->
+    Send this file: <input name="userfile" type="file" />
+    <input type="submit" value="Send File" />
+</form>
+</div>
+<div>
+  <form>
+    <div>
+      <select id="admins">
+      <?php 
+
+      $counter = 0;
+      foreach($adminList as $email){
+
+        echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
+        $counter += 1;
+
+      } 
+      ?>
+
+    </select>
+    <input type="submit" value="Remove Admin"></br>
+    </div>
+
+  </form>
+</div>
+<div>
+  <form action='dashboard/addGenus' method='POST'>
+    <label> New Genus Name: <input type='text' name='newGenus' text="Enter New Genus"></label>
+    <input type='submit' value="Add Genus">
+  </form>
+</div>
 </div>
