@@ -1,4 +1,5 @@
-
+<?php
+/**********************************************************************
 <script type="text/javascript">
     function showForm() {
         var selopt = document.getElementById("opts").value;
@@ -88,41 +89,103 @@
         </select>
     </form>
 </div>
-
-<div>
-<form id="selPhage" name="phages" method="post" action="google.php">
-    <h3>Select genus</h3>
-    <select name="selGenus[]">
-        <option value="0">Mycobaterium</option>
-        <option value="1">Arthrobacter</option>
-        <option value="2">Streptomyces</option>
-        <option value="3">Bacillus</option>
-    </select>
+**********************************************************************/
+?>
+    <form id="phageOptions" name="options" method="post" action="google.php">
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="center">
+                    <h3>Select genus</h3>
+                    <select name="selGenus[]">
+                        <option value="0">None</option>
+                        <option value="1">Mycobacterium</option>
+                        <option value="2">Arthrobacter</option>
+                        <option value="3">Streptomyces</option>
+                        <option value="4">Bacillus</option>
+                    </select>
+                </td>
     
-    <h3>Select phage</h3>
-    <select name="selPhage[]" multiple="multiple">
-        <option value="0">Phage 0</option>
-        <option value="1">Phage 1</option>
-        <option value="2">Phage 2</option>
-        <option value="3">Phage 3</option>
-        <option value="4">Phage 4</option>
-        <option value="5">Phage 5</option>
-    </select>
+                <td align="center">
+                    <h3>Select phage</h3>
+                    <select name="selPhage[]" multiple="multiple">
+                        <option value="0">None</option>
+                        <option value="1">Phage 1</option>
+                        <option value="2">Phage 2</option>
+                        <option value="3">Phage 3</option>
+                        <option value="4">Phage 4</option>
+                        <option value="5">Phage 5</option>
+                    </select>
+                </td>
     
-    &nbsp;
-    <input type="submit" name="Submit" value="Submit"/>
+                <td align="center">
+                    <h3>Select cluster</h3>
+                    <select name="selCluster[]" multiple="multiple">
+                        <option value="0">None</option>
+                        <option value="1">Cluster 1</option>
+                        <option value="2">Cluster 2</option>
+                        <option value="3">Cluster 3</option>
+                        <option value="4">Cluster 4</option>
+                        <option value="5">Cluster 5</option>
+                    </select>
+                </td>
+    
+                <td align="center">
+                    <h3>Select sub-cluster</h3>
+                    <select name="selSubCluster[]" multiple="multiple">
+                        <option value="0">None</option>
+                        <option value="1">Sub-cluster 1</option>
+                        <option value="2">Sub-cluster 2</option>
+                        <option value="3">Sub-cluster 3</option>
+                        <option value="4">Sub-cluster 4</option>
+                        <option value="5">Sub-cluster 5</option>
+                    </select>
+                </td>
 
-</form>
-</div>
+                <td align="center">
+                    <h3>Select NEB enzyme</h3>
+                    <select name="selNeb[]" multiple="multiple">
+                        <option value="0">None</option>
+                        <option value="1">NEB enzyme 1</option>
+                        <option value="2">NEB enzyme 2</option>
+                        <option value="3">NEB enzyme 3</option>
+                        <option value="4">NEB enzyme 4</option>
+                        <option value="5">NEB enzyme 5</option>
+                    </select>
+                </td>
+
+                <td align="center">
+                    <h3>Select cut frequency</h3>
+                    <select name="selCuts[]" multiple="multiple">
+                        <option value="0">None (# of cuts = zero)</option>
+                        <option value="1">Few (1 <= # of cuts <= 5)</option>
+                        <option value="2">Some (5 <= # of cuts <= 16)</option>
+                        <option value="3">Many (16 <= # of cuts <= 41)</option>
+                        <option value="4">A lot (# of cuts >= 41)</option>
+                    </select>
+                </td>
+            </tr>
+                </br>
+                </br>
+                </br>
+            
+            <tr>
+                <td align="center">
+                    <input type="submit" name="Submit" value="Submit"/>
+                </td>
+            </tr>
+        
+        </tbody>
+        </table>
+    </form>
+
 
     <pre>
-
-     <u><bold>Features to be included:</bold></u>
+       <u><bold>Features to be included:</bold></u>
        -Phylip (Philo-tree) generation  
        -Weighted comparison of Enzyme cut information from unknown phage to known phage
        -Visualization of known phage cut information 
        -Visualization of unknown phage cut information 
        -Guided Enzyme selection
+    </pre>
 
- </pre>
-</div>
