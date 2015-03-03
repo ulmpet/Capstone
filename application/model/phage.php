@@ -29,26 +29,21 @@ class phage
         return $query->execute($parameters);
     }
 
-    function addShortPhage($phageArray,$type){
+    function addShortPhage($phageArray){
          set_time_limit(0);
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster,Updated) 
-                VALUES (:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
+                VALUES ";
+        $qpart = array_fill(0, count($phageArray), "(?,?,?,?,?)");
+        $sql .= implode(",",$qpart);
         $query = $this->db->prepare($sql);
-        $lines =0;
-        $success =0;
-        foreach($phageArray as $phage=>$value){
-            $lines +=1;
-            $parameters = array(':PhageName' => $phage,
-                            ':GenusID' => $type,
-                            ':ClusterID' => $value[0],
-                            ':Subcluster' => $value[1],
-                            ':Updated'=> date(MYSQL_DATE_FORMAT));
-            if($query->execute($parameters)){
-                $success+=1;
-            }
-            
-                           
+        $i =1;
+        foreach($phageArray as $item){
+            $query->bindParam($i++, $item[0]);
+            $query->bindParam($i++, $item[1]);
+            $query->bindParam($i++, $item[2]);
+            $query->bindParam($i++, $item[3]);
+            $query->bindParam($i++, $item[4]);
         }
-        return  array($lines,$success);
+        return  $query->execute();
     }
 }

@@ -113,7 +113,8 @@ class Dashboard extends Controller
                         }
                     }   
                 }
-                $this->phageModel->addShortPhage($phages,$genusName);   
+                $phages = $this->buildPhageValues($phages,$genusName);
+                $this->phageModel->addShortPhage($phages);   
             }
         }
     }//end short upload
@@ -131,7 +132,13 @@ class Dashboard extends Controller
         return $clusterMap;
     }
 
-    public function buildPhageValues($pahges){
-
+    public function buildPhageValues($phages,$genusName){
+        $phageValueOutputArray = array();
+        //echo "(:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
+        //Helper::outputArray($phages);
+        foreach ($phages as $key => $value) {
+            $phageValueOutputArray[] = array($key, $genusName, $value[0], $value[1], date(MYSQL_DATE_FORMAT));
+        }
+        return $phageValueOutputArray;
     }
 }
