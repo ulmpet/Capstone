@@ -15,26 +15,30 @@ class phage
 
     function addFullPhage($phageArray){
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster, YearFound, DateFinished,Updated) 
-                VALUES (:PhageName, :GenusID, :ClusterID, :Subcluster, :YearFound, :DateFinished,:Genome,:Updated)";
+                VALUES ";
+        $qpart = array_fill(0,count($phageArray),"(?,?,?,?,?,?,?)");
+        $sql .= implode(",",$qpart);
+        $sql .= "ON DUPLICATE KEY UPDATE GenusID=VALUES(GenusID), ClusterID=VALUES(ClusterID), Subcluster=Values(Subcluster),YearFound=VALUES(YearFound), DateFinished=VALUES(DateFinished),Updated=VALUES(Updated)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':PhageName' => $phageArray[0],
-                            ':GenusID' => $phageArray[1],
-                            ':ClusterID' => $phageArray[2],
-                            ':Subcluster' => $phageArray[3],
-                            ':YearFound' => $phageArray[4],
-                            ':DateFinished' => $phageArray[5],
-                            ':Genome'=> $phageArray[6],
-                            ':Updated'=> $phageArray[7]);
-
-        return $query->execute($parameters);
+        $i =1;
+        foreach($phageArray as $item){
+            $query->bindParam($i++, $item[0]);
+            $query->bindParam($i++, $item[1]);
+            $query->bindParam($i++, $item[2]);
+            $query->bindParam($i++, $item[3]);
+            $query->bindParam($i++, $item[4]);
+            $query->bindParam($i++, $item[5]);
+            $query->bindParam($i++, $item[6]);
+        }
+        return $query->execute();
     }
 
     function addShortPhage($phageArray){
-         set_time_limit(0);
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster,Updated) 
                 VALUES ";
         $qpart = array_fill(0, count($phageArray), "(?,?,?,?,?)");
         $sql .= implode(",",$qpart);
+        $sql .= "ON DUPLICATE KEY UPDATE GenusID=VALUES(GenusID), ClusterID=VALUES(ClusterID), Subcluster=Values(Subcluster),Updated=VALUES(Updated)";
         $query = $this->db->prepare($sql);
         $i =1;
         foreach($phageArray as $item){
