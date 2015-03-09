@@ -28,8 +28,8 @@ class Ajax extends Controller
         foreach($PhageNames as $row => $data){
             $phageOutput[$data['PhageID']] = $data['PhageName'];
         }
-        //json encode the array
-        //return it
+        echo json_encode($phageOutput);
+
     }
 
     public function getGenusNames(){
