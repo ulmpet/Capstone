@@ -113,7 +113,8 @@ class Dashboard extends Controller
                         }
                     }   
                 }
-                $this->phageModel->addShortPhage($phages,$genusName);   
+                $phages = $this->buildPhageValues($phages,$genusName);
+                $this->phageModel->addShortPhage($phages);   
             }
         }
     }//end short upload
@@ -121,6 +122,55 @@ class Dashboard extends Controller
     public function fullUpload($genusName){
         echo "full upload";
 
+    }
+
+    public function fastaUpload(){
+        ini_set("memory_limit","1024M");
+        $allPhages = $this->phageModel->getPhageNames();
+        $allPhages = $this->buildPhageMap($allPhages);
+        
+        if(isset($_FILES['userfile']['name'])){
+            //print_r($_FILES);
+            //CHeck for file upload error resulting in null file
+            if($_FILES['userfile']['name']!=null){
+                //open the uploaded file for reading
+                $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+                while(!feof($file)){
+                    $lines[] = fgets($file);
+                    }
+                }
+                foreach ($lines as $key => $value) {
+                    if (substr($value, 0, 1) == '>') {
+                        //echo $value . "<br/>";
+                        preg_match_all("/[a-zA-Z0-9]+/", $value, $matches);
+                        //Helper::outputArray($matches);
+                        $matchCount =0;
+                        foreach($matches[0] as $key => $word){
+                            if(array_key_exists($word, $allPhages)){
+                                $currentPhage = $word;
+                                $matchCount +=1;
+                                if($matchCount > 1){
+                                    break;
+                                }
+                            }
+                        }
+                    }else{
+                        if($matchCount>1){
+                            continue;
+                        }elseif(array_key_exists($currentPhage, $allPhages)){
+                            $allPhages[$currentPhage] .= trim($value);
+                        }
+                    }
+                }
+                //Helper::outputArray($allPhages);
+                foreach ($allPhages as $key => $value) {
+                    if(isset($value)){
+                        $sequencedPhages[$key] = $value; 
+                    }
+                }
+                Helper::outputArray($sequencedPhages);
+                //$this->phageModel->inputGenome($sequencedPhages);
+        }
     }
     private function generateClusterMap(){
         $allClusters = $this->clusterModel->getClusterList();
@@ -131,7 +181,21 @@ class Dashboard extends Controller
         return $clusterMap;
     }
 
-    public function buildPhageValues($pahges){
+    public function buildPhageValues($phages,$genusName){
+        $phageValueOutputArray = array();
+        //echo "(:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
+        //Helper::outputArray($phages);
+        foreach ($phages as $key => $value) {
+            $phageValueOutputArray[] = array($key, $genusName, $value[0], $value[1], date(MYSQL_DATE_FORMAT));
+        }
+        return $phageValueOutputArray;
+    }
 
+    public function buildPhageMap($phageNames){
+        //Helper::outputArray($phageNames);
+        foreach($phageNames as $index => $phage){
+            $phageMap[$phage['PhageName']] = null;
+        }
+        return $phageMap;
     }
 }
