@@ -13,6 +13,13 @@ class phage
         }
     }
 
+    function getPhageNames(){
+        $sql = "Select PhageName from phageTable;";
+        $query  = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     function addFullPhage($phageArray){
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster, YearFound, DateFinished,Updated) 
                 VALUES ";
