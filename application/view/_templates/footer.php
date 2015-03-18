@@ -12,7 +12,6 @@
     <?php if ($_REQUEST['url'] = "phagetool"){
     echo '<script src="'. URL .'js/phagetool.js"></script>';
 	}?>    
-    
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="<?php echo URL; ?>js/userdemographics.js"></script>
     <?php if ($_REQUEST['url'] = "dashboard"){

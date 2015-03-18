@@ -27,6 +27,6 @@
                        'height':500};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.LineChart(document.getElementById('userDemograph'));
+        var chart = new google.visualization.AreaChart(document.getElementById('userDemograph'));
         chart.draw(data, options);
       }
