@@ -115,6 +115,7 @@
     <p><input type='submit' value="Add Genus"></p>
   </form>
 </div>
+<!--Div that will hold the pie chart-->
 <div id="userDemograph" style="display:block">
   SHOWING DEMOGRAPHIC INFORMATION
 </div>

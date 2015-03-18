@@ -22,11 +22,8 @@
             <td align="center" colspan="3">
                 <h3>Select genus</h3>
                 <select name="selGenus[]">
-                    <option value="0">No genus</option>
-                    <option value="1">Mycobacterium</option>
-                    <option value="2">Arthrobacter</option>
-                    <option value="3">Streptomyces</option>
-                    <option value="4">Bacillus</option>
+                    <option value="none">No genus</option>
+
                 </select>
             </td>
         </tr>
@@ -37,36 +34,23 @@
             <td align="center">
                 <h3>Select phage</h3>
                 <select name="selPhage[]" multiple="multiple">
-                    <option value="0">No phage</option>
-                    <option value="1">Phage 1</option>
-                    <option value="2">Phage 2</option>
-                    <option value="3">Phage 3</option>
-                    <option value="4">Phage 4</option>
-                    <option value="5">Phage 5</option>
+                    <option value="none">No phage</option>
+                    
                 </select>
             </td>
         
             <td align="center">
                 <h3>Select cluster</h3>
                 <select name="selCluster[]" multiple="multiple">
-                    <option value="0">No cluster</option>
-                    <option value="1">Cluster 1</option>
-                    <option value="2">Cluster 2</option>
-                    <option value="3">Cluster 3</option>
-                    <option value="4">Cluster 4</option>
-                    <option value="5">Cluster 5</option>
+                    <option value="none">No cluster</option>
                 </select>
             </td>
         
             <td align="center">
                 <h3>Select sub-cluster</h3>
                 <select name="selSubCluster[]" multiple="multiple">
-                    <option value="0">No sub-cluster</option>
-                    <option value="1">Sub-cluster 1</option>
-                    <option value="2">Sub-cluster 2</option>
-                    <option value="3">Sub-cluster 3</option>
-                    <option value="4">Sub-cluster 4</option>
-                    <option value="5">Sub-cluster 5</option>
+                    <option value="none">No sub-cluster</option>
+
                 </select>
             </td>
         </tr>
