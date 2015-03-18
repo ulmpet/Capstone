@@ -9,5 +9,6 @@
 
     <!-- our JavaScript -->
     <script src="<?php echo URL; ?>js/application.js"></script>
+    <div class="footerlinks"> Contact Us </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <form id="phageOptions" name="options" method="post" action="google.php">
     
-    <div>
+    <div class="container">
     <table border="0" width="100%">
         <tbody>
         <tr>
@@ -123,12 +123,12 @@
 </form>
 
 
-<pre>
-   <u><bold>Features to be included:</bold></u>
-   -Phylip (Philo-tree) generation  
-   -Weighted comparison of Enzyme cut information from unknown phage to known phage
-   -Visualization of known phage cut information 
-   -Visualization of unknown phage cut information 
-   -Guided Enzyme selection
-</pre>
+<p>
+   <u><bold>Features to be included:</bold></u></br>
+   -Phylip (Philo-tree) generation</br>  
+   -Weighted comparison of Enzyme cut information from unknown phage to known phage</br>
+   -Visualization of known phage cut information</br> 
+   -Visualization of unknown phage cut information</br> 
+   -Guided Enzyme selection</br>
+</p>
 
