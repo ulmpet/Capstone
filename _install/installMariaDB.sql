@@ -33,7 +33,13 @@ CREATE TABLE IF NOT EXISTS enzymeTable
 (
 	EnzymeID INTEGER AUTO_INCREMENT NOT NULL primary key,
 	EnzymeName VARCHAR(100),
-	CutPattern VARCHAR(50) # do we keep this? 
+	CutPattern VARCHAR(50),
+	RecognitionPattern VARCHAR(100),
+	RecognitionforComputing VARCHAR(100),
+	RecognitionPatternLength INTEGER,
+	CleavagePositionUpper INTEGER,
+	CleavagePositionLower INTEGER, #this is relative to previous
+	NonNbases INTEGER #this is the non-N bases within recognition pattern
 );
 
 CREATE TABLE IF NOT EXISTS clusterTable
