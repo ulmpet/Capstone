@@ -35,7 +35,7 @@ class Ajax extends Controller
 
         $genusNames = $this->genusModel->getGenusList();
         foreach($genusNames as $row => $data){
-            $genusOutput[$data['GenusID']] = $data['Genus'];
+            $genusOutput[] = json_encode(array( 'ID' => $data['GenusID'], 'name'=>$data['Genus']));
         }
         echo json_encode($genusOutput);
     }
@@ -43,7 +43,7 @@ class Ajax extends Controller
     public function getClusterNames(){
         $ClusterNames = $this->clusterModel->getClusterList();
         foreach($ClusterNames as $row => $data){
-            $clusterOutput[$data['ClusterID']] = $data['Cluster'];
+            $clusterOutput[] = json_encode(array( 'ID' => $data['ClusterID'], 'name'=>$data['Cluster']));  
         }
         echo json_encode($clusterOutput);
     }
