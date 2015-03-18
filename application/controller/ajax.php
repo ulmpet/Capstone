@@ -10,10 +10,9 @@
  */
 class Ajax extends Controller
 {
-    /**
-     * PAGE: index
-     * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
-     */
+    private $clusterModel;
+    private $genusModel;
+    private $phageModel;
 
     public function __construct(){
         parent::__construct();

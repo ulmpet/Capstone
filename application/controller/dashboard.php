@@ -172,6 +172,8 @@ class Dashboard extends Controller
                 //$this->phageModel->inputGenome($sequencedPhages);
         }
     }
+
+    //makes a assosiatce array maping cluster names to their databse id's
     private function generateClusterMap(){
         $allClusters = $this->clusterModel->getClusterList();
         $clusterMap = array();
@@ -181,16 +183,16 @@ class Dashboard extends Controller
         return $clusterMap;
     }
 
+    // formats phage information for insertion to the database
     public function buildPhageValues($phages,$genusName){
         $phageValueOutputArray = array();
-        //echo "(:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
-        //Helper::outputArray($phages);
         foreach ($phages as $key => $value) {
             $phageValueOutputArray[] = array($key, $genusName, $value[0], $value[1], date(MYSQL_DATE_FORMAT));
         }
         return $phageValueOutputArray;
     }
 
+    //makes an assosiative array with phage names from the database as keys
     public function buildPhageMap($phageNames){
         //Helper::outputArray($phageNames);
         foreach($phageNames as $index => $phage){
