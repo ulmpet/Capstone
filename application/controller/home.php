@@ -108,12 +108,9 @@ class Home extends Controller
     }//end logout
     
     public function testPage(){
+        $EnzymeArray = Array("Aasi" => array("AasI,DrdI,DseDI","GACNN_NN'NNGTC","(GAC......GTC)",12,7,-2,6));
+        echo addEnzymes(EnzymeArray);
         
-        echo $Testmessage;
-        echo $this->userModel->SelectUserByEmail('admin');
-        echo Helper::outputArray($_SESSION);
-        //echo Helper::outputArray($userModel->checkAuth($_SESSION['UID']));
-
 
     }//end test page
 
