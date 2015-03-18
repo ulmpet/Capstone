@@ -108,8 +108,9 @@ class Home extends Controller
     }//end logout
     
     public function testPage(){
+        $enzymeModel = $this->loadModel('enzyme');
         $EnzymeArray = Array("Aasi" => array("AasI,DrdI,DseDI","GACNN_NN'NNGTC","(GAC......GTC)",12,7,-2,6));
-        echo addEnzymes(EnzymeArray);
+        echo $enzymeModel->addEnzymes(EnzymeArray);
         
 
     }//end test page
