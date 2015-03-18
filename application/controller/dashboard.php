@@ -168,7 +168,7 @@ class Dashboard extends Controller
                         $sequencedPhages[$key] = $value; 
                     }
                 }
-                Helper::outputArray($sequencedPhages);
+                //Helper::outputArray($sequencedPhages);
                 //$this->phageModel->inputGenome($sequencedPhages);
         }
     }

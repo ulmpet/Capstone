@@ -31,4 +31,11 @@ class enzyme
         return $query->execute($parameters);
 
     }
+
+    function getEnzymeNamesAndID(){
+        $sql = "SELECT EnzymeID, EnzymeName from enzymeTable";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

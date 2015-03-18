@@ -13,12 +13,14 @@ class Ajax extends Controller
     private $clusterModel;
     private $genusModel;
     private $phageModel;
+    private $enzymeModel;
 
     public function __construct(){
         parent::__construct();
         $this->genusModel = $this->loadModel('genus');
         $this->clusterModel = $this->loadModel('cluster');
         $this->phageModel = $this->loadModel('phage');
+        $this->enzymeModel = $this->loadModel('enzyme');
     }
 
 
@@ -46,5 +48,14 @@ class Ajax extends Controller
             $clusterOutput[] = json_encode(array( 'ID' => $data['ClusterID'], 'name'=>$data['Cluster']));  
         }
         echo json_encode($clusterOutput);
+    }
+
+    public function getEnzymeNames(){
+        $enzymeNames = $this->enzymeModel->getEnzymeNamesAndID();
+        foreach($enzymeNames as $row => $data){
+            $enzymeOutput[] = json_encode(array( 'ID' => $data['EnzymeID'], 'name'=>$data['EnzymeName']));
+        }
+    echo json_encode($enzymeOutput);
+
     }
 }
