@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS enzymeTable
 (
 	EnzymeID INTEGER AUTO_INCREMENT NOT NULL primary key,
 	EnzymeName VARCHAR(100),
-	SamePatternEnzymes(100),
+	SamePatternEnzymes VARCHAR(100),
 	RecognitionPattern VARCHAR(100),
 	RecognitionforComputing VARCHAR(100),
 	RecognitionPatternLength INTEGER,

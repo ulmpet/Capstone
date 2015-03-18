@@ -37,12 +37,8 @@
             <td align="center">
                 <h3>Select phage</h3>
                 <select name="selPhage[]" multiple="multiple">
-                    <option value="0">No phage</option>
-                    <option value="1">Phage 1</option>
-                    <option value="2">Phage 2</option>
-                    <option value="3">Phage 3</option>
-                    <option value="4">Phage 4</option>
-                    <option value="5">Phage 5</option>
+                    <option value="none">No phage</option>
+                    
                 </select>
             </td>
         
