@@ -23,7 +23,7 @@ class Ajax extends Controller
 
 
     public function getPhageNames(){
-        $PhageNames = $this->phageModel->getPhageNames();
+        $PhageNames = $this->phageModel->getPhageNamesAndID();
         foreach($PhageNames as $row => $data){
             $phageOutput[$data['PhageID']] = $data['PhageName'];
         }
@@ -32,7 +32,7 @@ class Ajax extends Controller
     }
 
     public function getGenusNames(){
-        $genusNames = $this->genusModel->getGenusList()
+        $genusNames = $this->genusModel->getGenusList();
         foreach($genusNames as $row => $data){
             $genusOutput[$data['GenusID']] = $data['Genus'];
         }
