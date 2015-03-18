@@ -32,10 +32,19 @@ class Ajax extends Controller
     }
 
     public function getGenusNames(){
+
         $genusNames = $this->genusModel->getGenusList();
         foreach($genusNames as $row => $data){
             $genusOutput[$data['GenusID']] = $data['Genus'];
         }
         echo json_encode($genusOutput);
+    }
+
+    public function getClusterNames(){
+        $ClusterNames = $this->clusterModel->getClusterList();
+        foreach($ClusterNames as $row => $data){
+            $clusterOutput[$data['ClusterID']] = $data['Cluster'];
+        }
+        echo json_encode($clusterOutput);
     }
 }
