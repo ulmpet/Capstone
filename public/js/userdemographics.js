@@ -1,4 +1,3 @@
-$(function(){
       // Load the Visualization API and the piechart package.
       google.load('visualization', '1.0', {'packages':['corechart']});
 
@@ -28,7 +27,6 @@ $(function(){
                        'height':300};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.LineChart(document.getElementById('userDemograph'));
+        var chart = new google.visualization.PieChart(document.getElementById('userDemograph'));
         chart.draw(data, options);
       }
-  });
