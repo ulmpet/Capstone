@@ -9,6 +9,7 @@
 
     <!-- our JavaScript -->
     <script src="<?php echo URL; ?>js/application.js"></script>
+    <div class="footerlinks"> Contact Us </div>
     <?php if ($_REQUEST['url'] = "phagetool"){
     echo '<script src="'. URL .'js/phagetool.js"></script>';
 	}?>    
@@ -17,5 +18,6 @@
     <?php if ($_REQUEST['url'] = "dashboard"){
     echo '<script src="'. URL .'js/userdemographics.js"></script>';
     }?>   
+
 </body>
 </html>
