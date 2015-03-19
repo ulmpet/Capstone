@@ -21,6 +21,7 @@ class Dashboard extends Controller
         $this->clusterModel = $this->loadModel('cluster');
         $this->phageModel = $this->loadModel('phage');
         $this->enzymeModel = $this->loadModel('enzyme');
+        $this->cutModel = $this->loadModel('cut');
     }
     /**
      * PAGE: index
@@ -127,6 +128,7 @@ class Dashboard extends Controller
 
     public function fastaUpload(){
         ini_set("memory_limit","1024M");
+        set_time_limit (0);
         $allPhages = $this->phageModel->getPhageNames();
         $allPhages = $this->buildPhageMap($allPhages);
         
@@ -171,12 +173,18 @@ class Dashboard extends Controller
                 }
                 foreach ($sequencedPhages as $phage => $sequence) {
                    
-                $cutdata = $this->enzymeCutter($sequence);
-                foreach ($cutdata as $key => $value) {
-                    echo $key ."   " . count($value['cuts']) . "</br>";
+                    $cutdata = $this->enzymeCutter($sequence);
+                    foreach ($cutdata as $key => $value) {
+                        //echo $key ."   " . count($value['cuts']) . "</br>";
+                        $cutCountdata[$key] = count($value['cuts']);
+                    }
+
+                    $finalCutCountData = $this->buildCutValues($cutCountdata,$phage);
+                    //Helper::outputArray($finalCutCountData);
+                    $this->cutModel->insertCuts($finalCutCountData);
                 }
-            }
-                //$this->phageModel->inputGenome($sequencedPhages);
+                //Helper::outputArray($sequencedPhages);
+                $this->phageModel->inputGenome($sequencedPhages);
         }
     }
 
@@ -197,6 +205,31 @@ class Dashboard extends Controller
             $phageValueOutputArray[] = array($key, $genusName, $value[0], $value[1], date(MYSQL_DATE_FORMAT));
         }
         return $phageValueOutputArray;
+    }
+
+    public function buildCutValues($cutData,$phage){
+        $phageMap = $this->buildPhageIndexMap();
+        $enzymeMap = $this->buildEnzymeIndexMap();
+        foreach($cutData as $key => $value){
+            $outputArray[] = array($phageMap[$phage],$enzymeMap[$key],$value,null);
+        }
+        return $outputArray;
+    }
+
+    public function buildPhageIndexMap(){
+        $phagearray = $this->phageModel->getPhageNamesAndID();
+        foreach ($phagearray as $key => $value) {
+            $outputArray[$value['PhageName']] = $value['PhageID'];
+        }
+        return $outputArray;
+    }
+
+    public function buildEnzymeIndexMap(){
+        $enzymeArray = $this->enzymeModel->getEnzymeNamesAndID();
+        foreach ($enzymeArray as $key => $value) {
+            $outputArray[$value['EnzymeName']] = $value['EnzymeID'];
+        }
+        return $outputArray;
     }
 
     //makes an assosiative array with phage names from the database as keys

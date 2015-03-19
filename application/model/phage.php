@@ -64,4 +64,15 @@ class phage
         }
         return  $query->execute();
     }
+
+    public function inputGenome($genomeInfo){
+        //var_dump($genomeInfo);
+        $sql = "UPDATE phageTable set Gnome=:Gnome where PhageName=:PhageName";
+        $query = $this->db->prepare($sql);
+        foreach($genomeInfo as $key => $value){
+            $params = array(':PhageName' => $key, ':Gnome' => $value);
+            $query->execute($params);
+        }
+        
+    }
 }
