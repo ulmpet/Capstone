@@ -116,6 +116,6 @@ class user
     *
     */
     public function deactivateUser($userID){
-        $sql = "UPDATE userTable SET Active = 'fales' WHERE userID = $userID "
+        $sql = "UPDATE userTable SET Active = 'false' WHERE userID = $userID ";
     }
 }
