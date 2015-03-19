@@ -326,9 +326,7 @@ class Home extends Controller
     }//end test page
 
     public function redirectTest(){
-        $this->Testmessage = 'Succes 10100101!!';
-        $this->testPage();
-        die();
+        Helper::outputArray($_SESSION);
     }
 
 }// end class

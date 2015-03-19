@@ -27,7 +27,7 @@ class Ajax extends Controller
     public function getPhageNames(){
         $PhageNames = $this->phageModel->getPhageNamesAndID();
         foreach($PhageNames as $row => $data){
-            $phageOutput[] = json_encode(array( 'ID' => $data['PhageID'], 'name'=>$data['PhageName']));
+            $phageOutput[] = array( 'ID' => $data['PhageID'], 'name'=>$data['PhageName']);
         }
         echo json_encode($phageOutput);
 

@@ -38,4 +38,11 @@ class enzyme
         $query->execute();
         return $query->fetchAll();
     }
+
+    function getEnzymesForCutting(){
+        $sql = "select * from enzymeTable";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

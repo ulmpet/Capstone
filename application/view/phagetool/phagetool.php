@@ -1,11 +1,12 @@
-<form id="phageOptions" name="options" method="post" action="google.php">
+
     
     <div class="container">
+        <form id="phageOptions" name="options" method="post" action="google.php">
     <table border="0" width="100%">
         <tbody>
         <tr>
-            <td align="center" colspan="3">
-                <h3>Preconditions</h3>
+            <td colspan="3">
+                <h3>Preconditions</h3></br>
                 <input type="radio" name="visualization type" value="1">Known phage &nbsp;
                 <input type="radio" name="visualization type" value="1">Known & unknown phage<br><br>
                 <input type="checkbox" name="visualization type" value="1">Phylip Tree &nbsp;
@@ -15,50 +16,50 @@
                 </select>
             </td>
         </tr>
-    </div>
+    
 
-    <div>
+    
         <tr>
-            <td align="center" colspan="3">
+            <td colspan="3">
                 <h3>Select genus</h3>
                 <select name="selGenus[]">
-                    <option value="none">No genus</option>
+                    <option value="null">Any Genus</option>
 
                 </select>
             </td>
         </tr>
-    </div>
     
-    <div>
+    
+    
         <tr>
-            <td align="center">
+            <td >
                 <h3>Select phage</h3>
                 <select name="selPhage[]" multiple="multiple">
-                    <option value="none">No phage</option>
+                    <option value="null">No Phage</option>
                     
                 </select>
             </td>
         
-            <td align="center">
+            <td >
                 <h3>Select cluster</h3>
                 <select name="selCluster[]" multiple="multiple">
-                    <option value="none">No cluster</option>
+                    <option value="null">No Cluster</option>
                 </select>
             </td>
         
-            <td align="center">
+            <td >
                 <h3>Select sub-cluster</h3>
                 <select name="selSubCluster[]" multiple="multiple">
-                    <option value="none">No sub-cluster</option>
+                    <option value="null">No Sub-cluster</option>
 
                 </select>
             </td>
         </tr>
-    </div>
+    
         
-    <div>
+   
         <tr>    
-            <td align="center">
+            <td >
                 <h3>Enzyme presets</h3>
                 <select name="selPresets[]" multiple="multiple">
                     <option value="0">No preset</option>
@@ -69,19 +70,14 @@
                 </select>
             </td>
 
-            <td align="center">
+            <td>
                 <h3>Select NEB enzyme</h3>
                 <select name="selNeb[]" multiple="multiple">
-                    <option value="0">None</option>
-                    <option value="1">NEB enzyme 1</option>
-                    <option value="2">NEB enzyme 2</option>
-                    <option value="3">NEB enzyme 3</option>
-                    <option value="4">NEB enzyme 4</option>
-                    <option value="5">NEB enzyme 5</option>
+                    <option value="null">None</option>
                 </select>
             </td>
 
-            <td align="center">
+            <td>
                 <h3>Select cut frequency</h3>
                 <select name="selCuts[]" multiple="multiple">
                     <option value="0">None (# of cuts = zero)</option>
@@ -92,27 +88,27 @@
                 </select>
             </td>
         </tr>
-    </div>
+    
 
-    <div>
+  
         <tr>
-            <td align="center" colspan="3">
+            <td align="right" colspan="3">
                 <input type="submit" name="Submit" value="Submit"/>
             </td>
         </tr>
-    </div>
+ 
     
     </tbody>
     </table>
 </form>
+</div>
 
-
-<p>
+<!--<p>
    <u><bold>Features to be included:</bold></u></br>
    -Phylip (Philo-tree) generation</br>  
    -Weighted comparison of Enzyme cut information from unknown phage to known phage</br>
    -Visualization of known phage cut information</br> 
    -Visualization of unknown phage cut information</br> 
    -Guided Enzyme selection</br>
-</p>
+</p>-->
 
