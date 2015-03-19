@@ -118,7 +118,7 @@
 
 <!--Divs that will hold the pie chart-->
 <div id="userDemograph" style="display:block">
-  <div id="newuserDemograph" style="display:block; float: left">
+  <div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
   </div>
 
