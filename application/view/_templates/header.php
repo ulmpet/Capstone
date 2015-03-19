@@ -14,10 +14,12 @@
     <link href="<?php echo URL; ?>css/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- logo -->
-    <div class="logo">
 
-        P.E.T v2.0a
-        MINI
-    </div>
+<!-- logo -->
+<div class="logo">
+    P.E.T. v2.0a
+</div>
 
+<div class="logo2">
+    Phage Enzyme Tool
+</div>
