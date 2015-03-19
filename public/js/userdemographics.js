@@ -11,18 +11,17 @@
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('string', 'Time Frame');
+        data.addColumn('number', 'New Users');
         data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
+          ['Week 1', 5],
+          ['Week 2', 2],
+          ['Week 3', 7],
+          ['Week 4', 3],          
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
+        var options = {'title':'New User Registrations',
                        'width':700,
                        'height':500};
 
