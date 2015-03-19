@@ -20,6 +20,13 @@ class phage
         return $query->fetchAll();
     }
 
+    function getPhageNamesAndID(){
+        $sql = "Select PhageID,PhageName from phageTable;";
+        $query  = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     function addFullPhage($phageArray){
         $sql = "INSERT INTO phageTable (PhageName, GenusID, ClusterID, Subcluster, YearFound, DateFinished,Updated) 
                 VALUES ";
@@ -56,5 +63,16 @@ class phage
             $query->bindParam($i++, $item[4]);
         }
         return  $query->execute();
+    }
+
+    public function inputGenome($genomeInfo){
+        //var_dump($genomeInfo);
+        $sql = "UPDATE phageTable set Gnome=:Gnome where PhageName=:PhageName";
+        $query = $this->db->prepare($sql);
+        foreach($genomeInfo as $key => $value){
+            $params = array(':PhageName' => $key, ':Gnome' => $value);
+            $query->execute($params);
+        }
+        
     }
 }

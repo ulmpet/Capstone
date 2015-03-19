@@ -1,4 +1,4 @@
 <div class="container">
-    <h2>News</h2>
-    <p>More features to come.</p>
+    News
+    <p>More features to come. RSS feed?</p>
 </div>
