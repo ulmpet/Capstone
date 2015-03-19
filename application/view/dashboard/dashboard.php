@@ -62,7 +62,7 @@
        -Validation of data from phageDB and nebcutter</br>
     </p>
 
- <div id="fileUpload">
+ <div id="fileUpload" style="display:none">
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
     <div id="phageType" name="genus" style="display:block">
