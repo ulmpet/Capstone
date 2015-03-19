@@ -101,12 +101,21 @@ class user
     * @return the salt value for the given user.
     */
     public function getSalt($userEmail){
-        $sql = "SELECT Salt from userTable WHERE EmailAddress = :userEmail;";
+        $sql = "SELECT Salt FROM userTable WHERE EmailAddress = :userEmail;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userEmail' => $userEmail);
         $query->execute($parameters);
         $output = $query->fetchAll();
         return $output[0]['Salt'];
 
+    }
+    /**
+    *
+    *
+    *
+    *
+    */
+    public function deactivateUser($userID){
+        $sql = "UPDATE userTable SET Active = 'fales' WHERE userID = $userID "
     }
 }
