@@ -88,7 +88,7 @@ class user
     * ie. $MyArray[RowNumeber][ColomnName]
     */
     public function checkAuth($userID){
-        $sql = "SELECT AuthLevel FROM userTable WHERE UserID = :userID;";
+        $sql = "SELECT AuthLevel FROM userTable Where UserID = :userID;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userID' => $userID);
         $query->execute($parameters);
@@ -110,12 +110,12 @@ class user
 
     }
     /**
-    *public function deactivateUser($userID){
-    *$sql = "UPDATE userTable SET Active = 'false' WHERE UserID = :userID;"
     *
-    *    $query = $this->db->preprae($sql);
     *
-    *       $query->execute();
-   * }
+    *
+    *
     */
+    public function deactivateUser($userID){
+        $sql = "UPDATE userTable SET Active = 'fales' WHERE userID = $userID "
+    }
 }
