@@ -67,6 +67,43 @@ $(function(){
 });
 
 
-$(function proccessForm(){
+/***************************************************
+//phageOptions form processing ajax/json
 
+$(function proccessForm(){
+    if{
+        //code to select which and how the ajax functions should execute
+    }
+    $.ajax({
+        url: '/ajax/knownPhage',
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json'
+        data:() 
+        });
+
+        $.ajax({
+            url: '/ajax/unknownPhage',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json'
+            data:() 
+            });
+
+        $.ajax({
+            url: '/ajax/rootPhylip',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json'
+            data:()
+            });
+
+        $.ajax({
+            url: '/ajax/unrootPhylip',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json'
+            data:()
+            });
 });
+***************************************************/
