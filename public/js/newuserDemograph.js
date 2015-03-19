@@ -22,10 +22,10 @@
 
         // Set chart options
         var options = {'title':'New User Registrations',
-                       'width':700,
-                       'height':500};
+                       'width':500,
+                       'height':400};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.AreaChart(document.getElementById('userDemograph'));
+        var chart = new google.visualization.AreaChart(document.getElementById('newuserDemograph'));
         chart.draw(data, options);
-      }
+      };
