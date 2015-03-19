@@ -20,6 +20,8 @@ class Dashboard extends Controller
         $this->genusModel = $this->loadModel('genus');
         $this->clusterModel = $this->loadModel('cluster');
         $this->phageModel = $this->loadModel('phage');
+        $this->enzymeModel = $this->loadModel('enzyme');
+        $this->cutModel = $this->loadModel('cut');
     }
     /**
      * PAGE: index
@@ -126,6 +128,7 @@ class Dashboard extends Controller
 
     public function fastaUpload(){
         ini_set("memory_limit","1024M");
+        set_time_limit (0);
         $allPhages = $this->phageModel->getPhageNames();
         $allPhages = $this->buildPhageMap($allPhages);
         
@@ -168,10 +171,24 @@ class Dashboard extends Controller
                         $sequencedPhages[$key] = $value; 
                     }
                 }
-                Helper::outputArray($sequencedPhages);
-                //$this->phageModel->inputGenome($sequencedPhages);
+                foreach ($sequencedPhages as $phage => $sequence) {
+                   
+                    $cutdata = $this->enzymeCutter($sequence);
+                    foreach ($cutdata as $key => $value) {
+                        //echo $key ."   " . count($value['cuts']) . "</br>";
+                        $cutCountdata[$key] = count($value['cuts']);
+                    }
+
+                    $finalCutCountData = $this->buildCutValues($cutCountdata,$phage);
+                    //Helper::outputArray($finalCutCountData);
+                    $this->cutModel->insertCuts($finalCutCountData);
+                }
+                //Helper::outputArray($sequencedPhages);
+                $this->phageModel->inputGenome($sequencedPhages);
         }
     }
+
+    //makes a assosiatce array maping cluster names to their databse id's
     private function generateClusterMap(){
         $allClusters = $this->clusterModel->getClusterList();
         $clusterMap = array();
@@ -181,16 +198,41 @@ class Dashboard extends Controller
         return $clusterMap;
     }
 
+    // formats phage information for insertion to the database
     public function buildPhageValues($phages,$genusName){
         $phageValueOutputArray = array();
-        //echo "(:PhageName, :GenusID, :ClusterID, :Subcluster,:Updated)";
-        //Helper::outputArray($phages);
         foreach ($phages as $key => $value) {
             $phageValueOutputArray[] = array($key, $genusName, $value[0], $value[1], date(MYSQL_DATE_FORMAT));
         }
         return $phageValueOutputArray;
     }
 
+    public function buildCutValues($cutData,$phage){
+        $phageMap = $this->buildPhageIndexMap();
+        $enzymeMap = $this->buildEnzymeIndexMap();
+        foreach($cutData as $key => $value){
+            $outputArray[] = array($phageMap[$phage],$enzymeMap[$key],$value,null);
+        }
+        return $outputArray;
+    }
+
+    public function buildPhageIndexMap(){
+        $phagearray = $this->phageModel->getPhageNamesAndID();
+        foreach ($phagearray as $key => $value) {
+            $outputArray[$value['PhageName']] = $value['PhageID'];
+        }
+        return $outputArray;
+    }
+
+    public function buildEnzymeIndexMap(){
+        $enzymeArray = $this->enzymeModel->getEnzymeNamesAndID();
+        foreach ($enzymeArray as $key => $value) {
+            $outputArray[$value['EnzymeName']] = $value['EnzymeID'];
+        }
+        return $outputArray;
+    }
+
+    //makes an assosiative array with phage names from the database as keys
     public function buildPhageMap($phageNames){
         //Helper::outputArray($phageNames);
         foreach($phageNames as $index => $phage){
@@ -198,4 +240,51 @@ class Dashboard extends Controller
         }
         return $phageMap;
     }
+
+    private function enzymeCutter($sequence){
+        $enzymesArray = $this->enzymeModel->getEnzymesForCutting();
+
+        foreach ($enzymesArray as $key => $value) {
+            $enzymes_array[$value['EnzymeName']] = array($value['SamePatternEnzymes'],$value['RecognitionPattern'],$value['RecognitionforComputing'],$value['RecognitionPatternLength'],$value['CleavagePositionUpper'],$value['CleavagePositionLower']);
+        }
+
+        foreach ($enzymes_array as $enzyme => $val){
+        // this is to put together results for IIb endonucleases, which are computed as "enzyme_name" and "enzyme_name@"
+        $enzyme2=str_replace("@","",$enzyme);
+
+        // split sequence based on pattern from restriction enzyme
+        $fragments = preg_split("/".$enzymes_array[$enzyme][2]."/", $sequence,-1,PREG_SPLIT_DELIM_CAPTURE);
+        reset ($fragments);
+        $maxfragments=sizeof($fragments);
+        // when sequence is cleaved ($maxfragments>1) start further calculations
+        if ($maxfragments>1){
+                $recognitionposition=strlen($fragments[0]);
+                $counter_cleavages=0;
+                $list_of_cleavages="";
+                // for each frament generated, calculate cleavage position,
+                //    add it to a list, and add 1 to counter
+                for ($i=2;$i<$maxfragments; $i+=2){
+                        $cleavageposition=$recognitionposition+$enzymes_array[$enzyme][4];
+                        $digestion[$enzyme2]["cuts"][$cleavageposition]="";
+                                // As overlapping may occur for many endonucleases,
+                                //   a subsequence starting in position 2 of fragment is calculate
+                                $subsequence=substr($fragments[$i-1],1).$fragments[$i].substr($fragments[$i+1],0,40);
+                                $subsequence=substr($subsequence,0,2*$enzymes_array[$enzyme][3]-2);
+                                //Previous process is repeated
+                                // split subsequence based on pattern from restriction enzyme
+                                $fragments_subsequence = preg_split($enzymes_array[$enzyme][2],$subsequence);
+                                // when subsequence is cleaved start further calculations
+                                if (sizeof($fragments_subsequence)>1){
+                                        // for each fragment of subsequence, calculate overlapping cleavage position,
+                                        //    add it to a list, and add 1 to counter
+                                        $overlapped_cleavage=$recognitionposition+1+strlen($fragments_subsequence[0])+$enzymes_array[$enzyme][4];
+                                        $digestion[$enzyme2]["cuts"][$overlapped_cleavage]="";
+                                }
+                        // this is a counter for position
+                        $recognitionposition+=strlen($fragments[$i-1])+strlen($fragments[$i]);
+                }
+        }
+    }
+    return $digestion;
+  }  
 }

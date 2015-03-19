@@ -41,10 +41,10 @@
     </div>
 
   <div class="navigation"></br>
-    <p onclick=dashShowHide("userDemograph")> DEMOGRAPHIC </p>
-    <p onclick=dashShowHide("fileUpload")> UPLOAD </p>
-    <p onclick=dashShowHide("addGenus")> GENUS ADDITION </p>  
-    <p onclick=dashShowHide("removeAdmin")> ADMIN REMOVAL </p>
+    <div onclick=dashShowHide("userDemograph")> Demographic </div>
+    <div onclick=dashShowHide("fileUpload")> Upload </div>
+    <div onclick=dashShowHide("addGenus")> Genus Addition </div>  
+    <div onclick=dashShowHide("removeAdmin")> Admin Removal </div>
   </div>
 
 
@@ -62,7 +62,7 @@
        -Validation of data from phageDB and nebcutter</br>
     </p>
 
- <div id="fileUpload">
+ <div id="fileUpload" style="display:none">
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
     <div id="phageType" name="genus" style="display:block">
@@ -84,7 +84,7 @@
     <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
 <!--HEEEEEEEEELLLLPPPPPP TYPE FILE... CSS ME PLEASE-->
     <!-- Name of input element determines name in $_FILES array -->
-    <label><input name="userfile" type="file"/><input type="submit" value="Send File" /></label>
+    <input name="userfile" type="file"/><input type="submit" value="Send File" />
 </form>
 </div>
 
@@ -115,7 +115,15 @@
     <p><input type='submit' value="Add Genus"></p>
   </form>
 </div>
+
+<!--Divs that will hold the pie chart-->
 <div id="userDemograph" style="display:block">
-  SHOWING DEMOGRAPHIC INFORMATION
+  <div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
+    SHOWING DEMOGRAPHIC INFORMATION
+  </div>
+
+  <div id="ulocationDemograph" style="display:block; width: 350px; height:250px; float: left">
+    SHOWING DEMOGRAPHIC INFORMATION
+  </div>
 </div>
 </div>

@@ -14,7 +14,7 @@
     <link href="<?php echo URL; ?>css/style.css" rel="stylesheet">
 </head>
 <body>
-
+<div class="page-wrap">
 <!-- logo -->
 <div class="logo">
     P.E.T. v2.0a

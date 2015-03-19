@@ -10,33 +10,52 @@
  */
 class Ajax extends Controller
 {
-    /**
-     * PAGE: index
-     * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
-     */
+    private $clusterModel;
+    private $genusModel;
+    private $phageModel;
+    private $enzymeModel;
 
     public function __construct(){
         parent::__construct();
         $this->genusModel = $this->loadModel('genus');
         $this->clusterModel = $this->loadModel('cluster');
         $this->phageModel = $this->loadModel('phage');
+        $this->enzymeModel = $this->loadModel('enzyme');
     }
 
 
     public function getPhageNames(){
-        $PhageNames = $this->phageModel->getPhageNames();
+        $PhageNames = $this->phageModel->getPhageNamesAndID();
         foreach($PhageNames as $row => $data){
-            $phageOutput[$data['PhageID']] = $data['PhageName'];
+            $phageOutput[] = array( 'ID' => $data['PhageID'], 'name'=>$data['PhageName']);
         }
         echo json_encode($phageOutput);
 
     }
 
     public function getGenusNames(){
-        $genusNames = $this->genusModel->getGenusList()
+
+        $genusNames = $this->genusModel->getGenusList();
         foreach($genusNames as $row => $data){
-            $genusOutput[$data['GenusID']] = $data['Genus'];
+            $genusOutput[] = json_encode(array( 'ID' => $data['GenusID'], 'name'=>$data['Genus']));
         }
         echo json_encode($genusOutput);
+    }
+
+    public function getClusterNames(){
+        $ClusterNames = $this->clusterModel->getClusterList();
+        foreach($ClusterNames as $row => $data){
+            $clusterOutput[] = json_encode(array( 'ID' => $data['ClusterID'], 'name'=>$data['Cluster']));  
+        }
+        echo json_encode($clusterOutput);
+    }
+
+    public function getEnzymeNames(){
+        $enzymeNames = $this->enzymeModel->getEnzymeNamesAndID();
+        foreach($enzymeNames as $row => $data){
+            $enzymeOutput[] = json_encode(array( 'ID' => $data['EnzymeID'], 'name'=>$data['EnzymeName']));
+        }
+    echo json_encode($enzymeOutput);
+
     }
 }
