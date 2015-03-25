@@ -5,7 +5,7 @@
 </script>
     
     <div class="container">
-        <form id="phageOptions" name="options" method="post" action="google.php">
+        <form id="phageOptions" name="options" method="post" action="/home/output">
     <table border="0" width="100%">
         <tbody>
         <tr>
@@ -97,7 +97,7 @@
   
         <tr>
             <td align="right" colspan="3">
-                <input type="submit" name="Submit" value="Submit"/>
+                <input type="button" id="clicker">
             </td>
         </tr>
  
