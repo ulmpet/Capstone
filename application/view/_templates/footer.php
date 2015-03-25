@@ -14,6 +14,9 @@
     <!--div class="footerlinks"> Contact Us </div-->
     <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "phagetool"){
     echo '<script type="text/javascript" src="'. URL .'js/phagetool.js"></script>';
+    echo '<script src="' . URL . 'js/select2.min.js"></script>';
+    echo '<link href="'. URL . 'css/select2.css" rel="stylesheet" />';
+    echo '<script type="text/javascript"> makeBoxes() </script>';
 	}?>
 
     <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard"){
