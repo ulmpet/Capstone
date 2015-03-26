@@ -65,8 +65,19 @@ $(function(){
                     }
                 });
 });
+$(window).load(function(){
+
+    //anytime the values of a select box change run this function
+$("select").change(function(){
+    console.log( "Phage values: " + $("[name='selPhage[]']").select2("val"));
+    console.log( "Cluster Values: " + $("[name='selCluster[]']").select2("val"));
+    
 
 
+
+
+});
+});
 /***************************************************
 //phageOptions form processing ajax/json
 

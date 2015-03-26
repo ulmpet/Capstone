@@ -1,7 +1,11 @@
-
+<script type="text/javascript">
+ function makeBoxes(){
+    $(".js-example-basic-multiple").select2({width:"75%"});
+    }
+</script>
     
     <div class="container">
-        <form id="phageOptions" name="options" method="post" action="google.php">
+        <form id="phageOptions" name="options" method="post" action="/home/output">
     <table border="0" width="100%">
         <tbody>
         <tr>
@@ -34,7 +38,7 @@
         <tr>
             <td >
                 <h3>Select phage</h3>
-                <select name="selPhage[]" multiple="multiple">
+                <select class="js-example-basic-multiple" data-placeholder="Select Phage" name="selPhage[]" multiple="multiple">
                     <option value="null">No Phage</option>
                     
                 </select>
@@ -42,14 +46,14 @@
         
             <td >
                 <h3>Select cluster</h3>
-                <select name="selCluster[]" multiple="multiple">
+                <select class="js-example-basic-multiple" data-placeholder="Select Cluster" name="selCluster[]" multiple="multiple">
                     <option value="null">No Cluster</option>
                 </select>
             </td>
         
             <td >
                 <h3>Select sub-cluster</h3>
-                <select name="selSubCluster[]" multiple="multiple">
+                <select class="js-example-basic-multiple" data-placeholder="Select Subcluster" name="selSubCluster[]" multiple="multiple">
                     <option value="null">No Sub-cluster</option>
 
                 </select>
@@ -61,7 +65,7 @@
         <tr>    
             <td >
                 <h3>Enzyme presets</h3>
-                <select name="selPresets[]" multiple="multiple">
+                <select class="js-example-basic-multiple" data-placeholder="Select Enzyme Presets" name="selPresets[]" multiple="multiple">
                     <option value="0">No preset</option>
                     <option value="1">preset 1</option>
                     <option value="2">preset 2</option>
@@ -72,14 +76,14 @@
 
             <td>
                 <h3>Select NEB enzyme</h3>
-                <select name="selNeb[]" multiple="multiple">
+                <select class="js-example-basic-multiple" name="selNeb[]" data-placeholder="Select Enzymes" multiple="multiple">
                     <option value="null">None</option>
                 </select>
             </td>
 
             <td>
                 <h3>Select cut frequency</h3>
-                <select name="selCuts[]" multiple="multiple">
+                <select class="js-example-basic-multiple" name="selCuts[]" data-placeholder="Select Cut Frequency" multiple="multiple">
                     <option value="0">None (# of cuts = zero)</option>
                     <option value="1">Few (1 <= # of cuts <= 5)</option>
                     <option value="2">Some (5 <= # of cuts <= 16)</option>
@@ -93,7 +97,7 @@
   
         <tr>
             <td align="right" colspan="3">
-                <input type="submit" name="Submit" value="Submit"/>
+                <input type="button" id="clicker">
             </td>
         </tr>
  

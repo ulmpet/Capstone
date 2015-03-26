@@ -1,5 +1,7 @@
 </div>
 <div class="site-footer">
+
+    Footer works
     <!-- jQuery, loaded in the recommended protocol-less way -->
     <!-- more http://www.paulirish.com/2010/the-protocol-relative-url/ -->
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -14,6 +16,9 @@
     <!--div class="footerlinks"> Contact Us </div-->
     <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "phagetool"){
     echo '<script type="text/javascript" src="'. URL .'js/phagetool.js"></script>';
+    echo '<script src="' . URL . 'js/select2.min.js"></script>';
+    echo '<link href="'. URL . 'css/select2.css" rel="stylesheet" />';
+    echo '<script type="text/javascript"> makeBoxes() </script>';
 	}?>
 
     <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard"){
