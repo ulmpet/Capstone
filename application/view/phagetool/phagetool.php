@@ -11,9 +11,9 @@
         <tr>
             <td colspan="3">
                 <h3>Preconditions</h3></br>
-                <input type="radio" name="visualization type" value="1">Known phage &nbsp;
-                <input type="radio" name="visualization type" value="1">Known & unknown phage<br><br>
-                <input type="checkbox" name="visualization type" value="1">Phylip Tree &nbsp;
+                <input type="radio" name="visType" value="0">Known phage &nbsp;
+                <input type="radio" name="visType" value="1">Known & unknown phage<br><br>
+                <input type="checkbox" name="boolTree" id="boolTree" value="1">Phylip Tree &nbsp;
                 <select name="phylip visualization">
                     <option value="0">rooted</option>
                     <option value="1">unrooted</option>
@@ -97,7 +97,7 @@
   
         <tr>
             <td align="right" colspan="3">
-                <input type="button" id="clicker">
+                <input type="button" id="clicker" value="Submit">
             </td>
         </tr>
  
@@ -105,6 +105,11 @@
     </tbody>
     </table>
 </form>
+
+
+<div id="resultDiv">
+</div>
+
 </div>
 
 <!--<p>

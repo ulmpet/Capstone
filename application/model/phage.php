@@ -79,7 +79,7 @@ class phage
     public function getPhageDataForTool(){
         $sql = "SELECT p.PhageName,c.Cluster,g.Genus from phageTable as p
                 LEFT JOIN clusterTable as c on p.ClusterID = c.ClusterID
-                LEFT JOIN genusTable as g on p.GenusID = g.GenusID;"
+                LEFT JOIN genusTable as g on p.GenusID = g.GenusID;";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

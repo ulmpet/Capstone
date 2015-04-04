@@ -58,4 +58,12 @@ class Ajax extends Controller
     echo json_encode($enzymeOutput);
 
     }
+
+    public function getKnownCutData(){
+        Helper::outputArray($_POST);
+    }
+
+    public function getUnknownCutData(){
+        echo "UNKNOWN CUTS DATA";
+    }
 }
