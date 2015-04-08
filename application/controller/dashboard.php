@@ -33,6 +33,7 @@ class Dashboard extends Controller
         
         $adminList = $this->userModel->getAdmin();
         $genusList = $this->genusModel->getGenusList();
+        $phageList = $this->phageModel->getPhageNamesAndID();
 
 
     	require APP . 'view/_templates/header.php';
@@ -68,10 +69,13 @@ class Dashboard extends Controller
                 }else{
                     echo "no genus selected";
                 }
-                echo "do long csv";
+                //echo "do long csv";
             }elseif($_POST['filetype'] == 2){
                 $this->fastaUpload();
-                echo "do fasfa";
+                //echo "do fasfa";
+            }elseif($_POST['filetype'] == 3){
+                $this->nebUpload();
+                header("location: /dashboard");
             }
 
     }// end file upload
@@ -171,18 +175,7 @@ class Dashboard extends Controller
                         $sequencedPhages[$key] = $value; 
                     }
                 }
-                foreach ($sequencedPhages as $phage => $sequence) {
-                   
-                    $cutdata = $this->enzymeCutter($sequence);
-                    foreach ($cutdata as $key => $value) {
-                        //echo $key ."   " . count($value['cuts']) . "</br>";
-                        $cutCountdata[$key] = count($value['cuts']);
-                    }
-
-                    $finalCutCountData = $this->buildCutValues($cutCountdata,$phage);
-                    //Helper::outputArray($finalCutCountData);
-                    $this->cutModel->insertCuts($finalCutCountData);
-                }
+                
                 //Helper::outputArray($sequencedPhages);
                 $this->phageModel->inputGenome($sequencedPhages);
         }
@@ -220,6 +213,14 @@ class Dashboard extends Controller
         $phagearray = $this->phageModel->getPhageNamesAndID();
         foreach ($phagearray as $key => $value) {
             $outputArray[$value['PhageName']] = $value['PhageID'];
+        }
+        return $outputArray;
+    }
+
+    public function buildEnzymeCutMap(){
+        $enzymeArray = $this->enzymeModel->getEnzymeNames();
+        foreach ($enzymeArray as $key => $value) {
+            $outputArray[$value['EnzymeName']] = 0;
         }
         return $outputArray;
     }
@@ -287,4 +288,77 @@ class Dashboard extends Controller
     }
     return $digestion;
   }  
+
+  public function simpleDigestion($genome){
+
+  }
+
+  public function cutGenome($phageID){
+    $genome = $this->phageModel->getPhageGenome($phageID); 
+    Helper::outputArray($genome);     
+    $cutdata = $this->enzymeCutter($genome[0]['Gnome']);
+    foreach ($cutdata as $key => $value) {
+        echo $key ."   " . count($value['cuts']) . "</br>";
+        $cutCountdata[$key] = count($value['cuts']);
+    }
+
+    $finalCutCountData = $this->buildCutValues($cutCountdata,$phageID);
+    Helper::outputArray($finalCutCountData);
+    $this->cutModel->insertCuts($finalCutCountData);
+                
+  }
+
+
+  public function nebUpload(){
+        //Check to see the the SuperGlobal Variable $_FILES has data
+        if(isset($_FILES['userfile']['name'])){
+            //print_r($_FILES);
+            //CHeck for file upload error resulting in null file
+            if($_FILES['userfile']['name']!=null){
+                //open the uploaded file for reading
+                $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+                $count =0;
+                //while not end of file loop get line as an array
+                while(!feof($file)){
+                    $line[] = fgets($file);
+                }
+                $enzymeIndexMap = $this->buildEnzymeIndexMap();
+                $enzymeCutMap = $this->buildEnzymeCutMap();
+                $missingEnzymes = array();
+                $totalEnzymes = array();
+                foreach ($line as $key => $value) {
+                    $lineArray = preg_split("/(\W)+/", $value);
+                    
+                    if (isset($lineArray[1]) && is_numeric($lineArray[1])){
+                        //echo $lineArray[1] ."<br>";
+                        if(!in_array($lineArray[2], $totalEnzymes)){
+                                $totalEnzymes[] = $lineArray[2];
+                            }
+                        if(array_key_exists($lineArray[2], $enzymeCutMap)){
+                            $enzymeCutMap[$lineArray[2]] += 1;
+                        }else{
+                            if(!in_array($lineArray[2], $missingEnzymes)){
+                                $missingEnzymes[] = $lineArray[2];
+                            }
+                        }
+
+
+                        
+                    }else{
+                        echo "NAN <br>";
+                    }
+
+                }
+                foreach ($enzymeCutMap as $key => $value) {
+                    $enzymeIDCutMap[$enzymeIndexMap[$key]] = $value;
+                }
+
+                $this->cutModel->insertNebCuts($enzymeIDCutMap, $_POST['phageName']);
+
+                //Helper::outputArray($enzymeIDCutMap);
+                //Helper::outputArray($missingEnzymes);
+                //Helper::outputArray($submission);
+            }
+        }
+  }
 }

@@ -93,4 +93,12 @@ class phage
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function getPhageGenome($phageID){
+        $sql = "Select Gnome from phageTable where phageID = :phageID";
+        $query = $this->db->prepare($sql);
+        $param = array(":phageID" => $phageID);
+        $query->execute($param);
+        return $query->fetchAll();
+    }
 }

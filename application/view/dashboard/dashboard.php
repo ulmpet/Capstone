@@ -66,7 +66,12 @@
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
     <!-- MAX_FILE_SIZE must precede the file input field -->
     <div id="phageType" name="genus" style="display:block">
-        <select id="opts" name="genusName">
+        
+          <label><input type='radio' name="filetype"  value=0 id='short' onclick=showGenusFeild()>Short CSV</label>
+          <!-- <label><input type='radio' name="filetype"  value=1 id='full' onclick=showGenusFeild()>Full CSV</label> -->
+          <label><input type='radio' name="filetype"  value=2 id='fasta' onclick=hidePhageGenus()>FASTA File</label>
+          <label><input type='radio' name="filetype"  value=3 id='nebCutData' onclick=showPhageNameFeild();>Neb Cutter Data</label>
+          <select id="opts" name="genusName" style='display:none'>
             <?php 
 
               echo "<option value='null'> None </option>";
@@ -76,9 +81,16 @@
             } 
             ?>
         </select>
-          <label><input type='radio' name="filetype"  value=0 id='short' onchage=/>Short CSV</label>
-          <label><input type='radio' name="filetype"  value=1 id='full' onchange=/>Full CSV</label>
-          <label><input type='radio' name="filetype"  value=2 id='fasta' onchange=/>FASTA File</label>
+          <select id='phageNameFeild' name='phageName' style='display:none' >
+            <?php 
+
+              echo "<option value='null'> None </option>";
+            foreach($phageList as $phage){
+
+              echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>"; 
+            } 
+            ?>
+          </select>
     </div>
 
     <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
@@ -87,6 +99,22 @@
     <input name="userfile" type="file"/><input type="submit" value="Send File" />
 </form>
 </div>
+
+<script type="text/javascript">
+  function showPhageNameFeild(){
+    $("#phageNameFeild").css('display','block');
+    $("#opts").css('display','none');
+  }
+  function showGenusFeild(){
+    $("#phageNameFeild").css('display','none');
+    $("#opts").css('display','block');
+  }
+  function hidePhageGenus(){
+    $("#phageNameFeild").css('display','none');
+    $("#opts").css('display','none');
+  }
+</script>
+
 
 <div id="removeAdmin" style="display:none">
   <form>

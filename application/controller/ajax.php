@@ -21,6 +21,7 @@ class Ajax extends Controller
         $this->clusterModel = $this->loadModel('cluster');
         $this->phageModel = $this->loadModel('phage');
         $this->enzymeModel = $this->loadModel('enzyme');
+        $this->cutsModel = $this->loadModel('cut');
     }
 
 
@@ -60,7 +61,40 @@ class Ajax extends Controller
     }
 
     public function getKnownCutData(){
-        Helper::outputArray($_POST);
+
+
+        foreach ($_POST['selPhage'] as $key => $value) {
+            $phageIDarray[] = $value;
+        }
+        foreach ($_POST['selNeb'] as $key => $value) {
+            $enzymeIDarray[] = $value;
+        }
+        $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray);
+        
+        $enzymeCount = count($enzymeIDarray);
+        $tableHeader = "<thead><tr><th>Phage Name</th><th>Cluster</th><th>Subcluster</th>";
+        $tableBody = "<tbody>";
+        $enzymeNames = array();
+        $lastPhageName= null;
+
+        foreach ($cutdata as $key => $value) {
+            if(!in_array($value['EnzymeName'], $enzymeNames)){
+                $tableHeader .= "<th>". $value['EnzymeName']."</th>";
+                $enzymeNames[] = $value['EnzymeName'];
+            }
+            if($value['PhageName'] != $lastPhageName){
+                $tableBody.="<tr><td>".$value['PhageName']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
+                $lastPhageName = $value['PhageName']; 
+            }else{
+                $tableBody.= "<td>". $value['CutCount'] . "</td>";
+                if(($key+1)%$enzymeCount == 0){
+                    $tableBody .= '</tr>';
+                }
+            }
+        }
+        $tableHeader .= '</tr></thead>';
+        $tableBody .= '</tbody>';
+        echo $tableHeader . $tableBody;
     }
 
     public function getUnknownCutData(){

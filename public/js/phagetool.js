@@ -65,6 +65,7 @@ $(function(){
                     	//console.log(i);                    
                     }
                 });
+                
 });
 
 $(window).load(function(){
@@ -97,6 +98,7 @@ $("#clicker").click(function(){
                 )
                 .done(function(result){
                     $("#resultDiv").html(result);
+
                 });
         }else{
             window.alert("Please select an option under preconditions.")
