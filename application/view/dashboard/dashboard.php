@@ -68,7 +68,7 @@
     <div id="phageType" name="genus" style="display:block">
         
           <label><input type='radio' name="filetype"  value=0 id='short' onclick=showGenusFeild()>Short CSV</label>
-          <!-- <label><input type='radio' name="filetype"  value=1 id='full' onclick=showGenusFeild()>Full CSV</label> -->
+           <label><input type='radio' name="filetype"  value=1 id='full' onclick=showGenusFeild()>Full CSV</label> 
           <label><input type='radio' name="filetype"  value=2 id='fasta' onclick=hidePhageGenus()>FASTA File</label>
           <label><input type='radio' name="filetype"  value=3 id='nebCutData' onclick=showPhageNameFeild();>Neb Cutter Data</label>
           <select id="opts" name="genusName" style='display:none'>

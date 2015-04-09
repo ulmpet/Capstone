@@ -23,6 +23,31 @@ class cut
         }
     }
 
+    function insertMassCuts($data){
+                $null = null;
+        $sql = "REPLACE INTO cutsTable (PhageID,EnzymeID,CutCount,CutLocations) VALUES ";
+        $qpart = array_fill(0,(count($data[1])-1) *count($data),"(?,?,?,?)");
+        $sql .= implode(",",$qpart);
+        //$sql .= "ON DUPLICATE KEY IGNORE ";//UPDATE CutCount=VALUES(CutCount), CutLocations=VALUES(CutLocations)";
+        $query = $this->db->prepare($sql);
+        $i =1;
+        //echo $sql;
+        foreach($data as $entryset){
+            foreach ($entryset as $key => $value) {
+            //echo $key . " : " . $value . "<br>";
+                if ($key != 'PhageName') {
+                    //echo " " . $entryset['PhageName'] .", ".$key.", ". $value.", ". $null ." <br>";
+                    $query->bindValue($i++, $entryset['PhageName']);
+                    $query->bindValue($i++, $key);
+                    $query->bindValue($i++, $value);
+                    $query->bindValue($i++, $null);
+                }
+            }
+        }
+        //echo $sql;
+        return $query->execute();
+    }
+
     function insertNebCuts($data,$phageID){
         //echo "here <br>";
         //Helper::outputArray($data);

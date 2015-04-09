@@ -126,7 +126,63 @@ class Dashboard extends Controller
     }//end short upload
 
     public function fullUpload($genusName){
-        echo "full upload";
+        ini_set("memory_limit","1024M");
+        set_time_limit (0);
+        if(isset($_FILES['userfile']['name'])){
+            //print_r($_FILES);
+            //CHeck for file upload error resulting in null file
+            if($_FILES['userfile']['name']!=null){
+                //open the uploaded file for reading
+                $file = fopen($_FILES['userfile']['tmp_name'], 'r');
+                $cutData = array();
+                $enzymeOrder = array();
+                $count =0;
+                $enzymeIndexMap = $this->buildEnzymeIndexMap();
+                $enzymeIndexMap['Mycobacteriophage'] = 'PhageName';
+                $enzymeIndexMap['Arthrobacter '] = 'PhageName';
+                $enzymeIndexMap['Streptomyces '] = 'PhageName';
+                $enzymeIndexMap['Bacillus '] = 'PhageName';
+                $phages = $this->buildPhageIndexMap();
+                //while not end of file loop get line as an array
+                //Helper::outputArray($phages);
+                while(!feof($file)){
+                    $line = fgetcsv($file,0,",");
+                    //Helper::outputArray($line);
+                    if($count ==0 ){
+                        $enzymeOrder = $line;
+                        $count++;
+                    }else{
+                        if(!is_array($line)){
+                            //var_dump($line);
+                            //echo $count;
+                        }else{
+                        foreach ($line as $key => $value) {
+                            if($key == 0){
+                                
+                                if(isset($phages[$value])){
+                                    //echo $phages[$value];
+                                    $cutData[$count][$enzymeIndexMap[$enzymeOrder[$key]]] = $phages[$value];
+                                }else{
+                                    continue;
+                                }
+                            }else{
+                                if(isset($cutData[$count]['PhageName'])){
+                                    $cutData[$count][$enzymeIndexMap[$enzymeOrder[$key]]] = $value;
+                                }else{
+                                    continue;
+                                }
+                            }
+                            //$cutData[$count][$enzymeIndexMap[$enzymeOrder[$key]]] = $value;
+                        }
+                        $count++;
+                    }
+                    }
+
+                }
+                //Helper::outputArray($cutData);
+                $this->cutModel->insertMassCuts($cutData);
+            }
+        }
 
     }
 

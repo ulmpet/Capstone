@@ -83,13 +83,13 @@ class Ajax extends Controller
                 $enzymeNames[] = $value['EnzymeName'];
             }
             if($value['PhageName'] != $lastPhageName){
+                if(!is_null($lastPhageName)){
+                $tableBody .= '</tr>';
+                }
                 $tableBody.="<tr><td>".$value['PhageName']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
                 $lastPhageName = $value['PhageName']; 
             }else{
                 $tableBody.= "<td>". $value['CutCount'] . "</td>";
-                if(($key+1)%$enzymeCount == 0){
-                    $tableBody .= '</tr>';
-                }
             }
         }
         $tableHeader .= '</tr></thead>';
