@@ -63,6 +63,7 @@ class Dashboard extends Controller
                 }else{
                     echo "no genus selected";
                 }
+                header("location: /dashboard");
             }elseif($_POST['filetype'] == 1){
                 if($_POST['genusName'] !== "null"){
                     $this->fullUpload($_POST['genusName']);
@@ -73,6 +74,7 @@ class Dashboard extends Controller
             }elseif($_POST['filetype'] == 2){
                 $this->fastaUpload();
                 //echo "do fasfa";
+                header("location: /dashboard");
             }elseif($_POST['filetype'] == 3){
                 $this->nebUpload();
                 header("location: /dashboard");
