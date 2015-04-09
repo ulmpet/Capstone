@@ -20,6 +20,13 @@ class phage
         return $query->fetchAll();
     }
 
+    function getAllPhageID(){
+        $sql = "Select PhageID from phageTable;";
+        $query  = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     function getPhageNamesAndID(){
         $sql = "Select PhageID,PhageName from phageTable;";
         $query  = $this->db->prepare($sql);

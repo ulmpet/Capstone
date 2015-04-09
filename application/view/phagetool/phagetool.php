@@ -39,7 +39,7 @@
             <td >
                 <h3>Select phage</h3>
                 <select class="js-example-basic-multiple" data-placeholder="Select Phage" name="selPhage[]" multiple="multiple">
-                    <option value="null">No Phage</option>
+                    <option value='all'> All </option>
                     
                 </select>
             </td>
@@ -47,14 +47,14 @@
             <td >
                 <h3>Select cluster</h3>
                 <select class="js-example-basic-multiple" data-placeholder="Select Cluster" name="selCluster[]" multiple="multiple">
-                    <option value="null">No Cluster</option>
+                    <option value="all">ALL</option>
                 </select>
             </td>
         
             <td >
                 <h3>Select sub-cluster</h3>
                 <select class="js-example-basic-multiple" data-placeholder="Select Subcluster" name="selSubCluster[]" multiple="multiple">
-                    <option value="null">No Sub-cluster</option>
+                    <option value="all">ALL</option>
 
                 </select>
             </td>
@@ -77,7 +77,7 @@
             <td>
                 <h3>Select NEB enzyme</h3>
                 <select class="js-example-basic-multiple" name="selNeb[]" data-placeholder="Select Enzymes" multiple="multiple">
-                    <option value="null">None</option>
+                    <option value="all">ALL</option>
                 </select>
             </td>
 

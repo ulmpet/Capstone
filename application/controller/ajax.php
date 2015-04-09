@@ -64,6 +64,12 @@ class Ajax extends Controller
 
 
         foreach ($_POST['selPhage'] as $key => $value) {
+            if($value == 'all'){
+                $allPhageIDs = $this->phageModel->getAllPhageID();
+                foreach ($allPhageIDs as $k => $v) {
+                    $phageIDarray[] = $v['PhageID'];
+                }
+            }
             $phageIDarray[] = $value;
         }
         foreach ($_POST['selNeb'] as $key => $value) {

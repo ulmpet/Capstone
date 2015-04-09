@@ -85,6 +85,7 @@
             <?php 
 
               echo "<option value='null'> None </option>";
+              
             foreach($phageList as $phage){
 
               echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>"; 
