@@ -62,7 +62,7 @@ class Home extends Controller
             // add the salt to the password and hash useing sah512 creating a 128 charicter password
             $password = hash('sha512',$_REQUEST['pass'].$salt);
             //add all user signup data to the array 
-            $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1);
+            $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1,date(MYSQL_DATE_FORMAT));
 
             //insert the data to the database and return to home on success
             if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){

@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS userTable
 	IPAddress VARCHAR(15),
 	Organization VARCHAR(50),
 	Salt VARCHAR(128),
-	Active Boolean
+	Active Boolean,
+	SignupDate DATE,
+	LastLogin DATE
 );
 
 CREATE TABLE IF NOT EXISTS cutsTable

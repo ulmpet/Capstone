@@ -19,7 +19,7 @@ class user
      */
     public function addUser($userInfo)
     {
-        $sql = "INSERT INTO userTable (EmailAddress, Password, AuthLevel, VerificationValue, IPAddress, Organization,Salt,Active) VALUES (:EmailAddress, :Password, :Root, :VerificationValue, :IPAddress, :Organization,:Salt,:Active)";
+        $sql = "INSERT INTO userTable (EmailAddress, Password, AuthLevel, VerificationValue, IPAddress, Organization,Salt,Active,SignupDate) VALUES (:EmailAddress, :Password, :Root, :VerificationValue, :IPAddress, :Organization,:Salt,:Active, :SignupDate)";
         $query = $this->db->prepare($sql);
         $parameters = array(':EmailAddress' => $userInfo[0],
                             ':Password' => $userInfo[1],
@@ -28,7 +28,9 @@ class user
                             ':IPAddress' => $userInfo[4],
                             ':Organization' => $userInfo[5],
                             ':Salt'=> $userInfo[6],
-                            ':Active'=> $userInfo[7]);
+                            ':Active'=> $userInfo[7],
+                            ':SignupDate'=> $userInfo[8]);
+
 
         return $query->execute($parameters);
     }

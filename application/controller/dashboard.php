@@ -29,8 +29,11 @@ class Dashboard extends Controller
      */
     public function index()
     {
-        
-        
+        $AuthLevel = $this->userModel->checkAuth($_SESSION['UID']);
+        if ($AuthLevel[0]["AuthLevel"] < 1) {
+            header('location: /news');
+        }
+         
         $adminList = $this->userModel->getAdmin();
         $genusList = $this->genusModel->getGenusList();
         $phageList = $this->phageModel->getPhageNamesAndID();
