@@ -62,7 +62,7 @@ class Ajax extends Controller
 
     public function getKnownCutData(){
 
-
+        ini_set("memory_limit","1024M");
         foreach ($_POST['selPhage'] as $key => $value) {
             if($value == 'all'){
                 $allPhageIDs = $this->phageModel->getAllPhageID();
@@ -73,6 +73,10 @@ class Ajax extends Controller
             $phageIDarray[] = $value;
         }
         foreach ($_POST['selNeb'] as $key => $value) {
+            $allEnzymeIDs = $this->enzymeModel->getAllEnzymeID();
+                foreach ($allEnzymeIDs as $k => $v) {
+                    $enzymeIDarray[] = $v['EnzymeID'];
+                }
             $enzymeIDarray[] = $value;
         }
         $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray);
