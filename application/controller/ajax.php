@@ -56,33 +56,92 @@ class Ajax extends Controller
         foreach($enzymeNames as $row => $data){
             $enzymeOutput[] = json_encode(array( 'ID' => $data['EnzymeID'], 'name'=>$data['EnzymeName']));
         }
-    echo json_encode($enzymeOutput);
+        echo json_encode($enzymeOutput);
 
+    }
+    public function getSubClusters(){
+        $SubClusterNames = $this->phageModel->getSubclusters();
+        foreach($SubClusterNames as $key => $data){
+            if($data['Subcluster'] != 'None'){
+            $subclusterOutput[] = array( 'ID' => $data['Cluster'].$data['Subcluster'], 'name' => $data['Cluster'].$data['Subcluster']);
+            }
+        }
+        echo json_encode($subclusterOutput);
     }
 
     public function getKnownCutData(){
 
         ini_set("memory_limit","1024M");
-        foreach ($_POST['selPhage'] as $key => $value) {
-            if($value == 'all'){
-                $allPhageIDs = $this->phageModel->getAllPhageID();
-                foreach ($allPhageIDs as $k => $v) {
+        if(isset($_POST['selPhage'])){
+            foreach ($_POST['selPhage'] as $key => $value) {
+                if($value == 'all'){
+                    $allPhageIDs = $this->phageModel->getAllPhageID();
+                    foreach ($allPhageIDs as $k => $v) {
+                        $phageIDarray[] = $v['PhageID'];
+                    }
+                }
+                $phageIDarray[] = $value;
+            }
+        }
+
+        if(isset($_POST['selNeb'])){
+            foreach ($_POST['selNeb'] as $key => $value) {
+                if($value == 'all'){
+                    $allEnzymeIDs = $this->enzymeModel->getAllEnzymeID();
+                        foreach ($allEnzymeIDs as $k => $v) {
+                            $enzymeIDarray[] = $v['EnzymeID'];
+                        }
+                }
+                $enzymeIDarray[] = $value;
+            }
+        }
+
+
+        if(isset($_POST['selCluster'])){
+            if(in_array('all', $_POST['selCluster'])){
+                $phageIdsByCluster = $this->phageModel->getAllPhageID();
+            }else{
+                $phageIdsByCluster = $this->phageModel->getPhageIDByCluster($_POST['selCluster']);
+            }
+            foreach ($phageIdsByCluster as $k => $v) {
+                $phageIDarray[] = $v['PhageID'];
+            }
+        }
+
+        if(isset($_POST['selSubCluster'])){
+            $clusterMap = $this->buildClusterMap();
+            if(in_array('all', $_POST['selSubCluster'])){
+                $phageIdsBySubcluster = $this->phageModel->getAllPhageID();
+            }else{
+                //seporate clustes and subclusters
+                foreach ($_POST['selSubCluster'] as $key => $value) {
+                    preg_match('/[A-Za-z]+/', $value, $cluster);
+                    preg_match('/\d+/', $value, $subcluster);
+                    $subclusterSelectArray[] = array($clusterMap[$cluster[0]],$subcluster[0]);
+                }
+                //Helper::outputArray($subclusterSelectArray);
+                $phageIdsBySubcluster = $this->phageModel->getPhageIDBySubCluster($subclusterSelectArray);
+                foreach ($phageIdsBySubcluster as $k => $v) {
                     $phageIDarray[] = $v['PhageID'];
                 }
             }
-            $phageIDarray[] = $value;
         }
-        foreach ($_POST['selNeb'] as $key => $value) {
-            $allEnzymeIDs = $this->enzymeModel->getAllEnzymeID();
-                foreach ($allEnzymeIDs as $k => $v) {
-                    $enzymeIDarray[] = $v['EnzymeID'];
-                }
-            $enzymeIDarray[] = $value;
+
+        if(isset($phageIDarray) && isset($enzymeIDarray)){
+            $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray);
+        }elseif(isset($phageIDarray)){
+            echo "Please select at least one enzyme.";
+            exit;
+        }elseif(isset($enzymeIDarray)){
+            echo "Please select at least one phage.";
+            exit;
+        }else{
+            echo "Please select at least one Enzyme and One Phage";
+            exit;
         }
-        $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray);
         
         $enzymeCount = count($enzymeIDarray);
-        $tableHeader = "<thead><tr><th>Phage Name</th><th>Cluster</th><th>Subcluster</th>";
+        $tableHeader = "<thead><tr><th>Phage Name</th><th>Genus</th><th>Cluster</th><th>Subcluster</th>";
         $tableBody = "<tbody>";
         $enzymeNames = array();
         $lastPhageName= null;
@@ -96,7 +155,7 @@ class Ajax extends Controller
                 if(!is_null($lastPhageName)){
                 $tableBody .= '</tr>';
                 }
-                $tableBody.="<tr><td>".$value['PhageName']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
+                $tableBody.="<tr><td>".$value['PhageName']."</td><td>". $value['Genus']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
                 $lastPhageName = $value['PhageName']; 
             }else{
                 $tableBody.= "<td>". $value['CutCount'] . "</td>";
@@ -109,5 +168,13 @@ class Ajax extends Controller
 
     public function getUnknownCutData(){
         echo "UNKNOWN CUTS DATA";
+    }
+
+    private function buildClusterMap(){
+        $clusters = $this->clusterModel->getClusterList();
+        foreach ($clusters as $key => $value) {
+            $clusterMap[$value['Cluster']] = $value['ClusterID']; 
+        }
+        return $clusterMap;
     }
 }

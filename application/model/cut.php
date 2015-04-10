@@ -72,10 +72,11 @@ class cut
     function selectCuts($phageArray, $enzymeArray){
         $phages = implode(',', array_fill(0, count($phageArray), '?'));
         $enzymes = implode(',', array_fill(0, count($enzymeArray), '?'));
-        $sql = "SELECT p.PhageName, e.EnzymeName, c.Cluster, p.Subcluster, ct.CutCount from cutsTable ct 
+        $sql = "SELECT p.PhageName, g.Genus, e.EnzymeName, c.Cluster, p.Subcluster, ct.CutCount from cutsTable ct 
                 LEFT JOIN phageTable as p on p.PhageID = ct.PhageID
                 LEFT JOIN enzymeTable as e on e.EnzymeID = ct.EnzymeID
                 LEFT JOIN clusterTable as c on p.ClusterID = c.ClusterID
+                LEFT JOIN genusTable as g on p.GenusID = g.GenusID
                 WHERE ct.PhageID in (" . $phages .") AND ct.EnzymeID in (" . $enzymes .");";
         $query = $this->db->prepare($sql);
         foreach ($phageArray as $key => $value) {

@@ -65,6 +65,22 @@ $(function(){
                     	//console.log(i);                    
                     }
                 });
+         $.ajax(url + "/ajax/getSubClusters")
+                .done(function(result) {
+                    // this will be executed if the ajax-call was successful
+                    // here we get the feedback from the ajax-call (result) and show it in #javascript-ajax-result-box
+                    var jsonResult = $.parseJSON(result);
+                    console.log(jsonResult);
+                    //console.log(jsonResult.length);
+                    for (var i = 0; i < jsonResult.length ; i++) {
+                        var temp = jsonResult[i];
+                        $("select[name='selSubCluster[]']").append($("<option></option>")
+                                                            .attr("value",temp['ID'])
+                                                            .text(temp['name']));
+                        //console.log(temp['ID'] +" :"+temp['name']);
+                        //console.log(i);                    
+                    }
+                });
                 
 });
 
