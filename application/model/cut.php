@@ -82,7 +82,7 @@ class cut
             $sql .= "and ((ct.CutCount between ";
             $qpart = array_fill(0, count($ranges), "? and ?");
             $sql .= implode(") or  ( ct.CutCount between ", $qpart) ."))";
-            echo $sql;
+            //echo $sql;
         }
         $query = $this->db->prepare($sql);
         $i=1;

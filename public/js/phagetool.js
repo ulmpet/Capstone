@@ -104,23 +104,29 @@ $("#clicker").click(function(){
                 data: $("#phageOptions").serialize() }
                 )
                 .done(function(result){
-                    $('#resultDiv').children().remove();
-                    //console.log(result);
+                    $('#resultTable').children().remove();
+                    console.log(result);
+
                     var info = $.parseJSON(result);
+                    if(info['message'] != null){
+                        $("#resultTable").html(info['message']);
+                        return;
+                    }
                     //console.log(info);
-                    $("#resultDiv").html(info['rows']);
-                    if ( $.fn.dataTable.isDataTable( '#resultDiv' ) ) {
+                    //$("#resultTable").html(info['rows']);
+                    if ( $.fn.dataTable.isDataTable( '#resultTable' ) ) {
                         $.fn.dataTableExt.sErrMode = 'console';
-                        var table = $("#resultDiv").DataTable({
+                        var table = $("#resultTable").DataTable({
+                            "destroy": true,
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
-                            "destroy": true
+                            
                         });
                         new $.fn.dataTable.FixedColumns( table );
                     }else{
                         $.fn.dataTableExt.sErrMode = 'console';
-                        var table = $("#resultDiv").DataTable({
+                        var table = $("#resultTable").DataTable({
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns']
@@ -135,8 +141,8 @@ $("#clicker").click(function(){
                 data: $("#phageOptions").serialize() }
                 )
                 .done(function(result){
-                    $("#resultDiv").html(result);
-                    $("#resultDiv").DataTable();
+                    $("#resultTable").html(result);
+                    $("#resultTable").DataTable();
                 });
         }else{
             window.alert("Please select an option under preconditions.")

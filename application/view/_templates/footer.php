@@ -18,7 +18,7 @@
     echo '<script type="text/javascript" src="'. URL .'js/phagetool.js"></script>';
     echo '<script src="' . URL . 'js/select2.min.js"></script>';
     echo '<link href="'. URL . 'css/select2.css" rel="stylesheet" />';
-    echo '<script src="' . URL . 'js/jquery.dataTables.min.js"></script>';
+    echo '<script src="' . URL . 'js/jquery.dataTables.js"></script>';
     echo '<link href="'. URL . 'css/jquery.dataTables.min.css" rel="stylesheet" />';
     echo '<script src="' . URL . 'js/dataTables.fixedColumns.js"></script>';
      echo '<link href="'. URL . 'css/dataTables.fixedColumns.css" rel="stylesheet" />';

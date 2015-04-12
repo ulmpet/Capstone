@@ -107,9 +107,10 @@
 </form>
 
 
-<table id="resultDiv" class='display' >
-
-</table>
+<div id="resultDiv"  >
+    <table id='resultTable' class='display'>
+    </table>
+</div>
 
 </div>
 

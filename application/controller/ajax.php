@@ -73,6 +73,11 @@ class Ajax extends Controller
 
     public function getKnownCutData(){
 
+        $enzymeNames = array();
+        $phageNames = array();
+        $lastPhageName= null;
+        $message = null;
+
         ini_set("memory_limit","1024M");
         if(isset($_POST['selPhage'])){
             foreach ($_POST['selPhage'] as $key => $value) {
@@ -152,60 +157,61 @@ class Ajax extends Controller
         if(isset($phageIDarray) && isset($enzymeIDarray)){
             $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray,$ranges);
         }elseif(isset($phageIDarray)){
-            echo "Please select at least one enzyme.";
-            exit;
+            $message ="Please select at least one enzyme.";
+            
         }elseif(isset($enzymeIDarray)){
-            echo "Please select at least one phage.";
-            exit;
+            $message = "Please select at least one phage.";
+            
         }else{
-            echo "Please select at least one Enzyme and One Phage";
-            exit;
+            $message =  "Please select at least one Enzyme and One Phage";
+            
         }
         
-        $enzymeCount = count($enzymeIDarray);
-        //$tableHeader = "<thead><tr><th>Phage Name</th><th>Genus</th><th>Cluster</th><th>Subcluster</th>";
-        //$tableBody = "<tbody>";
-        $enzymeNames = array();
-        $phageNames = array();
-        $lastPhageName= null;
+        if(is_null($message)){
+            $enzymeCount = count($enzymeIDarray);
+            //$tableHeader = "<thead><tr><th>Phage Name</th><th>Genus</th><th>Cluster</th><th>Subcluster</th>";
+            //$tableBody = "<tbody>";
 
-        // foreach ($cutdata as $key => $value) {
-        //     if(!in_array($value['EnzymeName'], $enzymeNames)){
-        //         $tableHeader .= "<th>". $value['EnzymeName']."</th>";
-        //         $enzymeNames[] = $value['EnzymeName'];
-        //     }
-        //     if($value['PhageName'] != $lastPhageName){
-        //         if(!is_null($lastPhageName)){
-        //         $tableBody .= '</tr>';
-        //         }
-        //         $tableBody.="<tr><td>".$value['PhageName']."</td><td>". $value['Genus']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
-        //         $lastPhageName = $value['PhageName']; 
-        //     }else{
-        //         $tableBody.= "<td>". $value['CutCount'] . "</td>";
-        //     }
-        // }
-        // $tableHeader .= '</tr></thead>';
-        // $tableBody .= '</tbody>';
+            // foreach ($cutdata as $key => $value) {
+            //     if(!in_array($value['EnzymeName'], $enzymeNames)){
+            //         $tableHeader .= "<th>". $value['EnzymeName']."</th>";
+            //         $enzymeNames[] = $value['EnzymeName'];
+            //     }
+            //     if($value['PhageName'] != $lastPhageName){
+            //         if(!is_null($lastPhageName)){
+            //         $tableBody .= '</tr>';
+            //         }
+            //         $tableBody.="<tr><td>".$value['PhageName']."</td><td>". $value['Genus']."</td><td>".$value['Cluster']."</td><td>".$value['Subcluster']."</td><td>".$value['CutCount']."</td>";
+            //         $lastPhageName = $value['PhageName']; 
+            //     }else{
+            //         $tableBody.= "<td>". $value['CutCount'] . "</td>";
+            //     }
+            // }
+            // $tableHeader .= '</tr></thead>';
+            // $tableBody .= '</tbody>';
 
-        $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name");
-        $headerObjects[] = array("title" => "Genus","data" => "Genus");
-        $headerObjects[] = array("title" => "Cluster","data" => "Cluster");
-        $headerObjects[] = array("title" => "Subcluster","data" => "Subcluster");
-        foreach ($cutdata as $key => $value) {
-            if(!in_array($value['EnzymeName'], $enzymeNames)){
-                $headerObjects[] = array("title" => $value['EnzymeName'],"data" => $value['EnzymeName']);
-                $enzymeNames[] = $value['EnzymeName'];
+            $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name");
+            $headerObjects[] = array("title" => "Genus","data" => "Genus");
+            $headerObjects[] = array("title" => "Cluster","data" => "Cluster");
+            $headerObjects[] = array("title" => "Subcluster","data" => "Subcluster");
+            foreach ($cutdata as $key => $value) {
+                if(!in_array($value['EnzymeName'], $enzymeNames)){
+                    $headerObjects[] = array("title" => $value['EnzymeName'],"data" => $value['EnzymeName']);
+                    $enzymeNames[] = $value['EnzymeName'];
+                }
+                if(!array_key_exists($value['PhageName'], $phageNames)){
+                    $phageNames[$value['PhageName']] = array('Phage Name' => $value['PhageName'], 'Genus'=>$value['Genus'],'Cluster'=>$value['Cluster'],'Subcluster'=>$value['Subcluster'],$value['EnzymeName']=>$value['CutCount']);
+                }else{
+                    $phageNames[$value['PhageName']][$value['EnzymeName']] = $value['CutCount'];
+                }
             }
-            if(!array_key_exists($value['PhageName'], $phageNames)){
-                $phageNames[$value['PhageName']] = array('Phage Name' => $value['PhageName'], 'Genus'=>$value['Genus'],'Cluster'=>$value['Cluster'],'Subcluster'=>$value['Subcluster'],$value['EnzymeName']=>$value['CutCount']);
-            }else{
-                $phageNames[$value['PhageName']][$value['EnzymeName']] = $value['CutCount'];
+            foreach ($phageNames as $key => $value) {
+                $rowObjects[] = $value;
             }
+            $JSONoutput = json_encode(array("columns"=>$headerObjects, "rows"=>$rowObjects, 'message' => $message));
+        }else{
+            $JSONoutput = json_encode(array("columns"=>null, "rows"=>null, 'message' => $message));
         }
-        foreach ($phageNames as $key => $value) {
-            $rowObjects[] = $value;
-        }
-        $JSONoutput = json_encode(array("columns"=>$headerObjects, "rows"=>$rowObjects));
         echo $JSONoutput;
     }
 
