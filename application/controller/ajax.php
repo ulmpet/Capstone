@@ -205,9 +205,20 @@ class Ajax extends Controller
                     $phageNames[$value['PhageName']][$value['EnzymeName']] = $value['CutCount'];
                 }
             }
+            foreach ($phageNames as $row => $valueArray) {
+                foreach ($enzymeNames as $enzyme) {
+                    if(!array_key_exists($enzyme, $valueArray)){
+                        $phageNames[$row][$enzyme] = "No Data";
+                        //Helper::outputArray($row);
+                    }
+                }
+            }
             foreach ($phageNames as $key => $value) {
                 $rowObjects[] = $value;
             }
+            
+            
+            
             $JSONoutput = json_encode(array("columns"=>$headerObjects, "rows"=>$rowObjects, 'message' => $message));
         }else{
             $JSONoutput = json_encode(array("columns"=>null, "rows"=>null, 'message' => $message));
