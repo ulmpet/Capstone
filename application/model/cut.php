@@ -69,7 +69,7 @@ class cut
         return $query->execute();
     }
 
-    function selectCuts($phageArray, $enzymeArray){
+    function selectCuts($phageArray, $enzymeArray,$ranges = null){
         $phages = implode(',', array_fill(0, count($phageArray), '?'));
         $enzymes = implode(',', array_fill(0, count($enzymeArray), '?'));
         $sql = "SELECT p.PhageName, g.Genus, e.EnzymeName, c.Cluster, p.Subcluster, ct.CutCount from cutsTable ct 
@@ -77,13 +77,26 @@ class cut
                 LEFT JOIN enzymeTable as e on e.EnzymeID = ct.EnzymeID
                 LEFT JOIN clusterTable as c on p.ClusterID = c.ClusterID
                 LEFT JOIN genusTable as g on p.GenusID = g.GenusID
-                WHERE ct.PhageID in (" . $phages .") AND ct.EnzymeID in (" . $enzymes .");";
+                WHERE ct.PhageID in (" . $phages .") AND ct.EnzymeID in (" . $enzymes .")";
+        if(!is_null($ranges)){
+            $sql .= "and ((ct.CutCount between ";
+            $qpart = array_fill(0, count($ranges), "? and ?");
+            $sql .= implode(") or  ( ct.CutCount between ", $qpart) ."))";
+            echo $sql;
+        }
         $query = $this->db->prepare($sql);
+        $i=1;
         foreach ($phageArray as $key => $value) {
-            $query->bindValue($key+1, $value);
+            $query->bindValue($i++, $value);
         }
         foreach ($enzymeArray as $key => $value) {
-            $query->bindValue($key+count($phageArray)+1, $value);
+            $query->bindValue($i++, $value);
+        }
+        if(!is_null($ranges)){
+            foreach($ranges as $k => $v){
+                $query->bindParam($i++, $v[0], PDO::PARAM_INT);
+                $query->bindParam($i++, $v[1], PDO::PARAM_INT);
+            }
         }
         $query->execute();
         return $query->fetchAll();

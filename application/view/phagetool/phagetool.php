@@ -107,9 +107,8 @@
 </form>
 
 
-<table id="resultDiv">
-    <thead><tr><th></th></tr></thead>
-    <tbody></tbody>
+<table id="resultDiv" class='display' >
+
 </table>
 
 </div>

@@ -70,7 +70,7 @@ $(function(){
                     // this will be executed if the ajax-call was successful
                     // here we get the feedback from the ajax-call (result) and show it in #javascript-ajax-result-box
                     var jsonResult = $.parseJSON(result);
-                    console.log(jsonResult);
+                    //console.log(jsonResult);
                     //console.log(jsonResult.length);
                     for (var i = 0; i < jsonResult.length ; i++) {
                         var temp = jsonResult[i];
@@ -88,10 +88,10 @@ $(window).load(function(){
 
     //anytime the values of a select box change run this function
 $("#clicker").click(function(){
-    console.log( "Phage values: " + $("[name='selPhage[]']").select2("val"));
-    console.log( "Cluster Values: " + $("[name='selCluster[]']").select2("val"));
-    console.log( "Enzyme Values: "+ $("[name='selNeb[]']").select2("val"));
-    
+    //console.log( "Phage values: " + $("[name='selPhage[]']").select2("val"));
+    //console.log( "Cluster Values: " + $("[name='selCluster[]']").select2("val"));
+    //console.log( "Enzyme Values: "+ $("[name='selNeb[]']").select2("val"));
+    //console.log( "CUT Values: "+ $("[name='selCuts[]']").select2("val"));
 
     if($("#boolTree").is(':checked')){
         console.log("makephylipTree!!!!!!!!!!!!!!");
@@ -104,7 +104,29 @@ $("#clicker").click(function(){
                 data: $("#phageOptions").serialize() }
                 )
                 .done(function(result){
-                    $("#resultDiv").html(result);
+                    $('#resultDiv').children().remove();
+                    //console.log(result);
+                    var info = $.parseJSON(result);
+                    //console.log(info);
+                    $("#resultDiv").html(info['rows']);
+                    if ( $.fn.dataTable.isDataTable( '#resultDiv' ) ) {
+                        $.fn.dataTableExt.sErrMode = 'console';
+                        var table = $("#resultDiv").DataTable({
+                            "scrollX" : "100%",
+                            "data" : info['rows'],
+                            "columns": info['columns'],
+                            "destroy": true
+                        });
+                        new $.fn.dataTable.FixedColumns( table );
+                    }else{
+                        $.fn.dataTableExt.sErrMode = 'console';
+                        var table = $("#resultDiv").DataTable({
+                            "scrollX" : "100%",
+                            "data" : info['rows'],
+                            "columns": info['columns']
+                        });
+                        new $.fn.dataTable.FixedColumns( table );
+                    }
                 });
         }else if($("[name='visType']:checked").val() == 1){
             $.ajax({
@@ -114,7 +136,7 @@ $("#clicker").click(function(){
                 )
                 .done(function(result){
                     $("#resultDiv").html(result);
-
+                    $("#resultDiv").DataTable();
                 });
         }else{
             window.alert("Please select an option under preconditions.")
