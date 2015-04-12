@@ -1,17 +1,8 @@
 <div class="container">
-    Account
+    <h1>Account</h1>
 
     <div>
-        <form method = "POST" action = "">
-            <br>
-            Click here if you would like to deactivate your account.
-            <br>
-            <input name="Deactivate" type="submit" value="Deactivate"/> 
-        </form>
-    </div>
-
-    <div>
-        <h2>Change Password</h2>
+        <h2>Change Password:</h2>
         <form method="POST" action="">
     <table>
         <tr>
@@ -30,6 +21,15 @@
             <p><input type= "submit" value="Change Password"> 
         </form>
     </div>
+    <div>
+        <h2>Deactivate Account:</h2>
+        <form method = "POST" action = "">
+            Click here if you would like to deactivate your account.
+            <br>
+            <input name="Deactivate" type="submit" value="Deactivate"/> 
+        </form>
+    </div>
+
     <p>
         <u><bold>Features to be included:</bold></u></br>
         -Phage filtering mechanisms (cluster, sub-cluster, genus, …)</br>
