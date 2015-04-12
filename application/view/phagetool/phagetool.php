@@ -11,7 +11,7 @@
         <tr>
             <td colspan="3">
                 <h3>Preconditions</h3></br>
-                <input type="radio" name="visType" value="0">Known phage &nbsp;
+                <input type="radio" name="visType" value="0" checked=checked>Known phage &nbsp;
                 <input type="radio" name="visType" value="1">Known & unknown phage<br><br>
                 <input type="checkbox" name="boolTree" id="boolTree" value="1">Phylip Tree &nbsp;
                 <select name="phylip visualization">
@@ -104,6 +104,7 @@
     
     </tbody>
     </table>
+    
 </form>
 
 
@@ -111,6 +112,9 @@
     <table id='resultTable' class='display'>
     </table>
 </div>
+
+<div id='unknownData'>
+    </div>
 
 </div>
 

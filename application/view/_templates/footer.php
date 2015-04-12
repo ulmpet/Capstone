@@ -21,7 +21,11 @@
     echo '<script src="' . URL . 'js/jquery.dataTables.js"></script>';
     echo '<link href="'. URL . 'css/jquery.dataTables.min.css" rel="stylesheet" />';
     echo '<script src="' . URL . 'js/dataTables.fixedColumns.js"></script>';
-     echo '<link href="'. URL . 'css/dataTables.fixedColumns.css" rel="stylesheet" />';
+    echo '<link href="'. URL . 'css/dataTables.fixedColumns.css" rel="stylesheet" />';
+    echo '<script src="' . URL . 'js/jquery-ui.js"></script>';
+    echo '<link href="'. URL . 'css/jquery-ui.css" rel="stylesheet" />';
+    echo '<link href="'. URL . 'css/jquery-ui.structure.css" rel="stylesheet" />';
+    echo '<link href="'. URL . 'css/jquery-ui.theme.css" rel="stylesheet" />';
     echo '<script type="text/javascript"> makeBoxes() </script>';
 	}?>
 

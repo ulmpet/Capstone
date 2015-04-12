@@ -86,6 +86,7 @@ $(function(){
 
 $(window).load(function(){
 
+
     //anytime the values of a select box change run this function
 $("#clicker").click(function(){
     //console.log( "Phage values: " + $("[name='selPhage[]']").select2("val"));
@@ -116,14 +117,18 @@ $("#clicker").click(function(){
                     //$("#resultTable").html(info['rows']);
                     if ( $.fn.dataTable.isDataTable( '#resultTable' ) ) {
                         $.fn.dataTableExt.sErrMode = 'console';
+                        $("#resultDiv").html("<table id='resultTable' class='display'></table>");
                         var table = $("#resultTable").DataTable({
-                            "destroy": true,
+                            
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
                             
                         });
                         new $.fn.dataTable.FixedColumns( table );
+                        $('html, body').animate({
+                            scrollTop: $("#resultDiv").offset().top
+                        }, 300);
                     }else{
                         $.fn.dataTableExt.sErrMode = 'console';
                         var table = $("#resultTable").DataTable({
@@ -137,12 +142,28 @@ $("#clicker").click(function(){
         }else if($("[name='visType']:checked").val() == 1){
             $.ajax({
                 method: "POST",
-                url: url + "/ajax/getUnknownCutData",
+                url: url + "/ajax/buildUknownModal",
                 data: $("#phageOptions").serialize() }
-                )
-                .done(function(result){
-                    $("#resultTable").html(result);
-                    $("#resultTable").DataTable();
+                ).done(function(result){
+                    $("#unknownData").html(result);
+                    $("#unknownData").dialog({
+                        modal: true,
+                        width: "600",
+                        height: "600",
+                        title: "select unknown Cuts",
+                        buttons: [{
+                            text: "Submit",
+                            click: function(){
+                                submitUnknownData();
+                            },
+                        },{
+                            text: "Cancel",
+                            click: function(){
+                                $(this).dialog("close");
+                            }
+                        }
+                        ]
+                    })
                 });
         }else{
             window.alert("Please select an option under preconditions.")
@@ -152,43 +173,47 @@ $("#clicker").click(function(){
 
 });
 });
-/***************************************************
-//phageOptions form processing ajax/json
 
-$(function proccessForm(){
-    if{
-        //code to select which and how the ajax functions should execute
-    }
+function submitUnknownData(){
+    //console.log(otherFormData);
     $.ajax({
-        url: '/ajax/knownPhage',
-        dataType: 'json',
-        type: 'post',
-        contentType: 'application/json'
-        data:() 
-        });
+        type: "POST",
+        url: url + "/ajax/getUnknownCutData",
+        data: $("form").serialize() }
+        )
+        .done(function(result){
+                    $('#resultTable').children().remove();
+                    console.log(result);
 
-        $.ajax({
-            url: '/ajax/unknownPhage',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json'
-            data:() 
-            });
-
-        $.ajax({
-            url: '/ajax/rootPhylip',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json'
-            data:()
-            });
-
-        $.ajax({
-            url: '/ajax/unrootPhylip',
-            dataType: 'json',
-            type: 'post',
-            contentType: 'application/json'
-            data:()
-            });
-});
-***************************************************/
+                    var info = $.parseJSON(result);
+                    if(info['message'] != null){
+                        $("#resultTable").html(info['message']);
+                        return;
+                    }
+                    //console.log(info);
+                    //$("#resultTable").html(info['rows']);
+                    if ( $.fn.dataTable.isDataTable( '#resultTable' ) ) {
+                        $.fn.dataTableExt.sErrMode = 'console';
+                        $("#resultDiv").html("<table id='resultTable' class='display'></table>");
+                        var table = $("#resultTable").DataTable({
+                            
+                            "scrollX" : "100%",
+                            "data" : info['rows'],
+                            "columns": info['columns'],
+                            
+                        });
+                        new $.fn.dataTable.FixedColumns( table );
+                        $('html, body').animate({
+                            scrollTop: $("#resultDiv").offset().top
+                        }, 300);
+                    }else{
+                        $.fn.dataTableExt.sErrMode = 'console';
+                        var table = $("#resultTable").DataTable({
+                            "scrollX" : "100%",
+                            "data" : info['rows'],
+                            "columns": info['columns']
+                        });
+                        new $.fn.dataTable.FixedColumns( table );
+                    }
+                });
+}

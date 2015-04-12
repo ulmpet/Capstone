@@ -59,4 +59,17 @@ class enzyme
         $query->execute();
         return $query->fetchAll();
     }
+
+    function getEnzymeNamesByID($idArray){
+        $sql = "Select EnzymeName, EnzymeID from enzymeTable where EnzymeID in (";
+        $qpart = array_fill(0,count($idArray),"?");
+        $sql .= implode(',', $qpart) . ')';
+        $query = $this->db->prepare($sql);
+        $i= 1;
+        foreach ($idArray as $key => $value) {
+            $query->bindValue($i++, $value);
+        }
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
