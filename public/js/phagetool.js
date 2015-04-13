@@ -117,12 +117,13 @@ $("#clicker").click(function(){
                     //$("#resultTable").html(info['rows']);
                     if ( $.fn.dataTable.isDataTable( '#resultTable' ) ) {
                         $.fn.dataTableExt.sErrMode = 'console';
-                        $("#resultDiv").html("<table id='resultTable' class='display'></table>");
+                        $("#resultDiv").html("<table id='resultTable' class='display cell-border'></table>");
                         var table = $("#resultTable").DataTable({
                             
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
+
                             
                         });
                         new $.fn.dataTable.FixedColumns( table );
@@ -134,7 +135,7 @@ $("#clicker").click(function(){
                         var table = $("#resultTable").DataTable({
                             "scrollX" : "100%",
                             "data" : info['rows'],
-                            "columns": info['columns']
+                            "columns": info['columns'],
                         });
                         new $.fn.dataTable.FixedColumns( table );
                     }
@@ -194,7 +195,7 @@ function submitUnknownData(){
                     //$("#resultTable").html(info['rows']);
                     if ( $.fn.dataTable.isDataTable( '#resultTable' ) ) {
                         $.fn.dataTableExt.sErrMode = 'console';
-                        $("#resultDiv").html("<table id='resultTable' class='display'></table>");
+                        $("#resultDiv").html("<table id='resultTable' class='display cell-border'></table>");
                         var table = $("#resultTable").DataTable({
                             
                             "scrollX" : "100%",

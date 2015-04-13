@@ -290,11 +290,11 @@ class Ajax extends Controller
             $enzymeCount = count($enzymeIDarray);
 
 
-            $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name");
-            $headerObjects[] = array("title"=> "Sim Score", "data"=>"simscore");
-            $headerObjects[] = array("title" => "Genus","data" => "Genus");
-            $headerObjects[] = array("title" => "Cluster","data" => "Cluster");
-            $headerObjects[] = array("title" => "Subcluster","data" => "Subcluster");
+            $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name", "className"=> "dt-center");
+            $headerObjects[] = array("title"=> "Sim Score", "data"=>"simscore", "className"=> "dt-center");
+            $headerObjects[] = array("title" => "Genus","data" => "Genus", "className"=> "dt-center");
+            $headerObjects[] = array("title" => "Cluster","data" => "Cluster", "className"=> "dt-center");
+            $headerObjects[] = array("title" => "Subcluster","data" => "Subcluster", "className"=> "dt-center");
             foreach ($cutdata as $key => $value) {
                 if(!in_array($value['EnzymeName'], $enzymeNames)){
                     $headerObjects[] = array("title" => $value['EnzymeName'],"data" => $value['EnzymeName']);

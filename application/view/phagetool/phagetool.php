@@ -109,7 +109,7 @@
 
 
 <div id="resultDiv"  >
-    <table id='resultTable' class='display'>
+    <table id='resultTable' class='display cell-border'>
     </table>
 </div>
 
