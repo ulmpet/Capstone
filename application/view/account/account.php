@@ -3,19 +3,19 @@
 
     <div>
         <h2>Change Password:</h2>
-        <form method="POST" action="">
+        <form method="POST" action="/account/changepassword">
     <table>
         <tr>
             <td>Enter your existing password:</td>
-            <td><input type="password" size="16" name="password"></td>
+            <td><input type="password"  name="password"></td>
         </tr>
         <tr>
             <td>Enter your new password:</td>
-            <td><input type="password" size="16" name="newpassword"></td>
+            <td><input type="password"  name="newpassword"></td>
         </tr>
         <tr>
             <td>Re-enter your new password:</td>
-            <td><input type="password" size="16" name="confirmnewpassword"></td>
+            <td><input type="password"  name="confirmnewpassword"></td>
         </tr>
     </table>
             <p><input type= "submit" value="Change Password"> 
