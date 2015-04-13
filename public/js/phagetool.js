@@ -123,7 +123,9 @@ $("#clicker").click(function(){
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
-
+                            "columnDefs": [
+                                {className: "dt-center", "targets": "_all"},
+                            ]
                             
                         });
                         new $.fn.dataTable.FixedColumns( table );
@@ -136,6 +138,9 @@ $("#clicker").click(function(){
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
+                            "columnDefs": [
+                                {className: "dt-center", "targets": "_all"},
+                            ]
                         });
                         new $.fn.dataTable.FixedColumns( table );
                     }
@@ -156,6 +161,7 @@ $("#clicker").click(function(){
                             text: "Submit",
                             click: function(){
                                 submitUnknownData();
+                                $(this).dialog("close");
                             },
                         },{
                             text: "Cancel",
@@ -201,7 +207,11 @@ function submitUnknownData(){
                             "scrollX" : "100%",
                             "data" : info['rows'],
                             "columns": info['columns'],
-                            
+                            "columnDefs": [
+                                {'className': "dt-center", "targets": "_all"},
+                                {"targets": [0], "visible":false, "searchable": false}
+                            ],
+                            "aaSortingFixed": [[0,'asc']]
                         });
                         new $.fn.dataTable.FixedColumns( table );
                         $('html, body').animate({
@@ -212,7 +222,12 @@ function submitUnknownData(){
                         var table = $("#resultTable").DataTable({
                             "scrollX" : "100%",
                             "data" : info['rows'],
-                            "columns": info['columns']
+                            "columns": info['columns'],
+                            "columnDefs": [
+                                {className: "dt-center", "targets": "_all"},
+                                {"targets": [0], "visible":false, "searchable": false}
+                            ],
+                            "aaSortingFixed": [[0,'asc']]
                         });
                         new $.fn.dataTable.FixedColumns( table );
                     }

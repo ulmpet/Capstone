@@ -289,7 +289,7 @@ class Ajax extends Controller
         if(is_null($message)){
             $enzymeCount = count($enzymeIDarray);
 
-
+            $headerObjects[] = array("data" => "rowsort");
             $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name", "className"=> "dt-center");
             $headerObjects[] = array("title"=> "Sim Score", "data"=>"simscore", "className"=> "dt-center");
             $headerObjects[] = array("title" => "Genus","data" => "Genus", "className"=> "dt-center");
@@ -301,7 +301,7 @@ class Ajax extends Controller
                     $enzymeNames[] = $value['EnzymeName'];
                 }
                 if(!array_key_exists($value['PhageName'], $phageNames)){
-                    $phageNames[$value['PhageName']] = array('Phage Name' => $value['PhageName'], 'Genus'=>$value['Genus'],'Cluster'=>$value['Cluster'],'Subcluster'=>$value['Subcluster'],$value['EnzymeName']=>$value['CutCount']);
+                    $phageNames[$value['PhageName']] = array('rowsort' => 1 ,'Phage Name' => $value['PhageName'], 'Genus'=>$value['Genus'],'Cluster'=>$value['Cluster'],'Subcluster'=>$value['Subcluster'],$value['EnzymeName']=>$value['CutCount']);
                 }else{
                     $phageNames[$value['PhageName']][$value['EnzymeName']] = $value['CutCount'];
                 }
@@ -314,6 +314,7 @@ class Ajax extends Controller
                     }
                 }
             }
+            $phageNames[$_POST['unknownName']] = array('rowsort' => 0 , 'Phage Name' => $_POST['unknownName'], 'Genus'=>"UNKNOWN",'Cluster'=>"UNKNOWN",'Subcluster'=>"UNKNOWN");
             $enzymeMapNametoID = $this->buildEnzymeMapNametoID();
             foreach ($phageNames as $key => $valueArray) {
                 $match =0;
@@ -350,8 +351,11 @@ class Ajax extends Controller
                             # code...
                             break;
                     }
-                    if ($valueArray[$enzyme] <= $upperBound && $valueArray[$enzyme] >= $lowerBound) {
-                        $match++;
+                    $phageNames[$_POST['unknownName']][$enzyme] = $lowerBound."-".$upperBound;
+                    if($_POST['unknownName'] != $key){
+                        if ($valueArray[$enzyme] <= $upperBound && $valueArray[$enzyme] >= $lowerBound) {
+                            $match++;
+                        }
                     }
                     
                     
@@ -377,7 +381,7 @@ class Ajax extends Controller
     
 
     public function buildUknownModal(){
-        $modalData = '<form id="unknownDataForm"><table><tr><td><label style="width:200px">Name for Unknown Phage:</label></td><td> <input type="text" name="unknownName"></td></tr>';
+        $modalData = '<form id="unknownDataForm"><table><tr><td><label style="width:200px">Name for Unknown Phage:</label></td><td> <input type="text" name="unknownName" value="Unknown Phage"></td></tr>';
         if(isset($_POST['selNeb'])){
             $enzymeIds = $this->getEnzymeIDArray($_POST['selNeb']);
             $namesAndIds = $this->enzymeModel->getEnzymeNamesByID($enzymeIds);
