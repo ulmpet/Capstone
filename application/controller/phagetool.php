@@ -17,13 +17,22 @@ class PhageTool extends Controller
     public function index()
     {
 
-        $phageGenus = $this->loadModel('genus');
-        $genusList = $phageGenus->getGenusList();
+        $genusModel = $this->loadModel('genus');
+        $phageModel = $this->loadModel('phage');
+        $clusterModel = $this->loadModel('cluster');
+        $enzymeModel = $this->loadModel('enzyme');
+        //$phageList = $phageModel->getPhageNamesAndID();
+        //$subClusterAssociations = $phageModel->getSubClusterAssociations();
+        //$clusterList = $clusterModel->getClusterList();
+        //$enzymeList = $enzymeModel->getEnzymeNamesAndID();
+        //$genusList = $genusModel->getGenusList();
         
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/phagetool/phagetool.php';
-        require APP . 'view/_templates/footer.php';}
+        require APP . 'view/_templates/footer.php';
+        //Helper::outputArray($subClusterAssociations);
+    }
 
     public function test(){
     	

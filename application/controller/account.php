@@ -21,4 +21,23 @@ class Account extends Controller
         require APP . 'view/account/account.php';
         require APP . 'view/_templates/footer.php';
     }
+    /**
+    *  Step 1) check that the user is logged in and if the password entered is the correct password.
+    *          - Stored in $_REQUEST['password'] 
+    *       2) check new password and newconfirmed password are the same. If not return error. 
+    *       3) Generate new salt, hash the new password. Update DB with new hashed password and Salt.
+    */
+    public function changePassword()
+    {
+        Helper::outputArray($_REQUEST);
+        
+        $this->message = "Create your new password now.";
+        $salt = bin2hex(openssl_random_pseudo_bytes(64));
+
+        $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+
+
+        //$this->userModel->updatePassword($password,$salt){
+
+    }
 }

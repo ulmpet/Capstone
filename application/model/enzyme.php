@@ -39,9 +39,36 @@ class enzyme
         return $query->fetchAll();
     }
 
+    function getAllEnzymeID(){
+        $sql = "SELECT EnzymeID from enzymeTable";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    function getEnzymeNames(){
+        $sql = "SELECT EnzymeName from enzymeTable";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     function getEnzymesForCutting(){
         $sql = "select * from enzymeTable";
         $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    function getEnzymeNamesByID($idArray){
+        $sql = "Select EnzymeName, EnzymeID from enzymeTable where EnzymeID in (";
+        $qpart = array_fill(0,count($idArray),"?");
+        $sql .= implode(',', $qpart) . ')';
+        $query = $this->db->prepare($sql);
+        $i= 1;
+        foreach ($idArray as $key => $value) {
+            $query->bindValue($i++, $value);
+        }
         $query->execute();
         return $query->fetchAll();
     }
