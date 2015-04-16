@@ -5,7 +5,7 @@
 </script>
     
     <div class="container">
-        <form id="phageOptions" name="options" method="post" action="/home/output">
+        <form id="phageOptions" name="options" method="post" action="/phagetool/phylip">
     <table border="0" width="100%">
         <tbody>
         <tr>

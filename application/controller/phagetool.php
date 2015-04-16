@@ -34,7 +34,7 @@ class PhageTool extends Controller
         //Helper::outputArray($subClusterAssociations);
     }
 
-    public function test(){
-    	
+    public function phylip(){
+    	Helper::outputArray($_POST);
     }
 }
