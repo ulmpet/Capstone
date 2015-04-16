@@ -36,5 +36,14 @@ class PhageTool extends Controller
 
     public function phylip(){
     	Helper::outputArray($_POST);
+    	$commandString = "/usr/local/src/phylip-3.69/exe/pars< ". $file_parsIn . " > /dev/null 2>&1";
+    	//exec($commandString);
+    	$commandString = "/";
+    	//exec($commandString)
+    	$commandString = "";
+    	$commandString = "";
+    	$commandString = "";
+    	$commandString = "";
+    	$commandString = "";
     }
 }
