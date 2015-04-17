@@ -22,22 +22,44 @@ class Account extends Controller
         require APP . 'view/_templates/footer.php';
     }
     /**
-    *  Step 1) check that the user is logged in and if the password entered is the correct password.
-    *          - Stored in $_REQUEST['password'] 
-    *       2) check new password and newconfirmed password are the same. If not return error. 
-    *       3) Generate new salt, hash the new password. Update DB with new hashed password and Salt.
+    *  This method is called upon the submit of a form in the Account.php View
+    *  It checks the current passowrd with the help of account.php model and will change the password,
+    *  with a new salted hash. This method is not quite complete because the message comfirming the change in passwords will not show for some reason. 
+    *       
     */
     public function changePassword()
     {
-        Helper::outputArray($_REQUEST);
-        
-        $this->message = "Create your new password now.";
-        $salt = bin2hex(openssl_random_pseudo_bytes(64));
+        //Helper::outputArray($_REQUEST);
+        //Helper::outputArray($_SESSION);
 
-        $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+        //will get the users Username by session ID
+        $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
+        //gets the salt for the current user
+        $userSalt = $this->userModel->getSalt($currentUser);
+        //hash and salt the password.
+        $password = hash('sha512',$_REQUEST['password'].$userSalt);
+        //used to confirm password
+        $passcheck = $this->userModel->checkPassword($_SESSION['UID'], $password);
 
+        if(count($passcheck) != 1 ){
+            $this->message = "Invalid password, please try again.";
+        }
+        $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
 
-        //$this->userModel->updatePassword($password,$salt){
+        if($newcheck != 0){
+            $this->message = "The new passwords do not match. Passwords are case-sensitive, please check them again.";
+        }
+        else{
+            //generate a new salt and use it with the hash of the new password
+            $salt = bin2hex(openssl_random_pseudo_bytes(64));
+            $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+            $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
+            $this->message = "Congratulations, your new password has been set.";
+        }
 
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/_templates/nav.php';
+        require APP . 'view/account/account.php';
+        require APP . 'view/_templates/footer.php';
     }
 }
