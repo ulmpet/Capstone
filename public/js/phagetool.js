@@ -96,6 +96,7 @@ $("#clicker").click(function(){
 
     if($("#boolTree").is(':checked')){
         console.log("makephylipTree!!!!!!!!!!!!!!");
+        $("#phageOptions").submit();
     }else{
         console.log($("[name='visType']:checked").val());
         if($("[name='visType']:checked").val() == 0){
@@ -209,9 +210,9 @@ function submitUnknownData(){
                             "columns": info['columns'],
                             "columnDefs": [
                                 {'className': "dt-center", "targets": "_all"},
-                                {"targets": [0], "visible":false, "searchable": false}
+                                {"targets": [1], "visible":false, "searchable": false}
                             ],
-                            "aaSortingFixed": [[0,'asc']]
+                            "aaSortingFixed": [[1,'asc']]
                         });
                         new $.fn.dataTable.FixedColumns( table );
                         $('html, body').animate({
@@ -225,9 +226,9 @@ function submitUnknownData(){
                             "columns": info['columns'],
                             "columnDefs": [
                                 {className: "dt-center", "targets": "_all"},
-                                {"targets": [0], "visible":false, "searchable": false}
+                                {"targets": [1], "visible":false, "searchable": false}
                             ],
-                            "aaSortingFixed": [[0,'asc']]
+                            "aaSortingFixed": [[1,'asc']]
                         });
                         new $.fn.dataTable.FixedColumns( table );
                     }

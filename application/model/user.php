@@ -41,14 +41,14 @@ class user
     */
     public function selectAllUsers(){
         
-        $sql ="select * from userTable";
+        $sql ="SELECT * FROM userTable";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
     public function getAdmin(){
-        $sql ="select EmailAddress from userTable WHERE AuthLevel = 1;";
+        $sql ="SELECT EmailAddress FROM userTable WHERE AuthLevel = 1;";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -60,11 +60,20 @@ class user
     * @return an Integer representing the number of rows with that email address.
     */
     public function selectUserByEmail($email){
-        $sql ="select UserID from userTable WHERE EmailAddress = :email;";
+        $sql ="SELECT UserID from userTable WHERE EmailAddress = :email;";
         $query = $this->db->prepare($sql);
         $parameters = array(':email'=>$email);
         $query->execute($parameters);
         return count($query->fetchAll());
+    }
+    public function getUserByID($userID){
+
+        $sql = "SELECT EmailAddress FROM userTable WHERE UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID); 
+        $query->execute($parameters);
+        $output = $query->fetchAll();
+        return $output[0]['EmailAddress'];
     }
 
     /*
@@ -112,12 +121,40 @@ class user
 
     }
     /**
-    *
+    *This will set a users value
     *
     *
     *
     */
+
     public function deactivateUser($userID){
-        $sql = "UPDATE userTable SET Active = 'false' WHERE userID = $userID ";
+        $sql = "UPDATE userTable SET Active = 'false' WHERE userID = :userID;";
     }
+
+    /**
+    *This method will update the users password to the new one that has been entered. 
+    * Provided they input all the correct data.
+    *
+    *
+    */
+    public function changePassword($userID,$password,$newSalt){
+
+        $sql = "UPDATE userTable SET Password = :password, Salt = :newSalt  WHERE UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID,':password' => $password, ':newSalt' => $newSalt);
+        return $query->execute($parameters); 
+    }
+    /**
+    *This will check to see if the password entered matches the one in the DB
+    *
+    *
+    *
+    */
+    public function checkPassword($userID, $password){
+        $sql = "SELECT Password FROM userTable WHERE Password = :password AND UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID,':password' => $password);
+        $query-> execute($parameters);
+        return count($query->fetchAll());
+    } //end of checkPassword
 }
