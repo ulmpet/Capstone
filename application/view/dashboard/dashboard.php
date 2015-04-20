@@ -49,7 +49,7 @@
 
 
 <div class="container">
-    Dashboard</br></br>
+    <!--Dashboard</br></br>
     <p style="display:none">
      <u><bold>Features to be included:</bold></u></br>
        -Deactivation of accounts</br>
@@ -60,7 +60,7 @@
        -Addition of Cut location information</br>
        -Improved entry of Phage cut information</br> 
        -Validation of data from phageDB and nebcutter</br>
-    </p>
+    </p>-->
 
  <div id="fileUpload">
  <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">

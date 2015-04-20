@@ -123,12 +123,12 @@
 </form>
 
 
-<p>
+<!--<p>
    <u><bold>Features to be included:</bold></u></br>
    -Phylip (Philo-tree) generation</br>  
    -Weighted comparison of Enzyme cut information from unknown phage to known phage</br>
    -Visualization of known phage cut information</br> 
    -Visualization of unknown phage cut information</br> 
    -Guided Enzyme selection</br>
-</p>
+</p>-->
 
