@@ -1,27 +1,34 @@
 <div class="container">
-    <h1>Account</h1>
+    <div>
+        <form method = "POST" action = "">
+            <br>
+            Click here if you would like to deactivate your account.
+            <br>
+            <input name="Deactivate" type="submit" value="Deactivate"/> 
+        </form>
+    </div>
 
-    <div class="headings">
-        <h2>Change Password:</h2>
-        <form method="POST" action="/account/changepassword">
+    <div>
+        <h1>Change Password</h1>
+        <form method="POST" action="">
     <table>
         <tr>
             <td>Enter your existing password:</td>
-            <td><input type="password"  name="password"></td>
-            <td id = "" style="display: none"> Incorrect password! </td>
+            <td><input type="password" size="16" name="password"></td>
         </tr>
         <tr>
             <td>Enter your new password:</td>
-            <td><input type="password"  name="newpassword"></td>
+            <td><input type="password" size="16" name="newpassword"></td>
         </tr>
         <tr>
             <td>Re-enter your new password:</td>
-            <td><input type="password"  name="confirmnewpassword"></td>
+            <td><input type="password" size="16" name="confirmnewpassword"></td>
         </tr>
     </table>
             <p><input type= "submit" value="Change Password"> 
         </form>
     </div>
+
     <div class="headings">
         <!--<h2>Deactivate Account:</h2>-->
         <form method = "POST" action = "">
