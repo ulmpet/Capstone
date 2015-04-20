@@ -8,6 +8,7 @@
         <tr>
             <td>Enter your existing password:</td>
             <td><input type="password"  name="password"></td>
+            <td id = "" style="display: none"> Incorrect password! </td>
         </tr>
         <tr>
             <td>Enter your new password:</td>

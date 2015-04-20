@@ -289,8 +289,9 @@ class Ajax extends Controller
         if(is_null($message)){
             $enzymeCount = count($enzymeIDarray);
 
-            $headerObjects[] = array("data" => "rowsort");
+            
             $headerObjects[] = array("data" => "Phage Name","title" => "Phage Name", "className"=> "dt-center");
+            $headerObjects[] = array("data" => "rowsort");
             $headerObjects[] = array("title"=> "Sim Score", "data"=>"simscore", "className"=> "dt-center");
             $headerObjects[] = array("title" => "Genus","data" => "Genus", "className"=> "dt-center");
             $headerObjects[] = array("title" => "Cluster","data" => "Cluster", "className"=> "dt-center");
