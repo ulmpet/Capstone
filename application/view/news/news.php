@@ -1,4 +1,5 @@
 <div class="container">
-    News
-    <p>More features to come. RSS feed?</p>
+    Phage Enzyme Tool
+    <p>Make home connect to phage data button on menu
+    	and get rid of phage data view</p>
 </div>

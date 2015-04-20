@@ -133,26 +133,26 @@
       ?>
 
     </select>
-    <p><input type="submit" value="Remove Admin"></br></p>
+    <input type="submit" value="Remove Admin">
     </div>
 
   </form>
 </div>
 <div id = addGenus style="display:none">
   <form action='dashboard/addGenus' method='POST'>
-    <label> New Genus Name: <input type='text' name='newGenus' text="Enter New Genus"></label>
-    <p><input type='submit' value="Add Genus"></p>
+    <p><label>New Genus Name:  <input type='text' name='newGenus' text="Enter New Genus"></label>
+    <input type='submit' value="Add Genus"></p>
   </form>
 </div>
 
 <!--Divs that will hold the pie chart-->
 <div id="userDemograph" style="display:block">
-  <div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
+  <!--<div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
   </div>
 
   <div id="ulocationDemograph" style="display:block; width: 350px; height:250px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
-  </div>
+  </div>-->
 </div>
 </div>

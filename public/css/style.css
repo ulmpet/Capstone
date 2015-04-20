@@ -20,7 +20,7 @@ body {
     border-width: 2px;
     /*border-radius: 5px 5px 5px 5px;*/
     padding: 20px;
-    margin: 33px;
+    margin: 20px;
     width: 70%;
     float:left;
     clear:right;
@@ -31,6 +31,14 @@ body {
     font-size: 14px;
     color: #000000;
     font-weight: normal;
+}
+
+.container h1 {
+    font-size: 22px;
+}
+
+.container h2 {
+    font-size: 16;
 }
 
 .container p {
@@ -115,6 +123,14 @@ body {
 .container button:hover {
     background-color: #222;
     color: #fff;
+}
+
+.headings h2{
+    font-size: 14px;
+}
+
+.headings p{
+    font-size: 14px;
 }
 
 .site-footer {

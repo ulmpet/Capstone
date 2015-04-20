@@ -20,6 +20,6 @@
     P.E.T. v2.0a
 </div>
 
-<div class="logo2">
+<!--<div class="logo2">
     Phage Enzyme Tool
-</div>
+</div>-->

@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Account</h1>
 
-    <div>
+    <div class="headings">
         <h2>Change Password:</h2>
         <form method="POST" action="/account/changepassword">
     <table>
@@ -21,12 +21,10 @@
             <p><input type= "submit" value="Change Password"> 
         </form>
     </div>
-    <div>
-        <h2>Deactivate Account:</h2>
+    <div class="headings">
+        <!--<h2>Deactivate Account:</h2>-->
         <form method = "POST" action = "">
-            Click here if you would like to deactivate your account.
-            <br>
-            <input name="Deactivate" type="submit" value="Deactivate"/> 
+            <h2>Deactivate account:</h2> <input name="Deactivate" type="submit" value="click here"/> 
         </form>
     </div>
 
