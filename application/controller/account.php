@@ -41,15 +41,16 @@ class Account extends Controller
         //used to confirm password
         $passcheck = $this->userModel->checkPassword($_SESSION['UID'], $password);
 
-        if(count($passcheck) != 1 ){
-            $this->message = "Invalid password, please try again.";
-        }
-        $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
+        if(count($passcheck) == 1 ){
+            
+            $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
 
-        if($newcheck != 0){
+            if($newcheck != 0){
+
             $this->message = "The new passwords do not match. Passwords are case-sensitive, please check them again.";
-        }
-        else{
+
+            }else{
+
             //generate a new salt and use it with the hash of the new password
             $salt = bin2hex(openssl_random_pseudo_bytes(64));
             $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
@@ -57,6 +58,8 @@ class Account extends Controller
             $this->message = "Congratulations, your new password has been set.";
         }
 
+        }
+        
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/account/account.php';
