@@ -186,8 +186,17 @@ class PhageTool extends Controller
 
                         //Write data to fileObject
                         $filename = 'Infile_' . date('U');
-                        if(fopen(PHYLIP_DATA.$filename.".txt", 'w')){
-
+                        if($file = fopen(PHYLIP_DATA.$filename.".txt", 'w')){
+                            fwrite($file, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
+                            foreach ($outputNames as $key => $value) {
+                                fwrite($file, $value)
+                                if(strlen($value) < 10 ){
+                                    $whitespacearray = array_fill(0, 10-strlen($value), " ");
+                                    $whiteSpaceString = implode("", $whitespacearray);
+                                    fwrite($file, $whiteSpaceString);
+                                }
+                                fwrite($file, $cutBucketStrings[$key]);
+                            }
                         }else{
                             echo "Filed to open " . $filename . " For Write Operation";
                         }
