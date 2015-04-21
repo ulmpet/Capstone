@@ -211,7 +211,7 @@ class PhageTool extends Controller
                 }
             
             }else{
-                echo PHYLIP . "Is not a  Directory";
+                echo PHYLIP_DATA . "Is not a  Directory";
             }
         }else{
             echo PHYLIP_FOLDER . " Is not a Directory";
