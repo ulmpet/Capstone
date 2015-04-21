@@ -181,8 +181,8 @@ class PhageTool extends Controller
                             }
                         }
                         //Helper::outputArray($cutdata);
-                        //Helper::outputArray($outputNames);
-                        //Helper::outputArray($cutBucketStrings);
+                        Helper::outputArray($outputNames);
+                        Helper::outputArray($cutBucketStrings);
 
                         //Write data to fileObject
                         $filename = 'Infile_' . date('U');
