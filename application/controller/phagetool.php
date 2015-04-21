@@ -189,7 +189,7 @@ class PhageTool extends Controller
                         if($file = fopen(PHYLIP_DATA.$filename.".txt", 'w')){
                             fwrite($file, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
                             foreach ($outputNames as $key => $value) {
-                                fwrite($file, $value)
+                                fwrite($file, $value);
                                 if(strlen($value) < 10 ){
                                     $whitespacearray = array_fill(0, 10-strlen($value), " ");
                                     $whiteSpaceString = implode("", $whitespacearray);
