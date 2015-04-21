@@ -1,0 +1,1 @@
+semanage fcontext -a httpd_sys_rw_content_t "/var/www/html/public/phylip_data"
