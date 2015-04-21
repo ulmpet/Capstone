@@ -185,6 +185,12 @@ class PhageTool extends Controller
                         //Helper::outputArray($cutBucketStrings);
 
                         //Write data to fileObject
+                        $filename = 'Infile_' . date('U');
+                        if(fopen(PHYLIP_DATA.$filename.".txt", 'W')){
+
+                        }else{
+                            echo "Filed to open " . $filename . " For Write Operation";
+                        }
                         //passfile object to 1st command
                         //complete command list
                         //return a beautiful PDF
