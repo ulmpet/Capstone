@@ -35,7 +35,7 @@
     echo '<script type="text/javascript" src="'. URL .'js/ulocationDemograph.js"></script>';
     }?>
     
-    <?php include_once("analyticstracking.php") ?>
+    <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] != URL) include_once("analyticstracking.php") ?>
 </div>
 </body>
 </html>
