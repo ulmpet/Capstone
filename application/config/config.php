@@ -47,6 +47,7 @@ define('PHYLIP_FOLDER', $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/application/' .'li
 }else{
 define('PHYLIP_FOLDER', str_replace(URL_PUBLIC_FOLDER, '',$_SERVER['CONTEXT_DOCUMENT_ROOT']) . 'application/' .'libs/phylip_lin/');
 }
+date_default_timezone_set('America/Chicago');
 /**
  * Configuration for: Database
  * This is the place where you define your database credentials, database type etc.

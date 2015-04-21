@@ -186,7 +186,7 @@ class PhageTool extends Controller
 
                         //Write data to fileObject
                         $filename = 'Infile_' . date('U');
-                        if(fopen(PHYLIP_DATA.$filename.".txt", 'W')){
+                        if(fopen(PHYLIP_DATA.$filename.".txt", 'w')){
 
                         }else{
                             echo "Filed to open " . $filename . " For Write Operation";
