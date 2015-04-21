@@ -41,7 +41,12 @@ define('URL_PROTOCOL', 'http://');
 define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
 define('URL_SUB_FOLDER', str_replace(URL_PUBLIC_FOLDER, '', dirname($_SERVER['SCRIPT_NAME'])));
 define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
-
+define('PHYLIP_DATA',$_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/public/' .'phylip_data/' );
+if(URL_DOMAIN == "127.0.0.1"){
+define('PHYLIP_FOLDER', $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/application/' .'libs/phylip_win/');
+}else{
+define('PHYLIP_FOLDER', $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/application/' .'libs/phylip_lin/');
+}
 /**
  * Configuration for: Database
  * This is the place where you define your database credentials, database type etc.
