@@ -211,10 +211,10 @@ class PhageTool extends Controller
                 }
             
             }else{
-                echo "Wrong Phylip Data Directory";
+                echo PHYLIP . "Is not a  Directory";
             }
         }else{
-            echo "Wrong Phylip Folder Directory";
+            echo PHYLIP_FOLDER . " Is not a Directory";
         }
 
 
@@ -223,6 +223,7 @@ class PhageTool extends Controller
         //Helper::outputArray($_SERVER);
         echo PHYLIP_FOLDER . '<BR>';
         echo PHYLIP_DATA . "<BR>";
+        echo "URL SUB " . URL_SUB_FOLDER;
     }
 
     private function buildClusterMap(){
