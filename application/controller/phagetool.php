@@ -120,7 +120,7 @@ class PhageTool extends Controller
                             
                         }
 
-                        $outputNames[] = array();
+                        $outputNames = array();
                         $cutBucketStrings;
                         $bucketCounter = -1; 
                         foreach ($cutdata as $key => $value) {
