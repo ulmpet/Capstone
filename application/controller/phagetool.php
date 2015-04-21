@@ -224,7 +224,7 @@ class PhageTool extends Controller
         echo PHYLIP_FOLDER . '<BR>';
         echo PHYLIP_DATA . "<BR>";
         echo "URL SUB " . URL_SUB_FOLDER . "<BR>";
-        echo exec('whoami');
+        phpinfo();
     }
 
     private function buildClusterMap(){
