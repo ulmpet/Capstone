@@ -34,7 +34,8 @@
     echo '<script type="text/javascript" src="'. URL .'js/newuserDemograph.js"></script>';
     echo '<script type="text/javascript" src="'. URL .'js/ulocationDemograph.js"></script>';
     }?>
-        
+    
+    <?php include_once("analyticstracking.php") ?>
 </div>
 </body>
 </html>
