@@ -204,7 +204,7 @@ class PhageTool extends Controller
                         //passfile object to 1st command
                         //complete command list
                         //return a beautiful PDF
-                        $commandString = PHYLIP_FOLDER ."/pars < ". PHYLIP_DATA . $filename . " > /dev/null 2>&1";
+                        $commandString = PHYLIP_FOLDER ."/exe/pars < ". PHYLIP_DATA . $filename . " > /dev/null 2>&1";
                         exec($commandString);
                         $commandString = "/";
                         //exec($commandString)
