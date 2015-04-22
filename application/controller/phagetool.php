@@ -186,7 +186,7 @@ class PhageTool extends Controller
 
                         //Write data to fileObject
                         $filename = 'Infile_' . date('U');
-                        if($file = fopen(PHYLIP_DATA.$filename.".txt", 'w')){
+                        if($file = fopen(PHYLIP_DATA.$filename, 'w')){
                             fwrite($file, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
                             foreach ($outputNames as $key => $value) {
                                 //var_dump($value);
