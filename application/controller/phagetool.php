@@ -185,26 +185,41 @@ class PhageTool extends Controller
                         //Helper::outputArray($cutBucketStrings);
 
                         //Write data to fileObject
-                        $filename = 'Infile_' . date('U');
-                        if($file = fopen(PHYLIP_DATA.$filename, 'w')){
-                            fwrite($file, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
+                        $fileNameDate = .date('U');
+                        $filename = 'Infile_' . $fileNameDate;
+                        if($datafile = fopen(PHYLIP_DATA.$filename, 'w')){
+                            fwrite($datafile, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
                             foreach ($outputNames as $key => $value) {
                                 //var_dump($value);
-                                fwrite($file, $value);
+                                fwrite($datafile, $value);
                                 if(strlen($value) < 10 ){
                                     $whitespacearray = array_fill(0, 10-strlen($value), " ");
                                     $whiteSpaceString = implode("", $whitespacearray);
-                                    fwrite($file, $whiteSpaceString);
+                                    fwrite($datafile, $whiteSpaceString);
                                 }
-                                fwrite($file, $cutBucketStrings[$key] . "\n");
+                                fwrite($datafile, $cutBucketStrings[$key] . "\n");
                             }
                         }else{
                             echo "Filed to open " . $filename . " For Write Operation";
                         }
+
+                        $configfilename = "parsIn_" . $fileNameDate;
+                        if($configfile = fopen(PHYLIP_DATA.$configfilename, 'w')){
+                                fwrite($configfilename, PHYLIP_DATA.$filename."\n");
+                                fwrite($configfilename, "F\n".
+                                    PHYLIP_DATA."outfile_".$fileNameDate."\n".
+                                    "v\n
+                                    100\n
+                                    j");
+                                while (($seed = rand())%2 == 0){}
+                                fwrite($configfilename, $seed ."\n");
+                                fwrite($configfilename, "10\n");
+                                fwrite($configfilename, "Y\nF\n".PHYLIP_DATA."outtree_".$fileNameDate);
+                        }
                         //passfile object to 1st command
                         //complete command list
                         //return a beautiful PDF
-                        $commandString = PHYLIP_DATA ."/exe/pars < ". PHYLIP_DATA . $filename . " > /dev/null 2>&1";
+                        $commandString = PHYLIP_DATA ."/exe/pars < ". PHYLIP_DATA . $configfilename . " > /dev/null 2>&1";
                         exec($commandString);
                         $commandString = "/";
                         //exec($commandString)
