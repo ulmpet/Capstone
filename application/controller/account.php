@@ -16,8 +16,13 @@ class Account extends Controller
      */
     public function index()
     {
+        if(isset($_REQUEST['changePasswordThing'])){
+        $this->changepassword();
+        exit;
+        }   
+        
   		require APP . 'view/_templates/header.php';
-  		require APP . 'view/_templates/nav.php';
+        require APP . 'view/_templates/nav.php';
         require APP . 'view/account/account.php';
         require APP . 'view/_templates/footer.php';
     }
@@ -29,9 +34,9 @@ class Account extends Controller
     */
     public function changePassword()
     {
-        Helper::outputArray($_REQUEST);
-        Helper::outputArray($_SESSION);
-        Helper::outputArray($passcheck);
+        //Helper::outputArray($_REQUEST);
+        //Helper::outputArray($_SESSION);
+        //Helper::outputArray($passcheck);
 
         //will get the users Username by session ID
         $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
@@ -42,33 +47,52 @@ class Account extends Controller
         //used to confirm password
         $passcheck = $this->userModel->checkPassword($_SESSION['UID'], $password);
 
-        if($passcheck == 1 ){
+        if(empty($_REQUEST['newpassword'])){
 
-            $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
+            $_SESSION['message2'] = "The new passwords cannot be blank";
+            
+        }
+        else if(empty($_REQUEST['confirmnewpassword'])){
 
-            if($newcheck != 0){
+            $_SESSION['message2'] = "The new passwords cannot be blank";
 
-            $this->message = "The new passwords do not match.";
-
-            } //end of nested if
-            else{
-
-            //generate a new salt and use it with the hash of the new password
-            $salt = bin2hex(openssl_random_pseudo_bytes(64));
-            $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
-            $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
-            $this->message = "Congratulations, your new password has been set.";
-            }//end of nested else
-
-        }//end of first if
+        }
         else{
-            $this->message = "Invalid Password"; 
-            header("location: /account");
-        }//end of first else
-        
+
+
+            if($passcheck == 1 ){
+
+                $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
+
+                if($newcheck != 0){
+
+                $_SESSION['message2'] = "The new passwords do not match.";
+                
+
+                } //end of nested if
+                else{
+
+                //generate a new salt and use it with the hash of the new password
+                $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+                $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
+                $_SESSION['message2'] = "Congratulations, your new password has been set.";
+                
+                }//end of nested else
+
+            }//end of first if
+            else{
+             $_SESSION['message'] = "Invalid Password"; 
+            
+            }//end of first else
+        }
+
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/account/account.php';
         require APP . 'view/_templates/footer.php';
+        
     } //end of changePassword
+    
+
 }

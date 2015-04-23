@@ -19,14 +19,17 @@ class Home extends Controller
      */
     public function index()
     {
+        //check for validation of passwords!
+        //make sure that they are entering an email address.
+        //make it so view says enter username and passwords -- message system Sam built to show errors. 
+
         $this->message = 'Please enter your username and password.';
         //Helper::outputArray($userModel->selectAllUsers(),true);
-        //if the http request contains information from a feild called Email attempt a login
+        //if the http request contains information from a field called Email attempt a login
         if(isset($_REQUEST['Email'])){
             $userSalt = $this->userModel->getSalt($_REQUEST['Email']);
             $userEmail = $_REQUEST['Email'];
             $userPassword = hash('sha512',$_REQUEST['Password'].$userSalt);
-            //echo count($userModel->checkLogin($userEmail,$userPassword));
             //request user from database with entered credientials
             $userInformation = $this->userModel->checkLogin($userEmail,$userPassword);
             // if there is such a user
@@ -54,6 +57,9 @@ class Home extends Controller
     */
     public function signup()
     {
+        //stringcmp for passwords
+        //message system for feedback
+        //make sure emails are emails. REGEX from index().
         $this->message = 'Please Enter all required information.';
         if(isset($_REQUEST['email'])){
             //create a random salt to add to password
@@ -74,7 +80,6 @@ class Home extends Controller
 
         // load views
         require APP . 'view/_templates/header.php';
-        
         require APP . 'view/home/signup.php';
         require APP . 'view/_templates/footer.php';
     }
@@ -85,9 +90,8 @@ class Home extends Controller
      * This method handles what happens when you move to http://yourproject/home/exampleone
      * The camelCase writing is just for better readability. The method name is case-insensitive.
      */
-    
-
     public function logOut(){
+
         // Unset all of the session variables.
         $_SESSION = array();
 
