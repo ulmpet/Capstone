@@ -111,18 +111,15 @@ class PhageTool extends Controller
                             $cutdata = $this->cutsModel->selectCuts($phageIDarray,$enzymeIDarray,$ranges);
                         }elseif(isset($phageIDarray)){
                             $message ="Please select at least one enzyme.";
-                            
                         }elseif(isset($enzymeIDarray)){
                             $message = "Please select at least one phage.";
-                            
                         }else{
                             $message =  "Please select at least one Enzyme and One Phage";
-                            
                         }
 
                         $outputNames = array();
                         $cutBucketStrings;
-                        $bucketCounter = -1; 
+                        $bucketCounter = -1;
                         foreach ($cutdata as $key => $value) {
                             if($value['Cluster'] != null){
                                 if($value['Cluster'] == "Singleton"){
@@ -181,11 +178,16 @@ class PhageTool extends Controller
                             }
                         }
                         //Helper::outputArray($cutdata);
+			$uniqueOutputNames = array_unique($outputNames);
                         //Helper::outputArray($outputNames);
                         //Helper::outputArray($cutBucketStrings);
+			unset($outputNames);
+			foreach($uniqueOutputNames as $key=>$value){
+				$outputNames[] = $value;
+			}
 
                         //Write data to fileObject
-                        $fileNameDate = .date('U');
+                        $fileNameDate = date('U');
                         $filename = 'Infile_' . $fileNameDate;
                         if($datafile = fopen(PHYLIP_DATA.$filename, 'w')){
                             fwrite($datafile, count($outputNames) . " " . strlen($cutBucketStrings[0]) ."\n");
@@ -204,37 +206,58 @@ class PhageTool extends Controller
                         }
 
                         $configfilename = "parsIn_" . $fileNameDate;
-                        if($configfile = fopen(PHYLIP_DATA.$configfilename, 'w')){
-                                fwrite($configfilename, PHYLIP_DATA.$filename."\n");
-                                fwrite($configfilename, "F\n".
-                                    PHYLIP_DATA."outfile_".$fileNameDate."\n".
-                                    "v\n
-                                    100\n
-                                    j");
+                        //build config file for pars
+			if($configfile = fopen(PHYLIP_DATA.$configfilename, 'w')){
+                                fwrite($configfile, PHYLIP_DATA.$filename."\n");
+                                fwrite($configfile, "F\n".
+                                    PHYLIP_DATA."parsOutFile_".$fileNameDate."\n".
+                                    "V\n".
+                                    "100\n".
+                                    "J\n");
                                 while (($seed = rand())%2 == 0){}
-                                fwrite($configfilename, $seed ."\n");
-                                fwrite($configfilename, "10\n");
-                                fwrite($configfilename, "Y\nF\n".PHYLIP_DATA."outtree_".$fileNameDate);
+                                fwrite($configfile, $seed ."\n");
+                                fwrite($configfile, "10\n");
+                                fwrite($configfile, "Y\nF\n".PHYLIP_DATA."parsOutTree_".$fileNameDate);
                         }
                         //passfile object to 1st command
-                        //complete command list
+                        $consenseConfigName = "consenseIN_" . $fileNameDate;
+			if($consenseConfigFile = fopen(PHYLIP_DATA.$consenseConfigName, 'w')){
+				fwrite($consenseConfigFile, PHYLIP_DATA."parsOutTree_".$fileNameDate);
+				fwrite($consenseConfigFile, "\nF\n" . PHYLIP_DATA."consenseOutFile_".$fileNameDate."\nC\nY\nF\n".PHYLIP_DATA."consenseOutTree_".$fileNameDate);
+			}
+			$drawgramConfigName = "drawgramIn_". $fileNameDate;
+			if($drawgramConfigFile = fopen(PHYLIP_DATA.$drawgramConfigName, 'w')){
+				fwrite($drawgramConfigFile, PHYLIP_DATA."consenseOutTree_".$fileNameDate."\n");
+				fwrite($drawgramConfigFile, "/usr/local/src/exe/font1\n");
+				fwrite($drawgramConfigFile, "P\nL\nV\n\N\nY\nF\n");
+				fwrite($drawgramConfigFile, PHYLIP_DATA . "plotfileDrawGram_".$fileNameDate);
+			}
+			//complete command list
                         //return a beautiful PDF
-                        $commandString = PHYLIP_DATA ."/exe/pars < ". PHYLIP_DATA . $configfilename . " > /dev/null 2>&1";
+			//echo exec("whoami");
+                        $commandString = "/usr/local/src/exe/pars < ". PHYLIP_DATA . $configfilename . " > /dev/null 2>&1";
+			//echo $commandString;
+                         exec($commandString);
+                        $commandString = "/usr/local/src/exe/consense < ". PHYLIP_DATA . $consenseConfigName. " > /dev/null 2>&1";
                         exec($commandString);
-                        $commandString = "/";
-                        //exec($commandString)
-                        $commandString = "";
-                        $commandString = "";
-                        $commandString = "";
-                        $commandString = "";
-                        $commandString = "";
+                        $commandString = "/usr/local/src/exe/drawgram < ". PHYLIP_DATA . $drawgramConfigName. " > /dev/null 2>&1";
+                        exec($commandString);
+			$commandString = "/usr/bin/ps2pdf13 " .PHYLIP_DATA."plotfileDrawGram_".$fileNameDate." " .PHYLIP_DATA."phagePDF_".$fileNameDate;
+                        exec($commandString);
+			
+			//header("Content-Type: application/pdf");
+			//header("Content-Disposition: inline; filename= phageTree.pdf");
+			//header("Content-Transfer-Encodeing: binary");
+			//header("Content-Length: " . filesize(PHYLIP_DATA . "phagePDF_".$fileNameDate));
+			//readfile(PHYLIP_DATA."phagePDF_".$fileNameDate.".pdf");
+			echo "<embed width='100%' height='100%' src=".URL . "phylip_data/phagePDF_".$fileNameDate." type='application/pdf'>";
                     }else{
                         echo "Failed To Open Phylip Data Directory";
                     }
                 }else{
                     echo "Failed To Open Phylip Directory";
                 }
-            
+
             }else{
                 echo PHYLIP_DATA . "Is not a  Directory";
             }
