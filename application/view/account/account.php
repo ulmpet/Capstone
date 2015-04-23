@@ -17,13 +17,14 @@
             <td><input type="password" size="16" name="confirmnewpassword"></td>
         </tr>
     </table>
-            <p><input type= "submit" value="changePassword"> 
+            <p><input type="submit" value="Submit"> 
         </form>
     </div>
 
     <div class="headings">
         <!--<h2>Deactivate Account:</h2>-->
         <form method = "POST" action = "">
+            <br>
             <h2>Deactivate account:</h2> <input name="Deactivate" type="submit" value="click here"/> 
         </form>
     </div>

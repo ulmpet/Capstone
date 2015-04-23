@@ -48,7 +48,7 @@ class Account extends Controller
 
             if($newcheck != 0){
 
-            $this->message = "The new passwords do not match. Passwords are case-sensitive, please check them again.";
+            $this->message = "The new passwords do not match.";
 
             } //end of nested if
             else{
@@ -63,7 +63,7 @@ class Account extends Controller
         }//end of first if
         else{
             $this->message = "Invalid Password"; 
-            header("Location: account.php");
+            header("location: /account");
         }//end of first else
         
         require APP . 'view/_templates/header.php';
