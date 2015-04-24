@@ -192,6 +192,7 @@ class PhageTool extends Controller
                             $enzymeNames = array_unique($enzymeNames);
                             $enzymeMapNametoID = $this->buildEnzymeMapNametoID();
                             $bucketCounter+=1;
+                            $cutBucketStrings[$bucketCounter] ='';
                             foreach ($enzymeNames as $key => $value) {
                                 $currID = $enzymeMapNametoID[$value];
                                 switch ($_POST[$currID]) {
