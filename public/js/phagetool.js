@@ -122,6 +122,7 @@ $("#clicker").click(function(){
                             }
                             ]
                         })
+                    window.location = url + "phylip_data/" + result;
                     });
         }else{
             $("#phageOptions").submit();
