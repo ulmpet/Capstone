@@ -14,7 +14,8 @@ phyl</div>
     <!-- our JavaScript -->
     <script src="<?php echo URL; ?>js/application.js"></script>
     <!--div class="footerlinks"> Contact Us </div-->
-    <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "phagetool"){
+
+    <?php  if((isset($_REQUEST['url']) && $_REQUEST['url'] == "phagetool") || (isset($_REQUEST['url']) && $_REQUEST['url'] == "phagetool/")){
     echo '<script type="text/javascript" src="'. URL .'js/phagetool.js"></script>';
     echo '<script src="' . URL . 'js/select2.min.js"></script>';
     echo '<link href="'. URL . 'css/select2.css" rel="stylesheet" />';
@@ -29,7 +30,7 @@ phyl</div>
     echo '<script type="text/javascript"> makeBoxes() </script>';
 	}?>
 
-    <?php if(isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard"){
+    <?php if((isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard") || (isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard/") {
     echo '<script type="text/javascript" src="https://www.google.com/jsapi"></script>';
     echo '<script type="text/javascript" src="'. URL .'js/newuserDemograph.js"></script>';
     echo '<script type="text/javascript" src="'. URL .'js/ulocationDemograph.js"></script>';
