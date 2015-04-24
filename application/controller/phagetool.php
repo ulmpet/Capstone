@@ -25,6 +25,10 @@ class PhageTool extends Controller
      */
     public function index()
     {
+        if(isset($_REQUEST['postCheck'])){
+            $this->phylip();
+            exit;
+        }
         
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';

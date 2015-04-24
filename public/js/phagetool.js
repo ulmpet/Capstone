@@ -95,10 +95,39 @@ $("#clicker").click(function(){
     //console.log( "CUT Values: "+ $("[name='selCuts[]']").select2("val"));
 
     if($("#boolTree").is(':checked')){
-        console.log("makephylipTree!!!!!!!!!!!!!!");
-        $("#phageOptions").submit();
+        //console.log("makephylipTree!!!!!!!!!!!!!!");
+        if($("[name='visType']:checked").val() == 1){
+            $.ajax({
+                    method: "POST",
+                    url: url + "/ajax/buildUknownModal",
+                    data: $("#phageOptions").serialize() }
+                    ).done(function(result){
+                        $("#unknownData").html(result);
+                        $("#unknownData").dialog({
+                            modal: true,
+                            width: "600",
+                            height: "600",
+                            title: "select unknown Cuts",
+                            buttons: [{
+                                text: "Submit",
+                                click: function(){
+                                    $.post("/phagetool", $('form').serialize());
+                                    $(this).dialog("close");
+                                },
+                            },{
+                                text: "Cancel",
+                                click: function(){
+                                    $(this).dialog("close");
+                                }
+                            }
+                            ]
+                        })
+                    });
+        }else{
+            $("#phageOptions").submit();
+        }
     }else{
-        console.log($("[name='visType']:checked").val());
+        //console.log($("[name='visType']:checked").val());
         if($("[name='visType']:checked").val() == 0){
             $.ajax({
                 method: "POST",
@@ -191,7 +220,7 @@ function submitUnknownData(){
         )
         .done(function(result){
                     $('#resultTable').children().remove();
-                    console.log(result);
+                    //console.log(result);
 
                     var info = $.parseJSON(result);
                     if(info['message'] != null){
