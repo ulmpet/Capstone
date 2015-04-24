@@ -124,7 +124,11 @@ class PhageTool extends Controller
                         $outputNames = array();
                         $cutBucketStrings;
                         $bucketCounter = -1;
+                        $enzymeNames = array();
+
+                        //loop threw known cut data
                         foreach ($cutdata as $key => $value) {
+                            //if the cluster is not null
                             if($value['Cluster'] != null){
                                 if($value['Cluster'] == "Singleton"){
                                     $cluster = "Si";
@@ -147,6 +151,7 @@ class PhageTool extends Controller
                             }
                             if(!in_array($phylip_enzyme_name, $outputNames)){
                                 $outputNames[] = $phylip_enzyme_name;
+                                $enzymeNames[] = $value['EnzymeName'];
                                 if($value['CutCount'] == 0){
                                     $bucketValue = "N";
                                 }elseif( 1<= (integer)$value['CutCount'] && (integer)$value['CutCount'] < 5){
@@ -165,6 +170,7 @@ class PhageTool extends Controller
                                 $cutBucketStrings[$bucketCounter] = $bucketValue;
                             }else{
                                 $outputNames[] = $phylip_enzyme_name;
+                                $enzymeNames[] = $value['EnzymeName'];
                                 if($value['CutCount'] == 0){
                                     $bucketValue = "N";
                                 }elseif( 1<= (integer)$value['CutCount'] && (integer)$value['CutCount'] < 5){
@@ -180,6 +186,38 @@ class PhageTool extends Controller
                                 }
                                 $cutBucketStrings[$bucketCounter] .= $bucketValue;
                             }
+                        }
+                        if(isset($_REQUEST['postCheck'])){
+                            $outputNames[] = substr($_REQUEST['unknownName'], 0,10);
+                            $enzymeNames = array_unique($enzymeNames);
+                            $enzymeMapNametoID = $this->buildEnzymeMapNametoID();
+                            $bucketCounter+=1;
+                            foreach ($enzymeNames as $key => $value) {
+                                $currID = $enzymeMapNametoID[$value];
+                                switch ($_POST[$currID]) {
+                                    case 0:
+                                        $cutBucketStrings[] .= "N";
+                                        break;
+                                    case 1:
+                                        $cutBucketStrings[] .= "F";
+                                        
+                                        break;
+                                    case 2:
+                                        $cutBucketStrings[] .= "S";
+                                        break;
+                                    case 3:
+                                        $cutBucketStrings[] .= "M";
+                                        break;
+                                    case 4:
+                                        $cutBucketStrings[] .= "A";
+                                        break;                            
+                                    default:
+                                        # code...
+                                        break;
+                                }
+                            }
+                            
+
                         }
                         //Helper::outputArray($cutdata);
 			$uniqueOutputNames = array_unique($outputNames);
@@ -302,5 +340,12 @@ class PhageTool extends Controller
                 $enzymeIDarray[] = $value;
             }
             return $enzymeIDarray;
+    }
+        private function buildEnzymeMapNametoID(){
+        $enzymes = $this->enzymeModel->getEnzymeNamesAndID();
+        foreach ($enzymes as $key => $value) {
+            $enzymeMap[$value['EnzymeName']] = $value['EnzymeID'];
+        }
+        return $enzymeMap;
     }
 }
