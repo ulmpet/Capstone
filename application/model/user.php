@@ -121,13 +121,13 @@ class user
 
     }
     /**
-    *This will set a user from active to inactive.
+    *This will set a user from active to inactive. 
     *
     *
     *
     */
     public function deactivateUser($userID){
-        $sql = "UPDATE userTable SET Active = 'false' WHERE userID = :userID;";
+        $sql = "UPDATE userTable SET Active = 0 WHERE userID = :userID;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userID' => $userID);
         return $query->execute($parameters);

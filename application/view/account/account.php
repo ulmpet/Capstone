@@ -13,15 +13,18 @@
         <tr>
             <td>Enter your new password:</td>
             <td><input type="password" size="16" name="newpassword"></td>
+            <?php if(isset($_SESSION['message2'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['message2']." </td>";}else{echo "<td> </td>";} ?>
         </tr>
         <tr>
             <td>Re-enter your new password:</td>
             <td><input type="password" size="16" name="confirmnewpassword"></td>
-             <?php if(isset($_SESSION['message2'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['message2']." </td>";}else{echo "<td> </td>";} ?>
+            <?php if(isset($_SESSION['success'])){ echo "<td class = 'ui-state-highlight'> ".$_SESSION['success']." </td>";}else{echo "<td> </td>";}?>
         </tr>
+
     </table>
             <p><input type="submit" value="Submit"> 
         </form>
+
     </div>
 
     <div class="headings">

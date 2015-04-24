@@ -22,8 +22,8 @@ class Home extends Controller
         //check for validation of passwords!
         //make sure that they are entering an email address.
         //make it so view says enter username and passwords -- message system Sam built to show errors. 
+        //REGEX for email 
 
-        $this->message = 'Please enter your username and password.';
         //Helper::outputArray($userModel->selectAllUsers(),true);
         //if the http request contains information from a field called Email attempt a login
         if(isset($_REQUEST['Email'])){
@@ -41,7 +41,7 @@ class Home extends Controller
                 header('location: /phagetool');
             //else login failed
             }else{
-                $this->message = 'Login Failed';
+                $_SESSION['errorMessage'] = 'Login Failed. Invalid email or password.';
             }
     }
         // load views
@@ -51,7 +51,7 @@ class Home extends Controller
     }
 
     /**
-    *   Function to preform sighnup on the web app. If the signup form as been posted
+    *   Function to preform sighnup on the web app. If the signup form as been opsted
     *
     *
     */
@@ -61,28 +61,57 @@ class Home extends Controller
         //message system for feedback
         //make sure emails are emails. REGEX from index().
         $this->message = 'Please Enter all required information.';
-        if(isset($_REQUEST['email'])){
-            //create a random salt to add to password
-            $salt = bin2hex(openssl_random_pseudo_bytes(64));
-            // add the salt to the password and hash useing sah512 creating a 128 charicter password
-            $password = hash('sha512',$_REQUEST['pass'].$salt);
-            //add all user signup data to the array 
-            $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1,date(MYSQL_DATE_FORMAT));
+
+            if(isset($_REQUEST['email'])){
+
+            $newUserEmail = $_REQUEST['email'];
+
+            if(!filter_var($newUserEmail, FILTER_VALIDATE_EMAIL)){
+
+                $_SESSION['bademail'] = "This is not a valid email. Please try again.";
+            }
+
+            $passcheck = strcmp($_REQUEST['pass'],$_REQUEST['passconfirm']);
+                  
+            if($passcheck != 0){
+
+                $_SESSION['passmessage'] = "The new passwords do not match.";
+                
+
+            } //end of nested if
+            if (empty($_REQUEST['pass']))
+            {
+                $_SESSION['passmessage'] = "The new passwords cannot be blank";
+            }
+            else if (empty($_REQUEST['passconfirm'])){
+
+                $_SESSION['passmessage'] = "The new passwords cannot be blank";
+            }
+
+                //create a random salt to add to password
+                $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
+                //add all user signup data to the array 
+                $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1,date(MYSQL_DATE_FORMAT));
 
             //insert the data to the database and return to home on success
             if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
                 $this->userModel->addUser($info);
-                header('location: /');
+                $_SESSION['accountSucc'] = "Success! You're now a user!";
+                header("Location: /login");
+            
             }else{
-                $this->message = 'This Account Email Address already Exists.';
+                $_SESSION['bademail'] = 'This Account Email Address already Exists.';
             }   
-         }
+                
+            }//end checks
 
-        // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/home/signup.php';
-        require APP . 'view/_templates/footer.php';
-    }
+            // load views
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/home/signup.php';
+            require APP . 'view/_templates/footer.php';
+
+    } //end of function
 
 
     /**

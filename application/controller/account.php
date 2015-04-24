@@ -37,7 +37,7 @@ class Account extends Controller
         //Helper::outputArray($_REQUEST);
         //Helper::outputArray($_SESSION);
         //Helper::outputArray($passcheck);
-
+        
         //will get the users Username by session ID
         $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
         //gets the salt for the current user
@@ -63,22 +63,19 @@ class Account extends Controller
             if($passcheck == 1 ){
 
                 $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
-
+                  
                 if($newcheck != 0){
 
                 $_SESSION['message2'] = "The new passwords do not match.";
-                
 
                 } //end of nested if
-                else{
 
+                $_SESSION['success'] = "Your new password has been set.";
                 //generate a new salt and use it with the hash of the new password
                 $salt = bin2hex(openssl_random_pseudo_bytes(64));
                 $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
                 $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
-                $_SESSION['message2'] = "Congratulations, your new password has been set.";
                 
-                }//end of nested else
 
             }//end of first if
             else{
@@ -93,6 +90,12 @@ class Account extends Controller
         require APP . 'view/_templates/footer.php';
         
     } //end of changePassword
+
+    public function deactivateAccount(){
+
+        $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
+
+    }
     
 
 }
