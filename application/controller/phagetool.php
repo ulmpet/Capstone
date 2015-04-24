@@ -196,20 +196,20 @@ class PhageTool extends Controller
                                 $currID = $enzymeMapNametoID[$value];
                                 switch ($_POST[$currID]) {
                                     case 0:
-                                        $cutBucketStrings[] .= "N";
+                                        $cutBucketStrings[$bucketCounter] .= "N";
                                         break;
                                     case 1:
-                                        $cutBucketStrings[] .= "F";
+                                        $cutBucketStrings[$bucketCounter] .= "F";
                                         
                                         break;
                                     case 2:
-                                        $cutBucketStrings[] .= "S";
+                                        $cutBucketStrings[$bucketCounter] .= "S";
                                         break;
                                     case 3:
-                                        $cutBucketStrings[] .= "M";
+                                        $cutBucketStrings[$bucketCounter] .= "M";
                                         break;
                                     case 4:
-                                        $cutBucketStrings[] .= "A";
+                                        $cutBucketStrings[$bucketCounter] .= "A";
                                         break;                            
                                     default:
                                         # code...
