@@ -111,7 +111,9 @@ $("#clicker").click(function(){
                             buttons: [{
                                 text: "Submit",
                                 click: function(){
-                                    $.post("/phagetool", $('form').serialize());
+                                    $.post("/phagetool", $('form').serialize()).done(function(result){
+					window.location = url + "phylip_data/" + result;
+					});
                                     $(this).dialog("close");
                                 },
                             },{
@@ -122,7 +124,7 @@ $("#clicker").click(function(){
                             }
                             ]
                         })
-                    window.location = url + "phylip_data/" + result;
+
                     });
         }else{
             $("#phageOptions").submit();
