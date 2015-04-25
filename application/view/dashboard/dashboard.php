@@ -146,13 +146,19 @@
 </div>
 
 <!--Divs that will hold the pie chart-->
-<div id="userDemograph" style="display:block">
-  <!--<div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
+<div id="userDemograph" style="display:block">  
+
+<!--<div id="newuserDemograph" style="display:block; width: 350px; height:225px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
   </div>
 
   <div id="ulocationDemograph" style="display:block; width: 350px; height:250px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
   </div>-->
+
+  <div id="container">
+    <p>For complete user demographics data, please visit the <a href="https://www.google.com/analytics/web/?authuser=0#report/visitors-overview/a61998275w96889679p101106604/"> phage tool's Google Analytics profile.</a></p>
+  </div>
+
 </div>
 </div>
