@@ -30,8 +30,11 @@
     <div class="headings">
         <!--<h2>Deactivate Account:</h2>-->
         <form method = "POST" action = "">
+            <input type='text' style='display:none' name='deactivateAccount'>
             <br>
-            <h2>Deactivate account:</h2> <input name="Deactivate" type="submit" value="click here"/> 
+            <h2>Deactivate account:</h2> 
+            <input name="Deactivate" type="submit" value="click here"/> 
+            <?php if(isset($_SESSION['badadmin'])){ echo "<div class = 'ui-state-error'> ".$_SESSION['badadmin']." </div>";}else{echo "<div> </div>";}?>
         </form>
     </div>
 
@@ -44,4 +47,6 @@
 <?php 
     unset($_SESSION['message']);
     unset($_SESSION['message2']);
+    unset($_SESSION['success']);
+    unset($_SESSION['badadmin']);
 ?>

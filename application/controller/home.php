@@ -112,7 +112,58 @@ class Home extends Controller
             require APP . 'view/_templates/footer.php';
 
     } //end of function
+    /**
+    * This function will handle a user trying to reactivate their account. FIX THIS SHIT!
+    *
+    */
+    public function reactivate(){
 
+        if(isset($_REQUEST['oldemail'])){
+
+            if (empty($_REQUEST['oldpass']) || empty($_REQUEST['oldemail']))
+            {
+                $_SESSION['passerror'] = "The password or email cannot be blank.";
+            }
+            //store the email the user is attempting to send.
+            $username = $_REQUEST['oldemail'];
+            //check for a valid email.
+            if(!filter_var($username, FILTER_VALIDATE_EMAIL)){
+
+                $_SESSION['bademail'] = "This is not a valid email. Please try again.";
+            }
+            //get the userID for the email entered, for password checking and final steps.
+            $userID = $this->userModel->getUserIdByEmail($username);
+            //gets the salt for the current user.
+            $userSalt = $this->userModel->getSalt($username);
+            //hash and salt the password.
+            $password = hash('sha512',$_REQUEST['oldpass'].$userSalt);
+
+            if($this->userModel->checkPassword($userID,$password) != 1){
+                $_SESSION['passerror'] = "Incorrect password";
+            }
+            $Inactive = $this->userModel->checkInactive($username, $password);
+            
+            
+            if(count($Inactive) > 0){
+
+                //something is not right in this method....
+                $this->userModel->reactivateUser($userID);
+                $_SESSION['accountSucc'] = "Success! You have been reactivated!";
+                header("Location: /login");
+
+            } 
+            else{
+                //maybe not here?
+                $_SESSION['alreadyact'] = "This account is already active.";
+            }
+        }//end of isset if
+
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/home/reactivate.php';
+            require APP . 'view/_templates/footer.php';
+    }//end of reactivate. 
+
+    
 
     /**
      * PAGE: exampleone
@@ -138,7 +189,7 @@ class Home extends Controller
         session_destroy();
         header('location: /home');
     }//end logout
-    
+
     public function output(){
         Helper::outputArray($_POST);
     }

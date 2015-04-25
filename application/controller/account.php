@@ -19,7 +19,11 @@ class Account extends Controller
         if(isset($_REQUEST['changePasswordThing'])){
         $this->changepassword();
         exit;
-        }   
+        }
+        else if(isset($_REQUEST['deactivateAccount'])) {
+        $this->deactivateAccount();
+        exit;   
+        } 
         
   		require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
@@ -38,13 +42,13 @@ class Account extends Controller
         //Helper::outputArray($_SESSION);
         //Helper::outputArray($passcheck);
         
-        //will get the users Username by session ID
+        //will get the users Username by session ID.
         $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
-        //gets the salt for the current user
+        //gets the salt for the current user.
         $userSalt = $this->userModel->getSalt($currentUser);
         //hash and salt the password.
         $password = hash('sha512',$_REQUEST['password'].$userSalt);
-        //used to confirm password
+        //used to confirm password.
         $passcheck = $this->userModel->checkPassword($_SESSION['UID'], $password);
 
         if(empty($_REQUEST['newpassword'])){
@@ -93,7 +97,20 @@ class Account extends Controller
 
     public function deactivateAccount(){
 
-        $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
+        $currentUser = $_SESSION['UID'];
+        $authoCheck = $this->userModel->checkAuth($currentUser);
+        if($authoCheck[0]['AuthLevel'] == 1){
+            $_SESSION['badadmin'] = "Admins are not allowed to use this function. Sorry!";
+        }
+        else{
+            $this->userModel->deactivateUser($_SESSION['UID']);
+            $_SESSION['errorMessage'] = "Thank you for chooseing P.E.T, Please contact an admin to reactivate your account.";
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/home/login.php';
+        require APP . 'view/_templates/footer.php';
+        
 
     }
     

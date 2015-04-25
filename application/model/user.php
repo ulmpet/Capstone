@@ -66,6 +66,18 @@ class user
         $query->execute($parameters);
         return count($query->fetchAll());
     }
+    public function getUserIdByEmail($email){
+        $sql ="SELECT UserID from userTable WHERE EmailAddress = :email;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':email'=>$email);
+        $query->execute($parameters);
+        $output = $query->fetchAll();
+        return $output[0]['UserID'];   
+    }
+    /*
+    *This will get a user by its session ID and return the corrosponding Email.
+    *
+    */
     public function getUserByID($userID){
 
         $sql = "SELECT EmailAddress FROM userTable WHERE UserID = :userID;";
@@ -85,7 +97,21 @@ class user
     * ie. $MyArray[RowNumber][ColomnName]
     */
     public function checkLogin($userEmail,$userPassword){
-        $sql ="SELECT UserID FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword AND Active=1;";
+        $sql ="SELECT UserID FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword AND Active = 1;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userEmail' => $userEmail, ':userPassword' => $userPassword);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
+    /*
+    * Will select inactive user matching emailAddress and Passsword then reactivate them in the controller.
+    *
+    *
+    *
+    *
+    */
+    public function checkInactive($userEmail,$userPassword){
+        $sql ="SELECT UserID FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword AND Active = 0;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userEmail' => $userEmail, ':userPassword' => $userPassword);
         $query->execute($parameters);
@@ -127,10 +153,24 @@ class user
     *
     */
     public function deactivateUser($userID){
-        $sql = "UPDATE userTable SET Active = 0 WHERE userID = :userID;";
+
+        $sql = "UPDATE userTable SET Active = 0 WHERE UserID = :userID;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userID' => $userID);
         return $query->execute($parameters);
+    }
+    /**
+    *This will reactivate a users account.
+    *
+    *
+    */
+    public function reactivateUser($userID){
+
+        $sql = "UPDATE userTable SET Active = 1 WHERE UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID);
+        return $query->execute($parameters);
+
     }
 
     /**

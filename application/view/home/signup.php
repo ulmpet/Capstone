@@ -1,5 +1,5 @@
 <div class="container">
-	<p><?php echo $this->message ?>
+	<h3>Please enter all required information.</h3>
 	<form method='post' action=''></br>
 		<table>
 

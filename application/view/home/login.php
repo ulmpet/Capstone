@@ -7,6 +7,7 @@
     	<input type='submit'> 
     	<div><?php if(isset($_SESSION['errorMessage'])){ echo "<div class = 'ui-state-error'> ".$_SESSION['errorMessage']." </div>";}else{echo "<div> </div>";} ?>  </div>
     	<p> <a href="<?php echo URL?>home/signup">Click here to sign up for an account!</a></p>
+    	<p> <a href="<?php echo URL?>home/reactivate">Click here to reactivate account!</a></p>
 	</form>
 </div>
 <?php
