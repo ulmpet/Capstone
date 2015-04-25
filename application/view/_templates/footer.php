@@ -1,4 +1,4 @@
-phyl</div>
+</div>
 <div class="site-footer">
 
     Footer works
@@ -30,7 +30,8 @@ phyl</div>
     echo '<script type="text/javascript"> makeBoxes() </script>';
 	}?>
 
-    <?php if((isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard") || (isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard/") {
+    <?php if((isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard") || (isset($_REQUEST['url']) && $_REQUEST['url'] == "dashboard/")) 
+    {
     echo '<script type="text/javascript" src="https://www.google.com/jsapi"></script>';
     echo '<script type="text/javascript" src="'. URL .'js/newuserDemograph.js"></script>';
     echo '<script type="text/javascript" src="'. URL .'js/ulocationDemograph.js"></script>';
