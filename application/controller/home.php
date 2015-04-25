@@ -35,7 +35,7 @@ class Home extends Controller
                 //set the session verables and redirect to News Page
                 $_SESSION['UID'] = $userInformation[0]['UserID'];
                 //Helper::outputArray($_SESSION);
-                header('location: /news');
+                header('location: /phagetool');
             //else login failed
             }else{
                 $this->message = 'Login Failed';

@@ -5,7 +5,7 @@
 </script>
     
     <div class="container">
-        <form id="phageOptions" name="options" method="post" action="/phagetool/phylip">
+        <form id="phageOptions" name="options" method="post" action="">
     <table border="0" width="100%">
         <tbody>
         <tr>
@@ -15,9 +15,7 @@
                 <input type="radio" name="visType" value="0" checked=checked>Known phage &nbsp;
                 <input type="radio" name="visType" value="1">Known & unknown phage<br><br>
                 <input type="checkbox" name="boolTree" id="boolTree" value="1">Phylip Tree &nbsp;
-                <select name="phylip visualization">
-                    <option value="0">rooted</option>
-                    <option value="1">unrooted</option>
+                <input name='postCheck' style='display:none'>
                 </select>
             </td>
         </tr>
