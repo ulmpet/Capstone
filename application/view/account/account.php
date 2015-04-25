@@ -2,29 +2,39 @@
 
     <div>
         <h1>Change Password</h1>
-        <form method="POST" action="account/changePassword">
+        <form method="POST" action="">
+        <input type='text' style='display:none' name='changePasswordThing'>
     <table>
         <tr>
             <td>Enter your existing password:</td>
             <td><input type="password" size="16" name="password"></td>
+            <?php if(isset($_SESSION['message'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['message']." </td>";}else{echo "<td> </td>";} ?>
         </tr>
         <tr>
             <td>Enter your new password:</td>
             <td><input type="password" size="16" name="newpassword"></td>
+            <?php if(isset($_SESSION['message2'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['message2']." </td>";}else{echo "<td> </td>";} ?>
         </tr>
         <tr>
             <td>Re-enter your new password:</td>
             <td><input type="password" size="16" name="confirmnewpassword"></td>
+            <?php if(isset($_SESSION['success'])){ echo "<td class = 'ui-state-highlight'> ".$_SESSION['success']." </td>";}else{echo "<td> </td>";}?>
         </tr>
+
     </table>
-            <p><input type= "submit" value="changePassword"> 
+            <p><input type="submit" value="Submit"> 
         </form>
+
     </div>
 
     <div class="headings">
         <!--<h2>Deactivate Account:</h2>-->
         <form method = "POST" action = "">
-            <h2>Deactivate account:</h2> <input name="Deactivate" type="submit" value="click here"/> 
+            <input type='text' style='display:none' name='deactivateAccount'>
+            <br>
+            <h2>Deactivate account:</h2> 
+            <input name="Deactivate" type="submit" value="click here"/> 
+            <?php if(isset($_SESSION['badadmin'])){ echo "<div class = 'ui-state-error'> ".$_SESSION['badadmin']." </div>";}else{echo "<div> </div>";}?>
         </form>
     </div>
 
@@ -34,3 +44,9 @@
         -Deactivation of accounts (not for admins, only super-admin can deactivate Admin.)</br>
     </p>-->
 </div>
+<?php 
+    unset($_SESSION['message']);
+    unset($_SESSION['message2']);
+    unset($_SESSION['success']);
+    unset($_SESSION['badadmin']);
+?>
