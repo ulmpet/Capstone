@@ -50,6 +50,13 @@
 
 <div class="container">
     Dashboard</br></br>
+    <?php
+    if(isset($_SESSION['adminMessage']) && isset($_SESSION['messageLevel'])){
+      echo "<div class='ui-state-" . $_SESSION['messageLevel'] ."' >".$_SESSION['adminMessage']."</div>";
+    }else{
+      echo "<div></div>";
+    }
+    ?>
     <!--<p style="display:none">
      <u><bold>Features to be included:</bold></u></br>
        -Deactivation of accounts</br>
@@ -177,3 +184,7 @@
 
 </div>
 </div>
+<?php
+unset($_SESSION['messageLevel']);
+unset($_SESSION['adminMessage']);
+?>
