@@ -118,22 +118,37 @@
 
 
 <div id="removeAdmin" style="display:none">
-  <form>
+  <form action='dashboard/processAdmin' method='post'>
     <div>
-      <select id="admins">
+      <select id="admins" name="removeAdmin">
+        <option value="none">Select An Admin</option>
       <?php 
 
-      $counter = 0;
-      foreach($adminList as $email){
 
-        echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
-        $counter += 1;
+      foreach($adminList as $admin){
+
+        echo "<option value=".$admin['UserID'].">".$admin['EmailAddress']." </option>";
+
 
       } 
       ?>
 
     </select>
     <input type="submit" value="Remove Admin">
+    <select id="users" name="makeAdmin">
+      <option value="none">Select A User</option>
+      <?php 
+
+
+      foreach($userList as $user){
+
+        echo "<option value=".$user['UserID'].">".$user['EmailAddress']." </option>";
+
+
+      } 
+      ?>
+    </select>
+    <input type="submit" value="Grant Admin">
     </div>
 
   </form>

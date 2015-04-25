@@ -47,11 +47,32 @@ class user
         return $query->fetchAll();
     }
 
-    public function getAdmin(){
-        $sql ="SELECT EmailAddress FROM userTable WHERE AuthLevel = 1;";
+    public function getUserList(){
+        $sql ="SELECT UserID, EmailAddress FROM userTable where AuthLevel < 1";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    public function getAdmin(){
+        $sql ="SELECT UserID, EmailAddress FROM userTable WHERE AuthLevel = 1;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function makeAdmin($userID){
+        $sql = "UPDATE userTable SET AuthLevel = 1 WHERE UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID);
+        return $query->execute($parameters);
+    }
+
+    public function removeAdmin($userID){
+        $sql = "UPDATE userTable SET AuthLevel = 0 WHERE UserID = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID);
+        return $query->execute($parameters);
     }
 
     /*
