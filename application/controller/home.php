@@ -92,7 +92,7 @@ class Home extends Controller
                 $salt = bin2hex(openssl_random_pseudo_bytes(64));
                 $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
                 //add all user signup data to the array 
-                $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'], $_REQUEST['organization'],$salt,1,date(MYSQL_DATE_FORMAT));
+                $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'],$salt,1,date(MYSQL_DATE_FORMAT));
 
             //insert the data to the database and return to home on success
             if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){

@@ -1,6 +1,6 @@
 <div class="container">
 	<h3>Please enter all required information.</h3>
-	<form method='post' action=''></br>
+	<form method='post' action='https://www.google.com/recaptcha/api/siteverify'><br>
 		<table>
 
 			<tr>
@@ -18,15 +18,11 @@
 				<td><input type="password" name="passconfirm"/></td>
 				<?php if(isset($_SESSION['passmessage'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['passmessage']." </td>";}else{echo "<td> </td>";} ?>
 			</tr>
-			<td> </td>
-			<tr>
-			<td>Your organization or institution</td>
-			<td><input type="text" name="organization"/></td>
-			<td>Your City</td>
-			<td><input type="text" name="city"/></td>
-		</tr>
 		</table>
-	<p>By providing us with this extra information, you are contributing to the improvement of these tools.</p>
+	<br>
+	
+	<div class="g-recaptcha" data-sitekey="6Ldg5AUTAAAAAGgnCFx4b7HPkuhYnbzjbLxuwIDt"></div>
+
 	<input type="submit"/>
 	</form>
 
