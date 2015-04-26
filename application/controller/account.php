@@ -104,7 +104,7 @@ class Account extends Controller
         }
         else{
             $this->userModel->deactivateUser($_SESSION['UID']);
-            $_SESSION['errorMessage'] = "Thank you for chooseing P.E.T, Please contact an admin to reactivate your account.";
+            $_SESSION['errorMessage'] = "Thank you for chooseing P.E.T, Please feel free to reactivate at any time with the below link.";
         }
 
         require APP . 'view/_templates/header.php';
@@ -112,7 +112,7 @@ class Account extends Controller
         require APP . 'view/_templates/footer.php';
         
 
-    }
-    
+    }    
+
 
 }

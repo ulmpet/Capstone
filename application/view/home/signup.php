@@ -6,7 +6,6 @@
 			<tr>
 				<td>Your email</td>
 				<td><input type="text" name="email"/></td>
-				<?php if(isset($_SESSION['goodemail'])){ echo "<td class = 'ui-state-highlight'> ".$_SESSION['goodemail']." </td>";}else{echo "<td> </td>";} ?>
 				<?php if(isset($_SESSION['bademail'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['bademail']." </td>";}else{echo "<td> </td>";} ?>
 			</tr>
 			<td> </td>
@@ -24,7 +23,7 @@
 			<td><input type="text" name="organization"/></td>
 			<td>Your City</td>
 			<td><input type="text" name="city"/></td>
-		</tr>
+		</tr> 
 		</table>
 	<p>By providing us with this extra information, you are contributing to the improvement of these tools.</p>
 	<input type="submit"/>
