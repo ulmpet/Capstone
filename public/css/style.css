@@ -75,6 +75,10 @@ body {
     font-color: #000000;
 }
 
+.container input[type="radio"]{
+    font-size: 14px;
+}
+
 .container input[type="submit"] {
     background-color: #f5f5f5;
     cursor: pointer;
@@ -213,11 +217,12 @@ body {
     background-color: f5f5f5;
     color: #380000;
     background: transparent;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     font-weight: bold;
 }
 
 .navigation div:hover {
+    cursor: hand;
     background-color: f5f5f5;
     width: 130px;
     color: #380000;

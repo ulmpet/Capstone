@@ -41,15 +41,15 @@
     </div>
 
   <div class="navigation"></br>
-    <div onclick=dashShowHide("userDemograph")> Demographic </div>
-    <div onclick=dashShowHide("fileUpload")> Upload </div>
-    <div onclick=dashShowHide("addGenus")> Genus Addition </div>  
-    <div onclick=dashShowHide("removeAdmin")> Admin Removal </div>
+    <div onclick=dashShowHide("userDemograph")> demographic </div>
+    <div onclick=dashShowHide("fileUpload")> upload </div>
+    <div onclick=dashShowHide("addGenus")> genus addition </div>  
+    <div onclick=dashShowHide("removeAdmin")> admin removal </div>
   </div>
 
 
 <div class="container">
-    Dashboard</br></br>
+    Dashboard</br>
     <!--<p style="display:none">
      <u><bold>Features to be included:</bold></u></br>
        -Deactivation of accounts</br>
@@ -63,42 +63,44 @@
     </p>-->
 
  <div id="fileUpload" style="display:none">
- <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
-    <!-- MAX_FILE_SIZE must precede the file input field -->
-    <div id="phageType" name="genus" style="display:block">
-        
-          <label><input type='radio' name="filetype"  value=0 id='short' onclick=showGenusFeild()>Short CSV</label>
-          <!-- <label><input type='radio' name="filetype"  value=1 id='full' onclick=showGenusFeild()>Full CSV</label> -->
-          <label><input type='radio' name="filetype"  value=2 id='fasta' onclick=hidePhageGenus()>FASTA File</label>
-          <label><input type='radio' name="filetype"  value=3 id='nebCutData' onclick=showPhageNameFeild();>Neb Cutter Data</label>
-          <select id="opts" name="genusName" style='display:none'>
-            <?php 
+   <form id='upload' enctype="multipart/form-data" action="dashboard/fileupload" method="POST">
+      <!-- MAX_FILE_SIZE must precede the file input field -->
+      <div id="phageType" name="genus" style="display:block">
+          <p>&nbsp;&nbsp;<i>Update Phage Enzyme Tool Data</i></p>
+            &nbsp;&nbsp;<label><input type='radio' name="filetype"  value=0 id='short' onclick=showGenusFeild()>Short CSV</label>
+                        <!-- <label><input type='radio' name="filetype"  value=1 id='full' onclick=showGenusFeild()>Full CSV</label> -->
+                        <label><input type='radio' name="filetype"  value=2 id='fasta' onclick=hidePhageGenus()>FASTA File</label>
+                        <label><input type='radio' name="filetype"  value=3 id='nebCutData' onclick=showPhageNameFeild();>Neb Cutter Data</label>
+                        &nbsp;&nbsp;
+            <select id="opts" name="genusName" style='display:none'>
+              <?php 
 
-              echo "<option value='null'> None </option>";
-            foreach($genusList as $genus){
+                echo "<option value='null'> None </option>";
+              foreach($genusList as $genus){
 
-              echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>"; 
-            } 
-            ?>
-        </select>
-          <select id='phageNameFeild' name='phageName' style='display:none' >
-            <?php 
+                echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>"; 
+              } 
+              ?>
+            </select>
 
-              echo "<option value='null'> None </option>";
-              
-            foreach($phageList as $phage){
+            <select id='phageNameFeild' name='phageName' style='display:none' >
+              <?php 
 
-              echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>"; 
-            } 
-            ?>
-          </select>
-    </div>
+                echo "<option value='null'> None </option>";
+                
+              foreach($phageList as $phage){
 
-    <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
-<!--HEEEEEEEEELLLLPPPPPP TYPE FILE... CSS ME PLEASE-->
-    <!-- Name of input element determines name in $_FILES array -->
-    <input name="userfile" type="file"/><input type="submit" value="Send File" />
-</form>
+                echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>"; 
+              } 
+              ?>
+            </select>
+      </div>
+
+      <input type="hidden" name="MAX_FILE_SIZE" value="56320000" />
+  <!--HEEEEEEEEELLLLPPPPPP TYPE FILE... CSS ME PLEASE-->
+      <!-- Name of input element determines name in $_FILES array -->
+      <input name="userfile" type="file"/><input type="submit" value="Send File" />
+  </form>
 </div>
 
 <script type="text/javascript">
@@ -118,30 +120,32 @@
 
 
 <div id="removeAdmin" style="display:none">
+  <p>&nbsp;&nbsp;<i>Remove Administrator</i></p>
   <form>
     <div>
+      &nbsp;&nbsp;
       <select id="admins">
-      <?php 
+        <?php 
 
-      $counter = 0;
-      foreach($adminList as $email){
+        $counter = 0;
+        foreach($adminList as $email){
 
-        echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
-        $counter += 1;
+          echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
+          $counter += 1;
 
-      } 
-      ?>
-
-    </select>
-    <input type="submit" value="Remove Admin">
+        } 
+        ?>
+      </select>
+      <input type="submit" value="Remove Admin">
     </div>
-
   </form>
 </div>
+
 <div id = addGenus style="display:none">
   <form action='dashboard/addGenus' method='POST'>
-    <p><label>New Genus Name:  <input type='text' name='newGenus' text="Enter New Genus"></label>
-    <input type='submit' value="Add Genus"></p>
+    <p><i>&nbsp;&nbsp;Add New Genus</i></br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Genus Name:  <input type='text' name='newGenus' text="Enter New Genus"></label>
+    <input type='submit' value="submit"></p>
   </form>
 </div>
 
@@ -155,9 +159,12 @@
   <div id="ulocationDemograph" style="display:block; width: 350px; height:250px; float: left">
     SHOWING DEMOGRAPHIC INFORMATION
   </div>-->
-
+  <p><i>&nbsp;&nbsp;Demographics</i></p>
+  <!--<p><img url="googleanalyticsicon.png" alt="Google Analyics Icon"></p>-->
   <div id="container">
-    <p>For complete user demographics data, please visit the <a href="https://www.google.com/analytics/web/?authuser=0#report/visitors-overview/a61998275w96889679p101106604/"> phage tool's Google Analytics profile.</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For complete user demographics data, visit 
+      <a href="https://www.google.com/analytics/web/?authuser=0#report/visitors-overview/a61998275w96889679p101106604/"> 
+     <i>The Phage Enzyme Tool</i> <b>Google Analytics</b> profile.</a></p>
   </div>
 
 </div>
