@@ -67,6 +67,11 @@ class Dashboard extends Controller
             }
         }
     }
+
+    public function processPhageDataForm(){
+        Helper::outputArray($_REQUEST);
+    }
+
     public function addGenus(){
         if(isset($_REQUEST['newGenus'])){
             $this->genusModel->addGenus($_REQUEST['newGenus']);
