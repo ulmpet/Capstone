@@ -1,6 +1,6 @@
 <div class="container">
 	<h1>Please enter all required information.</h1>
-	<form method='post' action='verify.php'><br>
+	<form method='post' action=''><br>
 		<table>
 			<tr>
 				<td>Enter your email:</td>
@@ -23,15 +23,14 @@
 			</tr>
 			<?php if(isset($_SESSION['capmessage'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['capmessage']." </td>";}else{echo "<td> </td>";} ?>
 		</table>
-	
-	<input type="submit"/>
+	<input type="submit"/>	
+
 
 	</form>
 </div>
 
 
 <?php
-    unset($_SESSION['goodemail']);
     unset($_SESSION['bademail']);
     unset($_SESSION['passmessage']);
     unset($_SESSION['capmessage']);
