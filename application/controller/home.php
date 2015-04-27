@@ -60,7 +60,6 @@ class Home extends Controller
         //stringcmp for passwords
         //message system for feedback
         //make sure emails are emails. REGEX from index().
-        $this->message = 'Please Enter all required information.';
 
             if(isset($_REQUEST['email'])){
 
@@ -68,44 +67,53 @@ class Home extends Controller
 
             if(!filter_var($newUserEmail, FILTER_VALIDATE_EMAIL)){
 
-                $_SESSION['bademail'] = "This is not a valid email. Please try again.";
-            }
-
-            $passcheck = strcmp($_REQUEST['pass'],$_REQUEST['passconfirm']);
-                  
-            if($passcheck != 0){
-
-                $_SESSION['passmessage'] = "The new passwords do not match.";
-                
-
-            } //end of nested if
-            if (empty($_REQUEST['pass']))
-            {
-                $_SESSION['passmessage'] = "The new passwords cannot be blank";
-            }
-            else if (empty($_REQUEST['passconfirm'])){
-
-                $_SESSION['passmessage'] = "The new passwords cannot be blank";
-            }
-
-                //create a random salt to add to password
-                $salt = bin2hex(openssl_random_pseudo_bytes(64));
-                $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
-                //add all user signup data to the array 
-                $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'],$salt,1,date(MYSQL_DATE_FORMAT));
-
-
-            //insert the data to the database and return to home on success
-            if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
-                $this->userModel->addUser($info);
-                $_SESSION['accountSucc'] = "Success! You're now a user!";
-                header("location: /login");
-            
+                $_SESSION['bademail'] = "This is not a valid email.";
             }else{
-                $_SESSION['bademail'] = 'This Account Email Address already Exists.';
-            }   
-                
-            }//end checks
+                $passcheck = strcmp($_REQUEST['pass'],$_REQUEST['passconfirm']);
+                  
+                if($passcheck != 0){
+
+                    $_SESSION['passmessage'] = "The new password do not match.";
+                    
+
+                }else if (empty($_REQUEST['pass'])){
+
+                    $_SESSION['passmessage'] = "The new password cannot be blank";
+
+                }else if (empty($_REQUEST['passconfirm'])){
+
+                    $_SESSION['passmessage'] = "The new password cannot be blank";
+
+                }else if(!isset($_REQUEST['g-recaptcha-response'])){
+
+                    $_SESSION['capmessage'] = "Please check the Captcha box";
+
+                }else{
+
+
+                    $captcha=$_REQUEST['g-recaptcha-response'];
+                    $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ldg5AUTAAAAAL-yaLI2L6HyD0MYehEWS_XxOYWJ&response=".$captcha);
+                    //create a random salt to add to password
+                    $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                    $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
+                    //add all user signup data to the array 
+                    $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'],$salt,1,date(MYSQL_DATE_FORMAT));
+
+                        if(empty($_POST['g-recaptcha-response'])){
+                            $_SESSION['capmessage'] = "Please check the Captcha box";
+                        }
+                        //insert the data to the database and return to home on success.
+                        else if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
+                            $this->userModel->addUser($info);
+                            $_SESSION['accountSucc'] = "Success! You're now a user!";
+                            header("location: /login");
+                        
+                        }else{
+                            $_SESSION['bademail'] = 'This Account Email Address already Exists.';
+                        }
+                }
+            } 
+        }//end checks
 
             // load views
             require APP . 'view/_templates/header.php';
