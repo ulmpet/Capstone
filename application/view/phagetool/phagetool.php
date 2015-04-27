@@ -22,11 +22,11 @@
 
             <tr>
                 <td colspan="3">
-                    <h3>Select genus</h3>
+<!--                     <h3>Select genus</h3>
                     <select name="selGenus[]">
                         <option value="null">Any Genus</option>
 
-                    </select>
+                    </select> -->
                 </td>
             </tr>
 
