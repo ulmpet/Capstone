@@ -56,16 +56,6 @@
             </tr>
         
             <tr>    
-                <td >
-                    <h3>Enzyme presets</h3>
-                    <select class="js-example-basic-multiple" data-placeholder="Select Enzyme Presets" name="selPresets[]" multiple="multiple">
-                        <option value="0">No preset</option>
-                        <option value="1">preset 1</option>
-                        <option value="2">preset 2</option>
-                        <option value="3">preset 3</option>
-                        <option value="4">preset 4</option>
-                    </select>
-                </td>
 
                 <td>
                     <h3>Select NEB enzyme</h3>
