@@ -180,7 +180,7 @@
         ?>
       </select>
       <label>SubCluster:<input type='text' name='subcluster' size='3'></label>
-    <input type='button' onlick='addPhage()' value="Add Phage"></p>  
+    <input type='button' onclick='addPhage()' value="Add Phage"></p>  
     <p>
       <label>Select a Phage to Remove:<select name="removePhageName">
         <?php
@@ -199,7 +199,7 @@
       $("#submissionType").val("removePhage");
       $("#phageDataForm").submit();
   }
-  function addphage(){
+  function addPhage(){
     $("#submissionType").val("addPhage");
     $("#phageDataForm").submit();
   }
