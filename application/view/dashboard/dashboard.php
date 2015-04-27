@@ -162,8 +162,26 @@
 </div>
 <div id = addGenus style="display:none">
   <form action='dashboard/addGenus' method='POST'>
-    <p><label>New Genus Name:  <input type='text' name='newGenus' text="Enter New Genus"></label>
+    <p><label>New Genus Name:  <input type='text' name='newGenus' value="Enter New Genus"></label>
     <input type='submit' value="Add Genus"></p>
+    <p><label>New Phage Name: <input type='text' name='newPhageName' value='Enter New Pahge Name'></label>
+      <select name="genusName">
+            <?php 
+            foreach($genusList as $genus){
+
+              echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>"; 
+            } 
+            ?>
+          </select>
+      <select name='clusterName'>
+        <?php
+          foreach($clusterList as $cluster){
+            echo "<option value=".$cluster['ClusterID'].">".$cluster['Cluster']." </option>";
+          }
+        ?>
+      </select>
+      <label>SubCluster:<input type='text' name='subcluster'></label>
+    <input type='submit' value="Add Phage"></p>  
   </form>
 </div>
 

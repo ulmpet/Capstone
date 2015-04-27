@@ -35,6 +35,7 @@ class Dashboard extends Controller
         }
          
         $adminList = $this->userModel->getAdmin();
+        $clusterList = $this->clusterModel->getClusterList();
         $userList = $this->userModel->getUserList();
         $genusList = $this->genusModel->getGenusList();
         $phageList = $this->phageModel->getPhageNamesAndID();
