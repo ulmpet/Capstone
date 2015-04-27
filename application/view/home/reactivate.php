@@ -12,14 +12,13 @@
 			<td> </td>
 			<tr>
 				<td>Password:</td>
-				<td><input type="password" name='oldpass'/></td>
+				<td><input type="password" name='oldpass'/>  <input type="submit"/></td>
 				<?php if(isset($_SESSION['passerror'])){ echo "<td class = 'ui-state-error'> ".$_SESSION['passerror']." </td>";}else{echo "<td> </td>";} ?>
 				<?php if(isset($_SESSION['alreadyact'])){ echo "<td class = 'ui-state-highlight'> ".$_SESSION['alreadyact']." </td>";}else{echo "<td> </td>";} ?>
 			</tr>
 			<td> </td>
 			</tr>
 		</table>
-		<input type="submit"/>
 	</form>
 
 </div>
