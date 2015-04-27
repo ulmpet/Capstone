@@ -88,7 +88,7 @@
         
             <tr>
                 <td align="right" colspan="3">
-                    </br><input type="button" id="clicker" value="Submit">
+                    </br><input type="button" id="clicker" value="submit">
                 </td>
             </tr>
     </tbody>
