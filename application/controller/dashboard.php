@@ -70,6 +70,28 @@ class Dashboard extends Controller
 
     public function processPhageDataForm(){
         Helper::outputArray($_REQUEST);
+        if($_REQUEST['submissionType'] == "addGenus"){
+            $this->addGenus();
+        }elseif($_REQUEST['submissionType'] == "addPhage") {
+            $this->addPhage();
+        }elseif($_REQUEST['submissionType'] == "removePhage") {
+            $this->removePhage();
+        }else{
+
+        }
+    }
+
+    // do things to add a new phage
+    public function addPhage(){
+        // PhageName, GenusID, ClusterID, Subcluster,Updated
+        $phageInput[0] = array($_REQUEST['newPhageName'],$_REQUEST['genusName'],$_REQUEST['clusterName'],$_REQUEST['subcluster'], date(MYSQL_DATE_FORMAT));
+        $this->phageModel->addShortPhage($phageInput);
+        return "SOmething";
+    }
+
+    // do things to remove a phage
+    public function removePhage(){
+        $this->phageModel->deletePhage($_REQUEST['removePhageName']);
     }
 
     public function addGenus(){
