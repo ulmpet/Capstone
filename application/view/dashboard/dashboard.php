@@ -161,10 +161,10 @@
   </form>
 </div>
 <div id = addGenus style="display:none">
-  <form action='dashboard/addGenus' method='POST'>
+  <form action='dashboard/processPhageDataForm' method='POST' id='phageDataForm'>
     <p><label>New Genus Name:  <input type='text' name='newGenus' value="Enter New Genus"></label>
-    <input type='submit' value="Add Genus"></p>
-    <p><label>New Phage Name: <input type='text' name='newPhageName' value='Enter New Pahge Name'></label>
+    <input type='button' onclick='addGenus()' value="Add Genus"></p>
+    <p><label>New Phage Name: <input type='text' name='newPhageName' value='Enter New Phage Name'></label>
       <select name="genusName">
             <?php 
             foreach($genusList as $genus){
@@ -180,11 +180,35 @@
           }
         ?>
       </select>
-      <label>SubCluster:<input type='text' name='subcluster'></label>
-    <input type='submit' value="Add Phage"></p>  
+      <label>SubCluster:<input type='text' name='subcluster' size='3'></label>
+    <input type='button' onlick='addPhage()' value="Add Phage"></p>  
+    <p>
+      <label>Select a Phage to Remove:<select name="removePhageName">
+        <?php
+          foreach($phageList as $phage){
+            echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>";
+          }      
+        ?>
+      </select>
+      <input type='button' onclick='removePhage()' value='Remove Phage'>
+    </p>
+    <input type='text' name='submissionType' value='' id='submissionType' style='display:none'>
   </form>
 </div>
-
+<script type='text/javascript'>
+  function removePhage(){
+      $("#submissionType").val("removePhage");
+      $("#phageDataForm").submit();
+  }
+  function addphage(){
+    $("#submissionType").val("addPhage");
+    $("#phageDataForm").submit();
+  }
+  function addGenus(){
+    $("#submissionType").val("addGenus");
+    $("#phageDataForm").submit();
+  }
+</script>
 <!--Divs that will hold the pie chart-->
 <div id="userDemograph" style="display:block">  
 
