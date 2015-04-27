@@ -31,23 +31,51 @@ class Dashboard extends Controller
     {
         $AuthLevel = $this->userModel->checkAuth($_SESSION['UID']);
         if ($AuthLevel[0]["AuthLevel"] < 1) {
-            header('location: /news');
+            header('location: /phageTool');
         }
          
         $adminList = $this->userModel->getAdmin();
+        $clusterList = $this->clusterModel->getClusterList();
+        $userList = $this->userModel->getUserList();
         $genusList = $this->genusModel->getGenusList();
         $phageList = $this->phageModel->getPhageNamesAndID();
 
-
+        //Helper::outputArray($userList);
     	require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/dashboard/dashboard.php';
         require APP . 'view/_templates/footer.php';
     }
 
+    public function processAdmin(){
+        Helper::outputArray($_REQUEST);
+        if(isset($_REQUEST['removeAdmin'])){
+            if($_REQUEST['removeAdmin'] != 'none'){
+                $this->userModel->removeAdmin($_REQUEST['removeAdmin']);
+                $_SESSION['adminMessage'] = 'User has had administration privileges removed.';
+                $_SESSION['messageLevel'] = 'highlight';
+                header('location: /dashboard');
+            }
+
+        }
+        if(isset($_REQUEST['makeAdmin'])){
+            if($_REQUEST['makeAdmin'] != "none"){
+                $this->userModel->makeAdmin($_REQUEST['makeAdmin']);
+                $_SESSION['adminMessage'] = 'User now has administration privileges.';
+                $_SESSION['messageLevel'] = 'highlight';
+                header('location: /dashboard');
+            }
+        }
+    }
+
+    public function processPhageDataForm(){
+        Helper::outputArray($_REQUEST);
+    }
+
     public function addGenus(){
         if(isset($_REQUEST['newGenus'])){
             $this->genusModel->addGenus($_REQUEST['newGenus']);
+            $_SESSION['adminMessage'] = 'Genus '.$_REQUEST['newGenus'].' successfuly added to the database.';
             header('location: /dashboard');
         }
     }
@@ -85,6 +113,8 @@ class Dashboard extends Controller
 
     }// end file upload
 
+
+    //Function to parse the CSV files from Phages DB
     private function shortUpload($genusName){
         $phages = array();
         $clusterMap = $this->generateClusterMap();
@@ -130,6 +160,8 @@ class Dashboard extends Controller
         }
     }//end short upload
 
+
+    //function to parse the CSV data from PET v 1.3
     public function fullUpload($genusName){
         ini_set("memory_limit","1024M");
         set_time_limit (0);
@@ -190,7 +222,7 @@ class Dashboard extends Controller
         }
 
     }
-
+    // function to parse data from Fasta files
     public function fastaUpload(){
         ini_set("memory_limit","1024M");
         set_time_limit (0);
@@ -303,6 +335,9 @@ class Dashboard extends Controller
         return $phageMap;
     }
 
+    // accepts a DNA sequence and cuts it with the enzymes in the database. Originated from Bio php
+    // dosent work correctly and is not used as of 4/25/15
+    // Neb data upload has been added to render this unnessissary
     private function enzymeCutter($sequence){
         $enzymesArray = $this->enzymeModel->getEnzymesForCutting();
 
@@ -354,6 +389,8 @@ class Dashboard extends Controller
 
   }
 
+  // depricated in favor of Neb data Upload
+  // used to call the enzyme cutter and build the cut values to be inserted into the database
   public function cutGenome($phageID){
     $genome = $this->phageModel->getPhageGenome($phageID); 
     Helper::outputArray($genome);     
@@ -369,7 +406,7 @@ class Dashboard extends Controller
                 
   }
 
-
+  // Parser for Neb data upload 
   public function nebUpload(){
         //Check to see the the SuperGlobal Variable $_FILES has data
         if(isset($_FILES['userfile']['name'])){

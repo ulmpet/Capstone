@@ -49,7 +49,14 @@
 
 
 <div class="container">
-    Dashboard</br>
+    Dashboard</br></br>
+    <?php
+    if(isset($_SESSION['adminMessage']) && isset($_SESSION['messageLevel'])){
+      echo "<div class='ui-state-" . $_SESSION['messageLevel'] ."' >".$_SESSION['adminMessage']."</div>";
+    }else{
+      echo "<div></div>";
+    }
+    ?>
     <!--<p style="display:none">
      <u><bold>Features to be included:</bold></u></br>
        -Deactivation of accounts</br>
@@ -120,35 +127,86 @@
 
 
 <div id="removeAdmin" style="display:none">
-  <p>&nbsp;&nbsp;<i>Remove Administrator</i></p>
-  <form>
+  <form action='dashboard/processAdmin' method='post'>
     <div>
-      &nbsp;&nbsp;
-      <select id="admins">
-        <?php 
+      <select id="admins" name="removeAdmin">
+        <option value="none">Select An Admin</option>
+      <?php 
 
-        $counter = 0;
-        foreach($adminList as $email){
 
-          echo "<option value=".$counter.">".$email['EmailAddress']." </option>";
-          $counter += 1;
+      foreach($adminList as $admin){
 
-        } 
+        echo "<option value=".$admin['UserID'].">".$admin['EmailAddress']." </option>";
         ?>
-      </select>
-      <input type="submit" value="Remove Admin">
+    </select>
+    <input type="submit" value="Remove Admin">
+    <select id="users" name="makeAdmin">
+      <option value="none">Select A User</option>
+      <?php 
+
+
+      foreach($userList as $user){
+
+        echo "<option value=".$user['UserID'].">".$user['EmailAddress']." </option>";
+
+
+      } 
+      ?>
+    </select>
+    <input type="submit" value="Grant Admin">
     </div>
   </form>
 </div>
 
 <div id = addGenus style="display:none">
-  <form action='dashboard/addGenus' method='POST'>
-    <p><i>&nbsp;&nbsp;Add New Genus</i></br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Genus Name:  <input type='text' name='newGenus' text="Enter New Genus"></label>
-    <input type='submit' value="submit"></p>
+  <form action='dashboard/processPhageDataForm' method='POST' id='phageDataForm'>
+    <p><label>New Genus Name:  <input type='text' name='newGenus' value="Enter New Genus"></label>
+    <input type='button' onclick='addGenus()' value="Add Genus"></p>
+    <p><label>New Phage Name: <input type='text' name='newPhageName' value='Enter New Phage Name'></label>
+      <select name="genusName">
+            <?php 
+            foreach($genusList as $genus){
+
+              echo "<option value=".$genus['GenusID'].">".$genus['Genus']." </option>"; 
+            } 
+            ?>
+          </select>
+      <select name='clusterName'>
+        <?php
+          foreach($clusterList as $cluster){
+            echo "<option value=".$cluster['ClusterID'].">".$cluster['Cluster']." </option>";
+          }
+        ?>
+      </select>
+      <label>SubCluster:<input type='text' name='subcluster' size='3'></label>
+    <input type='button' onlick='addPhage()' value="Add Phage"></p>  
+    <p>
+      <label>Select a Phage to Remove:<select name="removePhageName">
+        <?php
+          foreach($phageList as $phage){
+            echo "<option value=".$phage['PhageID'].">".$phage['PhageName']." </option>";
+          }      
+        ?>
+      </select>
+      <input type='button' onclick='removePhage()' value='Remove Phage'>
+    </p>
+    <input type='text' name='submissionType' value='' id='submissionType' style='display:none'>
   </form>
 </div>
-
+<script type='text/javascript'>
+  function removePhage(){
+      $("#submissionType").val("removePhage");
+      $("#phageDataForm").submit();
+  }
+  function addphage(){
+    $("#submissionType").val("addPhage");
+    $("#phageDataForm").submit();
+  }
+  function addGenus(){
+    $("#submissionType").val("addGenus");
+    $("#phageDataForm").submit();
+  }
+</script>
 <!--Divs that will hold the pie chart-->
 <div id="userDemograph" style="display:block">  
 
@@ -169,3 +227,7 @@
 
 </div>
 </div>
+<?php
+unset($_SESSION['messageLevel']);
+unset($_SESSION['adminMessage']);
+?>
