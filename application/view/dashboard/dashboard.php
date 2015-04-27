@@ -137,6 +137,7 @@
       foreach($adminList as $admin){
 
         echo "<option value=".$admin['UserID'].">".$admin['EmailAddress']." </option>";
+      }
         ?>
     </select>
     <input type="submit" value="Remove Admin">
@@ -224,10 +225,10 @@
       <a href="https://www.google.com/analytics/web/?authuser=0#report/visitors-overview/a61998275w96889679p101106604/"> 
      <i>The Phage Enzyme Tool</i> <b>Google Analytics</b> profile.</a></p>
   </div>
-
-</div>
-</div>
 <?php
 unset($_SESSION['messageLevel']);
 unset($_SESSION['adminMessage']);
 ?>
+</div>
+</div>
+
