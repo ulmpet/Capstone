@@ -60,7 +60,6 @@ class Home extends Controller
         //stringcmp for passwords
         //message system for feedback
         //make sure emails are emails. REGEX from index().
-        $this->message = 'Please Enter all required information.';
 
             if(isset($_REQUEST['email'])){
 
@@ -68,43 +67,53 @@ class Home extends Controller
 
             if(!filter_var($newUserEmail, FILTER_VALIDATE_EMAIL)){
 
-                $_SESSION['bademail'] = "This is not a valid email. Please try again.";
-            }
-
-            $passcheck = strcmp($_REQUEST['pass'],$_REQUEST['passconfirm']);
-                  
-            if($passcheck != 0){
-
-                $_SESSION['passmessage'] = "The new passwords do not match.";
-                
-
-            } //end of nested if
-            if (empty($_REQUEST['pass']))
-            {
-                $_SESSION['passmessage'] = "The new passwords cannot be blank";
-            }
-            else if (empty($_REQUEST['passconfirm'])){
-
-                $_SESSION['passmessage'] = "The new passwords cannot be blank";
-            }
-
-                //create a random salt to add to password
-                $salt = bin2hex(openssl_random_pseudo_bytes(64));
-                $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
-                //add all user signup data to the array 
-                $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'],$salt,1,date(MYSQL_DATE_FORMAT));
-
-            //insert the data to the database and return to home on success
-            if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
-                $this->userModel->addUser($info);
-                $_SESSION['accountSucc'] = "Success! You're now a user!";
-                header("Location: /login");
-            
+                $_SESSION['bademail'] = "This is not a valid email.";
             }else{
-                $_SESSION['bademail'] = 'This Account Email Address already Exists.';
-            }   
-                
-            }//end checks
+                $passcheck = strcmp($_REQUEST['pass'],$_REQUEST['passconfirm']);
+                  
+                if($passcheck != 0){
+
+                    $_SESSION['passmessage'] = "The new password do not match.";
+                    
+
+                }else if (empty($_REQUEST['pass'])){
+
+                    $_SESSION['passmessage'] = "The new password cannot be blank";
+
+                }else if (empty($_REQUEST['passconfirm'])){
+
+                    $_SESSION['passmessage'] = "The new password cannot be blank";
+
+                }else if(!isset($_REQUEST['g-recaptcha-response'])){
+
+                    $_SESSION['capmessage'] = "Please check the Captcha box";
+
+                }else{
+
+
+                    $captcha=$_REQUEST['g-recaptcha-response'];
+                    $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Ldg5AUTAAAAAL-yaLI2L6HyD0MYehEWS_XxOYWJ&response=".$captcha);
+                    //create a random salt to add to password
+                    $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                    $password = hash('sha512',$_REQUEST['passconfirm'].$salt);
+                    //add all user signup data to the array 
+                    $info = array($_REQUEST['email'], $password, 0, null, $_SERVER['REMOTE_ADDR'],$salt,1,date(MYSQL_DATE_FORMAT));
+
+                        if(empty($_POST['g-recaptcha-response'])){
+                            $_SESSION['capmessage'] = "Please check the Captcha box";
+                        }
+                        //insert the data to the database and return to home on success.
+                        else if($this->userModel->SelectUserByEmail($_REQUEST['email'])==0){
+                            $this->userModel->addUser($info);
+                            $_SESSION['accountSucc'] = "Success! You're now a user!";
+                            header("location: /login");
+                        
+                        }else{
+                            $_SESSION['bademail'] = 'This Account Email Address already Exists.';
+                        }
+                }
+            } 
+        }//end checks
 
             // load views
             require APP . 'view/_templates/header.php';
@@ -119,48 +128,52 @@ class Home extends Controller
     public function reactivate(){
 
         if(isset($_REQUEST['oldemail'])){
-
-            if (empty($_REQUEST['oldpass']) || empty($_REQUEST['oldemail']))
-            {
-                $_SESSION['passerror'] = "The password or email cannot be blank.";
-            }
+            
             //store the email the user is attempting to send.
             $username = $_REQUEST['oldemail'];
             //check for a valid email.
+            
+
+            
             if(!filter_var($username, FILTER_VALIDATE_EMAIL)){
 
                 $_SESSION['bademail'] = "This is not a valid email. Please try again.";
+
             }
+            
+
             //get the userID for the email entered, for password checking and final steps.
             $userID = $this->userModel->getUserIdByEmail($username);
             //gets the salt for the current user.
             $userSalt = $this->userModel->getSalt($username);
             //hash and salt the password.
             $password = hash('sha512',$_REQUEST['oldpass'].$userSalt);
+ 
+            if(empty($_REQUEST['oldpass']) || empty($_REQUEST['oldemail']))
+            {
+                $_SESSION['passerror'] = "The password or email cannot be blank.";
 
-            if($this->userModel->checkPassword($userID,$password) != 1){
-                $_SESSION['passerror'] = "Incorrect password";
             }
-            $Inactive = $this->userModel->checkInactive($username, $password);
-            
-            
-            if(count($Inactive) > 0){
+            else if($this->userModel->checkPassword($userID,$password) != 1){
+                $_SESSION['passerror'] = "Incorrect password";
+            } 
+            else if($this->userModel->checkInactive($username, $password) == 1){
 
+                $_SESSION['passerror'] = "This account is already active.";
+            }
+            else{
+                //maybe not here?
                 //something is not right in this method....
                 $this->userModel->reactivateUser($userID);
                 $_SESSION['accountSucc'] = "Success! You have been reactivated!";
-                header("Location: /login");
-
-            } 
-            else{
-                //maybe not here?
-                $_SESSION['alreadyact'] = "This account is already active.";
+                header("location: /home");
             }
         }//end of isset if
 
             require APP . 'view/_templates/header.php';
             require APP . 'view/home/reactivate.php';
             require APP . 'view/_templates/footer.php';
+
     }//end of reactivate. 
 
     

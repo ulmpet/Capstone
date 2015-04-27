@@ -111,11 +111,12 @@ class user
     *
     */
     public function checkInactive($userEmail,$userPassword){
-        $sql ="SELECT UserID FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword AND Active = 0;";
+        $sql ="SELECT Active FROM userTable WHERE EmailAddress = :userEmail AND Password = :userPassword;";
         $query = $this->db->prepare($sql);
         $parameters = array(':userEmail' => $userEmail, ':userPassword' => $userPassword);
         $query->execute($parameters);
-        return $query->fetchAll();
+        $output = $query->fetchAll();
+        return $output[0]['Active'];
     }
     /*
     *  Selects the authentication level of the user given by the user id passed to the function
