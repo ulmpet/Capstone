@@ -1,7 +1,15 @@
 </div>
 <div class="site-footer">
 
-    Help
+    <?php 
+    if(isset($_SESSION['UID'])){
+        if($this->getAuth() < 1){
+            echo "<a href=".URL."docs/PUG.pdf>Help</a>";
+        }else{
+            echo "<a href=".URL."docs/PAG.pdf>Help</a>";
+        }
+    }
+    ?>
     <!-- jQuery, loaded in the recommended protocol-less way -->
     <!-- more http://www.paulirish.com/2010/the-protocol-relative-url/ -->
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>

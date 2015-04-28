@@ -289,13 +289,14 @@ class PhageTool extends Controller
                         exec($commandString);
 			
 			if(!isset($_REQUEST['unknownName'])){
-				header("Content-Type: application/pdf");
-				header("Content-Disposition: inline; filename= phageTree.pdf");
-				header("Content-Transfer-Encodeing: binary");
-				header("Content-Length: " . filesize(PHYLIP_DATA . "phagePDF_".$fileNameDate));
-				//fopen(PHYLIP_DATA.)
-				readfile(PHYLIP_DATA . "phagePDF_".$fileNameDate);
+				//header("Content-Type: application/pdf");
+				//header("Content-Disposition: inline; filename= phageTree.pdf");
+				//header("Content-Transfer-Encodeing: binary");
+				//header("Content-Length: " . filesize(PHYLIP_DATA . "phagePDF_".$fileNameDate));
+				//fopen(PHYLIP_DATA."phagePDF_".$fileNameDate)
+				//readfile(PHYLIP_DATA . "phagePDF_".$fileNameDate);
 				//echo "<embed width='100%' height='100%' src=".URL . "phylip_data/phagePDF_".$fileNameDate." type='application/pdf'>";
+                header('location: '.PHYLIP_DATA.'phagePDF_'.$fileNameDate);
                     	}else{
 				echo "phagePDF_".$fileNameDate;
 			}
