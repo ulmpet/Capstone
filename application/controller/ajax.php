@@ -75,7 +75,6 @@ class Ajax extends Controller
 
         $enzymeNames = array();
         $phageNames = array();
-        $lastPhageName= null;
         $message = null;
 
         ini_set("memory_limit","1024M");
@@ -202,7 +201,7 @@ class Ajax extends Controller
     public function getUnknownCutData(){
         $enzymeNames = array();
         $phageNames = array();
-        $lastPhageName= null;
+        
         $message = null;
 
         ini_set("memory_limit","1024M");

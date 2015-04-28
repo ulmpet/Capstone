@@ -145,4 +145,12 @@ class phage
         $query->execute($param);
         return $query->fetchAll();
     }
+
+    public function deletePhage($phageID){
+        $sql = "DELETE from phageTable where phageID = :phageID";
+        $query = $this->db->prepare($sql);
+        $param = array(":phageID" => $phageID);
+        return $query->execute($param);
+
+    }
 }
