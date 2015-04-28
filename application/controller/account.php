@@ -16,8 +16,17 @@ class Account extends Controller
      */
     public function index()
     {
+        if(isset($_REQUEST['changePasswordThing'])){
+        $this->changepassword();
+        exit;
+        }
+        else if(isset($_REQUEST['deactivateAccount'])) {
+        $this->deactivateAccount();
+        exit;   
+        } 
+        
   		require APP . 'view/_templates/header.php';
-  		require APP . 'view/_templates/nav.php';
+        require APP . 'view/_templates/nav.php';
         require APP . 'view/account/account.php';
         require APP . 'view/_templates/footer.php';
     }
@@ -31,35 +40,79 @@ class Account extends Controller
     {
         //Helper::outputArray($_REQUEST);
         //Helper::outputArray($_SESSION);
-
-        //will get the users Username by session ID
+        //Helper::outputArray($passcheck);
+        
+        //will get the users Username by session ID.
         $currentUser = $this->userModel->getUserByID($_SESSION['UID']);
-        //gets the salt for the current user
+        //gets the salt for the current user.
         $userSalt = $this->userModel->getSalt($currentUser);
         //hash and salt the password.
         $password = hash('sha512',$_REQUEST['password'].$userSalt);
-        //used to confirm password
+        //used to confirm password.
         $passcheck = $this->userModel->checkPassword($_SESSION['UID'], $password);
 
-        if(count($passcheck) != 1 ){
-            $this->message = "Invalid password, please try again.";
-        }
-        $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
+        if(empty($_REQUEST['newpassword'])){
 
-        if($newcheck != 0){
-            $this->message = "The new passwords do not match. Passwords are case-sensitive, please check them again.";
+            $_SESSION['message2'] = "The new passwords cannot be blank";
+            
+        }
+        else if(empty($_REQUEST['confirmnewpassword'])){
+
+            $_SESSION['message2'] = "The new passwords cannot be blank";
+
         }
         else{
-            //generate a new salt and use it with the hash of the new password
-            $salt = bin2hex(openssl_random_pseudo_bytes(64));
-            $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
-            $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
-            $this->message = "Congratulations, your new password has been set.";
+
+
+            if($passcheck == 1 ){
+
+                $newcheck = strcmp($_REQUEST['newpassword'],$_REQUEST['confirmnewpassword']);
+                  
+                if($newcheck != 0){
+
+                $_SESSION['message2'] = "The new passwords do not match.";
+
+                } //end of nested if
+
+                $_SESSION['success'] = "Your new password has been set.";
+                //generate a new salt and use it with the hash of the new password
+                $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+                $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
+                
+
+            }//end of first if
+            else{
+             $_SESSION['message'] = "Invalid Password"; 
+            
+            }//end of first else
         }
 
         require APP . 'view/_templates/header.php';
         require APP . 'view/_templates/nav.php';
         require APP . 'view/account/account.php';
         require APP . 'view/_templates/footer.php';
-    }
+        
+    } //end of changePassword
+
+    public function deactivateAccount(){
+
+        $currentUser = $_SESSION['UID'];
+        $authoCheck = $this->userModel->checkAuth($currentUser);
+        if($authoCheck[0]['AuthLevel'] == 1){
+            $_SESSION['badadmin'] = "Admins are not allowed to use this function. Sorry!";
+        }
+        else{
+            $this->userModel->deactivateUser($_SESSION['UID']);
+            $_SESSION['errorMessage'] = "Thank you for chooseing P.E.T, Please feel free to reactivate at any time with the below link.";
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/home/login.php';
+        require APP . 'view/_templates/footer.php';
+        
+
+    }    
+
+
 }

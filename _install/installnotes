@@ -1,0 +1,6 @@
+
+
+#sets permission on the phylip_data folder to rw 
+semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/public/phylip_data(/.*)?"
+restorecon -Rv /var
+
