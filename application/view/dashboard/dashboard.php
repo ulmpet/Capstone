@@ -222,7 +222,7 @@
   <!--<p><img url="googleanalyticsicon.png" alt="Google Analyics Icon"></p>-->
   <div id="container">
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For complete user demographics data, visit 
-      <a href="https://www.google.com/analytics/web/?authuser=0#report/visitors-overview/a61998275w96889679p101106604/"> 
+      <a href="https://www.google.com/analytics/web/?et&authuser=0#dashboard/cM5jrokwREK6eLCFiiH3Iw/a62286415w97271973p101408867/%3F_u.date00%3D20150424%26_u.date01%3D20150427/"> 
      <i>The Phage Enzyme Tool</i> <b>Google Analytics</b> profile.</a></p>
   </div>
 <?php
