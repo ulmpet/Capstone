@@ -17,7 +17,7 @@
 <div class="page-wrap">
 <!-- logo -->
 <div class="logo">
-    P.E.T. v2.0a
+    P.E.T. v2.0
 </div>
 
 <!--<div class="logo2">
