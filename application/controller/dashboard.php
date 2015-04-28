@@ -72,10 +72,19 @@ class Dashboard extends Controller
         Helper::outputArray($_REQUEST);
         if($_REQUEST['submissionType'] == "addGenus"){
             $this->addGenus();
+            $_SESSION['adminMessage'] = 'Genus added to the database.';
+            $_SESSION['messageLevel'] = 'highlight';
+            header('location: /dashboard');
         }elseif($_REQUEST['submissionType'] == "addPhage") {
             $this->addPhage();
+            $_SESSION['adminMessage'] = 'Phage added to the database.';
+            $_SESSION['messageLevel'] = 'highlight';
+            header('location: /dashboard');
         }elseif($_REQUEST['submissionType'] == "removePhage") {
             $this->removePhage();
+            $_SESSION['adminMessage'] = 'Phage removed from the database.';
+            $_SESSION['messageLevel'] = 'highlight';
+            header('location: /dashboard');
         }else{
 
         }
@@ -113,8 +122,11 @@ class Dashboard extends Controller
             if($_POST['filetype'] == 0){
                 if($_POST['genusName'] !== "null"){
                     $this->shortUpload($_POST['genusName']);
+                    $_SESSION['adminMessage'] = 'Upload Complete.';
+                    $_SESSION['messageLevel'] = 'highlight';
                 }else{
-                    echo "no genus selected";
+                    $_SESSION['adminMessage'] = 'Upload Failed';
+                    $_SESSION['messageLevel'] = 'error';
                 }
                 header("location: /dashboard");
             }elseif($_POST['filetype'] == 1){
@@ -127,9 +139,13 @@ class Dashboard extends Controller
             }elseif($_POST['filetype'] == 2){
                 $this->fastaUpload();
                 //echo "do fasfa";
+                $_SESSION['adminMessage'] = 'Upload Complete.';
+                $_SESSION['messageLevel'] = 'highlight';
                 header("location: /dashboard");
             }elseif($_POST['filetype'] == 3){
                 $this->nebUpload();
+                $_SESSION['adminMessage'] = 'Upload Complete.';
+                $_SESSION['messageLevel'] = 'highlight';
                 header("location: /dashboard");
             }
 
