@@ -72,14 +72,14 @@ class Account extends Controller
 
                 $_SESSION['message2'] = "The new passwords do not match.";
 
-                } //end of nested if
-
-                $_SESSION['success'] = "Your new password has been set.";
-                //generate a new salt and use it with the hash of the new password
-                $salt = bin2hex(openssl_random_pseudo_bytes(64));
-                $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
-                $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
-                
+                }else{
+                    
+                    //generate a new salt and use it with the hash of the new password
+                    $salt = bin2hex(openssl_random_pseudo_bytes(64));
+                    $password = hash('sha512',$_REQUEST['confirmnewpassword'].$salt);
+                    $this->userModel->changePassword($_SESSION['UID'], $password, $salt);
+                    $_SESSION['success'] = "Your new password has been set.";
+                }
 
             }//end of first if
             else{
