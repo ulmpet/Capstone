@@ -296,7 +296,13 @@ class PhageTool extends Controller
 				//fopen(PHYLIP_DATA."phagePDF_".$fileNameDate)
 				//readfile(PHYLIP_DATA . "phagePDF_".$fileNameDate);
 				//echo "<embed width='100%' height='100%' src=".URL . "phylip_data/phagePDF_".$fileNameDate." type='application/pdf'>";
-                header('location: '.PHYLIP_DATA.'phagePDF_'.$fileNameDate);
+                /*if($filesInDir = array_diff(scandir(PHYLIP_DATA), array('..','.')){
+                    foreach ($filesInDir as $key => $value) {
+                        
+                    }
+                }*/
+
+                header('location: phylip_data/phagePDF_'.$fileNameDate);
                     	}else{
 				echo "phagePDF_".$fileNameDate;
 			}
