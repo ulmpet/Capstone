@@ -89,6 +89,8 @@ $(window).load(function(){
 
     //anytime the values of a select box change run this function
 $("#clicker").click(function(){
+    //$('#resultTable').children().remove();
+    $("#resultTable").html("<img src='"+url+"/img/hex-loader2.gif' style='margin-left:50%;height:25%'>");
     //console.log( "Phage values: " + $("[name='selPhage[]']").select2("val"));
     //console.log( "Cluster Values: " + $("[name='selCluster[]']").select2("val"));
     //console.log( "Enzyme Values: "+ $("[name='selNeb[]']").select2("val"));
