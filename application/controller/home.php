@@ -27,19 +27,23 @@ class Home extends Controller
         //Helper::outputArray($userModel->selectAllUsers(),true);
         //if the http request contains information from a field called Email attempt a login
         if(isset($_REQUEST['Email'])){
-            $userSalt = $this->userModel->getSalt($_REQUEST['Email']);
-            $userEmail = $_REQUEST['Email'];
-            $userPassword = hash('sha512',$_REQUEST['Password'].$userSalt);
-            //request user from database with entered credientials
-            $userInformation = $this->userModel->checkLogin($userEmail,$userPassword);
-            // if there is such a user
-            if(count($userInformation) == 1){
-            
-                //set the session verables and redirect to News Page
-                $_SESSION['UID'] = $userInformation[0]['UserID'];
-                //Helper::outputArray($_SESSION);
-                header('location: /phagetool');
-            //else login failed
+            if($this->userModel->userExists($_REQUEST['Email'])){
+                $userSalt = $this->userModel->getSalt($_REQUEST['Email']);
+                $userEmail = $_REQUEST['Email'];
+                $userPassword = hash('sha512',$_REQUEST['Password'].$userSalt);
+                //request user from database with entered credientials
+                $userInformation = $this->userModel->checkLogin($userEmail,$userPassword);
+                // if there is such a user
+                if(count($userInformation) == 1){
+                
+                    //set the session verables and redirect to News Page
+                    $_SESSION['UID'] = $userInformation[0]['UserID'];
+                    //Helper::outputArray($_SESSION);
+                    header('location: /phagetool');
+                //else login failed
+                }else{
+                    $_SESSION['errorMessage'] = 'Login Failed. Invalid email or password.';
+                }
             }else{
                 $_SESSION['errorMessage'] = 'Login Failed. Invalid email or password.';
             }

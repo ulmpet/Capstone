@@ -3,6 +3,7 @@
 
     <?php 
     if(isset($_SESSION['UID'])){
+        //echo $_SESSION['UID'];
         if($this->getAuth() < 1){
             echo "<a href=".URL."docs/PUG.pdf>Help</a>";
         }else{

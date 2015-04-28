@@ -220,4 +220,17 @@ class user
         $query-> execute($parameters);
         return count($query->fetchAll());
     } //end of checkPassword
+
+    public function userExists($userID){
+        $sql = "SELECT * FROM userTable where EmailAddress = :userID;";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':userID' => $userID);
+        $query-> execute($parameters);
+        $number =  count($query->fetchAll());
+        if($number > 0 ){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
