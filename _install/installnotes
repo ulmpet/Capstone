@@ -1,4 +1,17 @@
-
+Install 
+	install apache
+	install mysql
+	install php
+	install git
+	activeate mod_rewrite
+	git clone repo
+	cp php.ini to thing
+	cp apache config to thing
+	write settings to config file
+	set selinux settings
+	chmod 775 /var/www/html/*
+	makeFiles for phylip binarys
+	cp phylip to /usr/local/src/ ?
 
 #sets permission on the phylip_data folder to rw 
 semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/public/phylip_data(/.*)?"
